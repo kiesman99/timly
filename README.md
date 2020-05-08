@@ -1,6 +1,6 @@
 # timly
 
-A simple Timer written in Flutter
+A new Flutter project.
 
 ## Getting Started
 
