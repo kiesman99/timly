@@ -6,11 +6,13 @@ class TimerPage extends StatefulWidget {
 
   final Duration intervalDuration;
   final Duration recoverDuration;
+  final Duration preTimer;
   final int laps;
 
   TimerPage({
     @required this.intervalDuration,
     @required this.recoverDuration,
+    @required this.preTimer,
     @required this.laps
   });
 
@@ -22,6 +24,8 @@ class _TimerPageState extends State<TimerPage> {
 
   Timer _timer;
 
+  bool _hasStarted = false;
+
   bool _isRecovering = false;
 
   bool _isPaused = false;
@@ -32,11 +36,10 @@ class _TimerPageState extends State<TimerPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    _seconds = widget.intervalDuration.inSeconds;
+    _seconds = 1;
     _lap = widget.laps;
     _timer = new Timer.periodic(const Duration(milliseconds: 1000), (timer) {
-      if(!_isPaused && _lap != 0) {
+      if(_hasStarted && !_isPaused && _lap != 0) {
         if(_isRecovering) {
           _seconds++;
           if(_seconds == widget.recoverDuration.inSeconds + 1){
@@ -50,17 +53,21 @@ class _TimerPageState extends State<TimerPage> {
             _lap--;
           }
         }
-        setState(() {
-
-        });
+      } else {
+        // Pre Timer is handled here
+        if(_seconds == widget.preTimer.inSeconds) {
+          _seconds = widget.intervalDuration.inSeconds;
+          _hasStarted = true;
+        }
+          _seconds++;
       }
+      setState(() {});
     });
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _timer.cancel();
     super.dispose();
   }
@@ -81,7 +88,9 @@ class _TimerPageState extends State<TimerPage> {
             child: Text("${_lap}x", style: intervalStyle),
           ),
           Center(
-            child: Text(_seconds.toString(), style: timerStyle.copyWith(color: _isRecovering ? Colors.red : Colors.black)),
+            child: Text(
+              "$_seconds${_hasStarted ? '' : '...'}", 
+              style: timerStyle.copyWith(color: _isRecovering ? Colors.red : _hasStarted ? Colors.black : Colors.blue)),
           ),
         ],
       ),

@@ -59,6 +59,7 @@ class _PickerPageState extends State<PickerPage> {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) => TimerPage(
             intervalDuration: Duration(seconds: _intervalDuration),
             recoverDuration: Duration(seconds: _recoverDuration),
+            preTimer: Duration(seconds: 5),
             laps: _laps,
           )));
         },
