@@ -81,7 +81,7 @@ class _TimerPageState extends State<TimerPage> {
             child: Text("${_lap}x", style: intervalStyle),
           ),
           Center(
-            child: Text(_seconds.toString(), style: timerStyle),
+            child: Text(_seconds.toString(), style: timerStyle.copyWith(color: _isRecovering ? Colors.red : Colors.black)),
           ),
         ],
       ),
