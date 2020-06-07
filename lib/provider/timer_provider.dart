@@ -78,7 +78,7 @@ class TimerProvider extends ChangeNotifier {
   }
 
   void setupTick() {
-    if (displayDuration.inSeconds == 0) {
+    if (displayDuration.inSeconds == 1) {
       _state = _state.copyWith(state: TimlyState.RUNNING, duration: _timerDuration);
     } else {
       _state.decrement();
@@ -91,7 +91,7 @@ class TimerProvider extends ChangeNotifier {
       return;
     }
 
-    if (displayDuration.inSeconds == 0) {
+    if (displayDuration.inSeconds == 1) {
       _state = _state.copyWith(state: TimlyState.RECOVER, duration: _recoverDuration);
     } else {
       _state.decrement();
@@ -99,7 +99,7 @@ class TimerProvider extends ChangeNotifier {
   }
 
   void recoverTick() {
-    if (displayDuration.inSeconds == 0) {
+    if (displayDuration.inSeconds == 1) {
       _state = _state.copyWith(state: TimlyState.RUNNING, laps: (_state.laps - 1), duration: _timerDuration);
     } else {
       _state.decrement();
