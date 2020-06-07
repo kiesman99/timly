@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:timly/model/timly_model.dart';
 import 'package:timly/pages/timer_page.dart';
 import 'package:timly/provider/timer_provider.dart';
 
@@ -59,7 +60,13 @@ class _PickerPageState extends State<PickerPage> {
         child: Icon(Icons.check),
         onPressed: (){
           Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangeNotifierProvider(
-            create: (_) => TimerProvider(const Duration(seconds: 3), Duration(seconds: 2), Duration(seconds: 5), 4),
+            create: (_) => TimerProvider(
+                TimlyModel(
+                    intervalDuration:  Duration(seconds: _intervalDuration),
+                    recoverDuration: Duration(seconds: _recoverDuration),
+                    setupDuration: const Duration(seconds: 5),
+                    laps: _laps
+                )),
             child: TimerPage(),
           )));
         },

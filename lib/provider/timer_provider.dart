@@ -1,41 +1,31 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:timly/model/TimlyState.dart';
+import 'package:timly/model/timly_model.dart';
 
 class TimerProvider extends ChangeNotifier {
 
-  Duration displayDuration;
-
-  Duration _timerDuration, _pauseDuration, _setupDuration, _recoverDuration;
-  int _laps;
   Timer _timer;
-  _TimerState _state = _TimerState.SETUP;
+
+  TimlyModel _state;
+  TimlyModel get state => _state;
+
+  // easier access getter
+  Duration get _timerDuration => state.intervalDuration;
+  Duration get _setupDuration => state.setupDuration;
+  Duration get _recoverDuration => state.recoverDuration;
+  Duration get displayDuration => _state.duration;
+
+  int  get _laps => state.laps;
+
 
   int get laps => _laps;
 
   TimerProvider(
-      this._timerDuration,
-      this._recoverDuration,
-      this._setupDuration,
-      this._laps
+      this._state
       ) {
-    assert(_timerDuration != null);
-    assert(_recoverDuration != null);
-    assert(_setupDuration != null);
-    assert(_laps != null);
-    assert(_laps != 0);
-
-    print(
-"""
-New TimerProvider(
-  timer: $_timerDuration,
-  recover: $_recoverDuration,
-  setup: $_setupDuration,
-  laps: $_laps
-);
-""");
-
-    displayDuration = _setupDuration;
+    _state = _state.copyWith(duration: _setupDuration);
     print("Provider CREATED");
     if (_timer == null) {
       print("TIMER WAS NULL");
@@ -46,21 +36,21 @@ New TimerProvider(
 
   void _timerTick() {
     print("TICK, STATE: $_state, DURATION: ${displayDuration.inSeconds}");
-    switch(_state) {
-      case _TimerState.RUNNING:
+    switch(state.state) {
+      case TimlyState.RUNNING:
         _runningTick();
         break;
-      case _TimerState.PAUSED:
+      case TimlyState.PAUSED:
         // nothing happens. It's paused.
         break;
-      case _TimerState.SETUP:
+      case TimlyState.SETUP:
         setupTick();
         break;
-      case _TimerState.FINISHED:
+      case TimlyState.FINISHED:
         // nothing happens, it's finished.
       print("FINISHED");
         break;
-      case _TimerState.RECOVER:
+      case TimlyState.RECOVER:
         recoverTick();
         break;
     }
@@ -68,7 +58,14 @@ New TimerProvider(
   }
 
   void pause() {
-    _state = _TimerState.PAUSED;
+    _state = _state.copyWith(state: TimlyState.PAUSED);
+    _timer.cancel();
+    notifyListeners();
+  }
+
+  void resume() {
+    _state = _state.copyWith(state: TimlyState.RUNNING);
+    _timer = Timer.periodic(const Duration(milliseconds: 1000), (_) => _timerTick());
     notifyListeners();
   }
 
@@ -82,44 +79,31 @@ New TimerProvider(
 
   void setupTick() {
     if (displayDuration.inSeconds == 0) {
-      displayDuration = _timerDuration;
-      _state = _TimerState.RUNNING;
+      _state = _state.copyWith(state: TimlyState.RUNNING, duration: _timerDuration);
     } else {
-      displayDuration -= const Duration(seconds: 1);
+      _state.decrement();
     }
   }
 
   void _runningTick() {
     if (_laps == 0) {
-      _state = _TimerState.FINISHED;
+      _state = _state.copyWith(state: TimlyState.FINISHED);
       return;
     }
 
     if (displayDuration.inSeconds == 0) {
-      displayDuration = _recoverDuration;
-      _state = _TimerState.RECOVER;
+      _state = _state.copyWith(state: TimlyState.RECOVER, duration: _recoverDuration);
     } else {
-      displayDuration -= const Duration(seconds: 1);
+      _state.decrement();
     }
   }
 
   void recoverTick() {
     if (displayDuration.inSeconds == 0) {
-      displayDuration = _timerDuration;
-      _laps -= 1;
-      _state = _TimerState.RUNNING;
+      _state = _state.copyWith(state: TimlyState.RUNNING, laps: (_state.laps - 1), duration: _timerDuration);
     } else {
-      displayDuration -= const Duration(seconds: 1);
+      _state.decrement();
     }
   }
 
-}
-
-
-enum _TimerState {
-  RUNNING,
-  RECOVER,
-  PAUSED,
-  SETUP,
-  FINISHED
 }
