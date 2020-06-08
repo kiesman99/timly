@@ -1,9 +1,11 @@
 
 import 'package:flutter/foundation.dart';
 
-import 'TimlyState.dart';
+import 'timly_state.dart';
 
 class TimlyModel {
+
+  int initialLaps;
 
   Duration duration;
   final Duration intervalDuration;
@@ -18,8 +20,13 @@ class TimlyModel {
     @required this.setupDuration,
     @required this.laps,
     this.state = TimlyState.SETUP,
-    this.duration
+    this.duration,
+    this.initialLaps
   }) {
+    if (initialLaps == null) {
+      initialLaps = laps;
+    }
+
     if (duration == null) {
       duration = this.setupDuration;
     }
@@ -27,6 +34,34 @@ class TimlyModel {
 
   void decrement() {
     this.duration -= const Duration(seconds: 1);
+  }
+
+  double recoverPercentage() {
+    if (state == TimlyState.RECOVER) {
+      return (duration.inSeconds / recoverDuration.inSeconds) * 100;
+    }
+
+    return 100.0;
+  }
+
+  double intervalPercentage() {
+    if (state == TimlyState.RUNNING) {
+      return (duration.inSeconds / intervalDuration.inSeconds) * 100;
+    }
+
+    return 100.0;
+  }
+
+  double setupPercentage() {
+    if (state == TimlyState.SETUP) {
+      return (duration.inSeconds / setupDuration.inSeconds) * 100;
+    }
+
+    return 0.0;
+  }
+
+  double lapPercentage() {
+    return (laps / initialLaps ) * 100.0;
   }
 
   TimlyModel copyWith({
@@ -43,7 +78,8 @@ class TimlyModel {
       recoverDuration: recoverDuration ?? this.recoverDuration,
       setupDuration: setupDuration ?? this.setupDuration,
       laps: laps ?? this.laps,
-      state: state ?? this.state
+      state: state ?? this.state,
+      initialLaps: this.initialLaps
     );
   }
 }

@@ -1,8 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:timly/model/TimlyState.dart';
+import 'package:timly/model/timly_state.dart';
 import 'package:timly/model/timly_model.dart';
+import 'package:timly/paints/timer_progress_paint.dart';
 import 'package:timly/provider/timer_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -82,7 +83,15 @@ class CounterWidget extends StatelessWidget {
       style = style.copyWith(color: Colors.red);
     }
 
-    return Text("${state.duration.inSeconds}", style: style);
+    return CustomPaint(
+      painter: TimerProgressPainter(
+        lapPercentage: state.lapPercentage(),
+        intervalProgress: state.intervalPercentage(),
+        setupProgress: state.setupPercentage(),
+        recoverProgress: state.recoverPercentage()
+      ),
+      child: Text("${state.duration.inSeconds}", style: style),
+    );
   }
 }
 

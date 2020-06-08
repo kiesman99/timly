@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:timly/model/TimlyState.dart';
+import 'package:timly/model/timly_state.dart';
 import 'package:timly/model/timly_model.dart';
 
 class TimerProvider extends ChangeNotifier {
