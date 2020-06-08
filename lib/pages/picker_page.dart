@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:timly/model/timly_model.dart';
 import 'package:timly/pages/timer_page.dart';
+import 'package:timly/provider/sound_provider.dart';
 import 'package:timly/provider/timer_provider.dart';
 
 class PickerPage extends StatefulWidget {
@@ -59,14 +60,15 @@ class _PickerPageState extends State<PickerPage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check),
         onPressed: (){
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangeNotifierProvider(
+          Navigator.of(context).push(MaterialPageRoute(builder: (_) => ChangeNotifierProvider(
             create: (_) => TimerProvider(
                 TimlyModel(
                     intervalDuration:  Duration(seconds: _intervalDuration),
                     recoverDuration: Duration(seconds: _recoverDuration),
                     setupDuration: const Duration(seconds: 5),
                     laps: _laps
-                )),
+                ),
+                context.read<SoundProvider>()),
             child: TimerPage(),
           )));
         },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:timly/pages/picker_page.dart';
+import 'package:timly/provider/sound_provider.dart';
 
 void main() {
   Provider.debugCheckInvalidValueType = null;
@@ -29,7 +30,10 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: PickerPage(),
+      home: ChangeNotifierProvider(
+        create: (context) => SoundProvider(),
+        child: PickerPage(),
+      ),
     );
   }
 }

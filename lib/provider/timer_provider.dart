@@ -1,12 +1,17 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
+import 'package:soundpool/soundpool.dart';
 import 'package:timly/model/timly_state.dart';
 import 'package:timly/model/timly_model.dart';
+import 'package:timly/provider/sound_provider.dart';
 
 class TimerProvider extends ChangeNotifier {
 
   Timer _timer;
+
+  final SoundProvider _soundProvider;
 
   TimlyModel _state;
   TimlyModel get state => _state;
@@ -19,11 +24,11 @@ class TimerProvider extends ChangeNotifier {
 
   int  get _laps => state.laps;
 
-
   int get laps => _laps;
 
   TimerProvider(
-      this._state
+      this._state,
+      this._soundProvider
       ) {
     _state = _state.copyWith(duration: _setupDuration);
     print("Provider CREATED");
@@ -78,6 +83,11 @@ class TimerProvider extends ChangeNotifier {
   }
 
   void setupTick() {
+
+    if ([1,2].contains(_state.duration.inSeconds)) {
+      _soundProvider.playLongBeep();
+    }
+
     if (displayDuration.inSeconds == 1) {
       _state = _state.copyWith(state: TimlyState.RUNNING, duration: _timerDuration);
     } else {
@@ -92,6 +102,7 @@ class TimerProvider extends ChangeNotifier {
     }
 
     if (displayDuration.inSeconds == 1) {
+      _soundProvider.playLongBeep();
       _state = _state.copyWith(state: TimlyState.RECOVER, duration: _recoverDuration);
     } else {
       _state.decrement();
@@ -102,6 +113,12 @@ class TimerProvider extends ChangeNotifier {
     if (displayDuration.inSeconds == 1) {
       _state = _state.copyWith(state: TimlyState.RUNNING, laps: (_state.laps - 1), duration: _timerDuration);
     } else {
+      if ([2,3].contains(_state.duration.inSeconds)) {
+        _soundProvider.playShortBeep();
+      } else if(_state.duration.inSeconds == 1) {
+        _soundProvider.playLongBeep();
+      }
+
       _state.decrement();
     }
   }
