@@ -21,27 +21,38 @@ class _TimerPageState extends State<TimerPage> {
         builder: (BuildContext context, TimerState state) {
           if (state is Paused) {
             return Center(
-              child: Text("Paused!"),
+              child: Text("Paused!", style: finishText),
             );
           } else if (state is Finished) {
             return Center(
-              child: Text("Finished!"),
+              child: Text("Finished!", style: finishText),
             );
           } else {
             return CounterWidget(state: state);
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(context.bloc<TimerBloc>().state is Paused
-            ? Icons.pause
-            : Icons.play_arrow),
-        onPressed: () {
-          if (context.bloc<TimerBloc>().state is Paused) {
-            context.bloc<TimerBloc>().add(TimerEvent.resume());
-          } else {
-            context.bloc<TimerBloc>().add(TimerEvent.pause());
-          }
+      floatingActionButton: BlocBuilder<TimerBloc, TimerState>(
+        builder: (BuildContext context, TimerState state) {
+          return state.maybeWhen(
+            paused: (_) {
+              return FloatingActionButton(
+                child: Icon(Icons.play_arrow),
+                onPressed: () {
+                  context.bloc<TimerBloc>().add(TimerEvent.resume());
+                },
+              );
+            },
+            finished: () => Container(),
+            orElse: () {
+              return FloatingActionButton(
+                child: Icon(Icons.pause),
+                onPressed: () {
+                  context.bloc<TimerBloc>().add(TimerEvent.pause());
+                },
+              );
+            },
+          );
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -85,10 +96,10 @@ class CounterWidget extends StatelessWidget {
             child: CustomPaint(
           // TODO: Implement circular decrease animation
           painter: TimerProgressPainter(
-              lapPercentage: 100.0,
-              intervalProgress: 100.0,
-              setupProgress: 100.0,
-              recoverProgress: 100.0),
+              lapPercentage: context.bloc<TimerBloc>().lapPercentage,
+              intervalProgress: context.bloc<TimerBloc>().intervalPercentage,
+              setupProgress: context.bloc<TimerBloc>().setupPercentage,
+              recoverProgress: context.bloc<TimerBloc>().recoverPercentage),
           child: Text("$duration", style: style),
         )),
       ],

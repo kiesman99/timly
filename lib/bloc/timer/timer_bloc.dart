@@ -114,4 +114,23 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     _timer = null;
     return super.close();
   }
+
+  double get intervalPercentage {
+    return (_remaining.intervalDuration.inSeconds / _initial.intervalDuration.inSeconds) * 100;
+  }
+
+  double get recoverPercentage {
+    return (_remaining.recoverDuration.inSeconds / _initial.recoverDuration.inSeconds) * 100.0;
+  }
+
+  double get lapPercentage {
+    return (_remaining.laps / _initial.laps) * 100.0;
+  }
+
+  double get setupPercentage {
+    if (_remaining.setupDuration.inSeconds == 1) {
+      return 0.0;
+    }
+    return (_remaining.setupDuration.inSeconds / _initial.setupDuration.inSeconds) * 100.0;
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+// TODO: Convert to freezed Union
 class TimlyModel {
   final Duration intervalDuration;
   final Duration recoverDuration;
