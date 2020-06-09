@@ -31,6 +31,10 @@ class _$TimerEventTearOff {
   Resume resume() {
     return const Resume();
   }
+
+  Replay replay() {
+    return const Replay();
+  }
 }
 
 // ignore: unused_element
@@ -44,8 +48,8 @@ mixin _$TimerEvent {
     @required Result recoverTick(),
     @required Result pause(),
     @required Result resume(),
+    @required Result replay(),
   });
-
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result setupTick(),
@@ -53,9 +57,9 @@ mixin _$TimerEvent {
     Result recoverTick(),
     Result pause(),
     Result resume(),
+    Result replay(),
     @required Result orElse(),
   });
-
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result setupTick(SetupTick value),
@@ -63,8 +67,8 @@ mixin _$TimerEvent {
     @required Result recoverTick(RecoverTick value),
     @required Result pause(Pause value),
     @required Result resume(Resume value),
+    @required Result replay(Replay value),
   });
-
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result setupTick(SetupTick value),
@@ -72,6 +76,7 @@ mixin _$TimerEvent {
     Result recoverTick(RecoverTick value),
     Result pause(Pause value),
     Result resume(Resume value),
+    Result replay(Replay value),
     @required Result orElse(),
   });
 }
@@ -86,7 +91,6 @@ class _$TimerEventCopyWithImpl<$Res> implements $TimerEventCopyWith<$Res> {
   _$TimerEventCopyWithImpl(this._value, this._then);
 
   final TimerEvent _value;
-
   // ignore: unused_field
   final $Res Function(TimerEvent) _then;
 }
@@ -135,12 +139,14 @@ class _$SetupTick with DiagnosticableTreeMixin implements SetupTick {
     @required Result recoverTick(),
     @required Result pause(),
     @required Result resume(),
+    @required Result replay(),
   }) {
     assert(setupTick != null);
     assert(runningTick != null);
     assert(recoverTick != null);
     assert(pause != null);
     assert(resume != null);
+    assert(replay != null);
     return setupTick();
   }
 
@@ -152,6 +158,7 @@ class _$SetupTick with DiagnosticableTreeMixin implements SetupTick {
     Result recoverTick(),
     Result pause(),
     Result resume(),
+    Result replay(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -169,12 +176,14 @@ class _$SetupTick with DiagnosticableTreeMixin implements SetupTick {
     @required Result recoverTick(RecoverTick value),
     @required Result pause(Pause value),
     @required Result resume(Resume value),
+    @required Result replay(Replay value),
   }) {
     assert(setupTick != null);
     assert(runningTick != null);
     assert(recoverTick != null);
     assert(pause != null);
     assert(resume != null);
+    assert(replay != null);
     return setupTick(this);
   }
 
@@ -186,6 +195,7 @@ class _$SetupTick with DiagnosticableTreeMixin implements SetupTick {
     Result recoverTick(RecoverTick value),
     Result pause(Pause value),
     Result resume(Resume value),
+    Result replay(Replay value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -246,12 +256,14 @@ class _$RunningTick with DiagnosticableTreeMixin implements RunningTick {
     @required Result recoverTick(),
     @required Result pause(),
     @required Result resume(),
+    @required Result replay(),
   }) {
     assert(setupTick != null);
     assert(runningTick != null);
     assert(recoverTick != null);
     assert(pause != null);
     assert(resume != null);
+    assert(replay != null);
     return runningTick();
   }
 
@@ -263,6 +275,7 @@ class _$RunningTick with DiagnosticableTreeMixin implements RunningTick {
     Result recoverTick(),
     Result pause(),
     Result resume(),
+    Result replay(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -280,12 +293,14 @@ class _$RunningTick with DiagnosticableTreeMixin implements RunningTick {
     @required Result recoverTick(RecoverTick value),
     @required Result pause(Pause value),
     @required Result resume(Resume value),
+    @required Result replay(Replay value),
   }) {
     assert(setupTick != null);
     assert(runningTick != null);
     assert(recoverTick != null);
     assert(pause != null);
     assert(resume != null);
+    assert(replay != null);
     return runningTick(this);
   }
 
@@ -297,6 +312,7 @@ class _$RunningTick with DiagnosticableTreeMixin implements RunningTick {
     Result recoverTick(RecoverTick value),
     Result pause(Pause value),
     Result resume(Resume value),
+    Result replay(Replay value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -357,12 +373,14 @@ class _$RecoverTick with DiagnosticableTreeMixin implements RecoverTick {
     @required Result recoverTick(),
     @required Result pause(),
     @required Result resume(),
+    @required Result replay(),
   }) {
     assert(setupTick != null);
     assert(runningTick != null);
     assert(recoverTick != null);
     assert(pause != null);
     assert(resume != null);
+    assert(replay != null);
     return recoverTick();
   }
 
@@ -374,6 +392,7 @@ class _$RecoverTick with DiagnosticableTreeMixin implements RecoverTick {
     Result recoverTick(),
     Result pause(),
     Result resume(),
+    Result replay(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -391,12 +410,14 @@ class _$RecoverTick with DiagnosticableTreeMixin implements RecoverTick {
     @required Result recoverTick(RecoverTick value),
     @required Result pause(Pause value),
     @required Result resume(Resume value),
+    @required Result replay(Replay value),
   }) {
     assert(setupTick != null);
     assert(runningTick != null);
     assert(recoverTick != null);
     assert(pause != null);
     assert(resume != null);
+    assert(replay != null);
     return recoverTick(this);
   }
 
@@ -408,6 +429,7 @@ class _$RecoverTick with DiagnosticableTreeMixin implements RecoverTick {
     Result recoverTick(RecoverTick value),
     Result pause(Pause value),
     Result resume(Resume value),
+    Result replay(Replay value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -466,12 +488,14 @@ class _$Pause with DiagnosticableTreeMixin implements Pause {
     @required Result recoverTick(),
     @required Result pause(),
     @required Result resume(),
+    @required Result replay(),
   }) {
     assert(setupTick != null);
     assert(runningTick != null);
     assert(recoverTick != null);
     assert(pause != null);
     assert(resume != null);
+    assert(replay != null);
     return pause();
   }
 
@@ -483,6 +507,7 @@ class _$Pause with DiagnosticableTreeMixin implements Pause {
     Result recoverTick(),
     Result pause(),
     Result resume(),
+    Result replay(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -500,12 +525,14 @@ class _$Pause with DiagnosticableTreeMixin implements Pause {
     @required Result recoverTick(RecoverTick value),
     @required Result pause(Pause value),
     @required Result resume(Resume value),
+    @required Result replay(Replay value),
   }) {
     assert(setupTick != null);
     assert(runningTick != null);
     assert(recoverTick != null);
     assert(pause != null);
     assert(resume != null);
+    assert(replay != null);
     return pause(this);
   }
 
@@ -517,6 +544,7 @@ class _$Pause with DiagnosticableTreeMixin implements Pause {
     Result recoverTick(RecoverTick value),
     Result pause(Pause value),
     Result resume(Resume value),
+    Result replay(Replay value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -575,12 +603,14 @@ class _$Resume with DiagnosticableTreeMixin implements Resume {
     @required Result recoverTick(),
     @required Result pause(),
     @required Result resume(),
+    @required Result replay(),
   }) {
     assert(setupTick != null);
     assert(runningTick != null);
     assert(recoverTick != null);
     assert(pause != null);
     assert(resume != null);
+    assert(replay != null);
     return resume();
   }
 
@@ -592,6 +622,7 @@ class _$Resume with DiagnosticableTreeMixin implements Resume {
     Result recoverTick(),
     Result pause(),
     Result resume(),
+    Result replay(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -609,12 +640,14 @@ class _$Resume with DiagnosticableTreeMixin implements Resume {
     @required Result recoverTick(RecoverTick value),
     @required Result pause(Pause value),
     @required Result resume(Resume value),
+    @required Result replay(Replay value),
   }) {
     assert(setupTick != null);
     assert(runningTick != null);
     assert(recoverTick != null);
     assert(pause != null);
     assert(resume != null);
+    assert(replay != null);
     return resume(this);
   }
 
@@ -626,6 +659,7 @@ class _$Resume with DiagnosticableTreeMixin implements Resume {
     Result recoverTick(RecoverTick value),
     Result pause(Pause value),
     Result resume(Resume value),
+    Result replay(Replay value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -638,4 +672,119 @@ class _$Resume with DiagnosticableTreeMixin implements Resume {
 
 abstract class Resume implements TimerEvent {
   const factory Resume() = _$Resume;
+}
+
+abstract class $ReplayCopyWith<$Res> {
+  factory $ReplayCopyWith(Replay value, $Res Function(Replay) then) =
+      _$ReplayCopyWithImpl<$Res>;
+}
+
+class _$ReplayCopyWithImpl<$Res> extends _$TimerEventCopyWithImpl<$Res>
+    implements $ReplayCopyWith<$Res> {
+  _$ReplayCopyWithImpl(Replay _value, $Res Function(Replay) _then)
+      : super(_value, (v) => _then(v as Replay));
+
+  @override
+  Replay get _value => super._value as Replay;
+}
+
+class _$Replay with DiagnosticableTreeMixin implements Replay {
+  const _$Replay();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'TimerEvent.replay()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'TimerEvent.replay'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is Replay);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result setupTick(),
+    @required Result runningTick(),
+    @required Result recoverTick(),
+    @required Result pause(),
+    @required Result resume(),
+    @required Result replay(),
+  }) {
+    assert(setupTick != null);
+    assert(runningTick != null);
+    assert(recoverTick != null);
+    assert(pause != null);
+    assert(resume != null);
+    assert(replay != null);
+    return replay();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result setupTick(),
+    Result runningTick(),
+    Result recoverTick(),
+    Result pause(),
+    Result resume(),
+    Result replay(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (replay != null) {
+      return replay();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result setupTick(SetupTick value),
+    @required Result runningTick(RunningTick value),
+    @required Result recoverTick(RecoverTick value),
+    @required Result pause(Pause value),
+    @required Result resume(Resume value),
+    @required Result replay(Replay value),
+  }) {
+    assert(setupTick != null);
+    assert(runningTick != null);
+    assert(recoverTick != null);
+    assert(pause != null);
+    assert(resume != null);
+    assert(replay != null);
+    return replay(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result setupTick(SetupTick value),
+    Result runningTick(RunningTick value),
+    Result recoverTick(RecoverTick value),
+    Result pause(Pause value),
+    Result resume(Resume value),
+    Result replay(Replay value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (replay != null) {
+      return replay(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class Replay implements TimerEvent {
+  const factory Replay() = _$Replay;
 }

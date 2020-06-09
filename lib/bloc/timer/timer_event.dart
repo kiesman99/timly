@@ -14,4 +14,6 @@ abstract class TimerEvent with _$TimerEvent {
   const factory TimerEvent.pause() = Pause;
 
   const factory TimerEvent.resume() = Resume;
+
+  const factory TimerEvent.replay() = Replay;
 }

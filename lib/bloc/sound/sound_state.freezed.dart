@@ -32,20 +32,17 @@ mixin _$SoundState {
     @required Result idle(),
     @required Result playing(int streamId),
   });
-
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result idle(),
     Result playing(int streamId),
     @required Result orElse(),
   });
-
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result idle(IDLE value),
     @required Result playing(Playing value),
   });
-
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result idle(IDLE value),
@@ -64,7 +61,6 @@ class _$SoundStateCopyWithImpl<$Res> implements $SoundStateCopyWith<$Res> {
   _$SoundStateCopyWithImpl(this._value, this._then);
 
   final SoundState _value;
-
   // ignore: unused_field
   final $Res Function(SoundState) _then;
 }
@@ -163,7 +159,6 @@ abstract class IDLE implements SoundState {
 abstract class $PlayingCopyWith<$Res> {
   factory $PlayingCopyWith(Playing value, $Res Function(Playing) then) =
       _$PlayingCopyWithImpl<$Res>;
-
   $Res call({int streamId});
 }
 
@@ -276,6 +271,5 @@ abstract class Playing implements SoundState {
   const factory Playing(int streamId) = _$Playing;
 
   int get streamId;
-
   $PlayingCopyWith<Playing> get copyWith;
 }

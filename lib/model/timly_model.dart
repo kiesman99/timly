@@ -1,29 +1,13 @@
 import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-// TODO: Convert to freezed Union
-class TimlyModel {
-  final Duration intervalDuration;
-  final Duration recoverDuration;
-  final Duration setupDuration;
-  final int laps;
+part 'timly_model.freezed.dart';
 
-  TimlyModel({
-    @required this.intervalDuration,
-    @required this.recoverDuration,
-    @required this.setupDuration,
-    @required this.laps,
-  });
-
-  TimlyModel copyWith({
-    Duration intervalDuration,
-    Duration recoverDuration,
-    Duration setupDuration,
-    int laps,
-  }) {
-    return TimlyModel(
-        intervalDuration: intervalDuration ?? this.intervalDuration,
-        recoverDuration: recoverDuration ?? this.recoverDuration,
-        setupDuration: setupDuration ?? this.setupDuration,
-        laps: laps ?? this.laps);
-  }
+@freezed
+abstract class TimlyModel with _$TimlyModel {
+  const factory TimlyModel(
+      {@required Duration intervalDuration,
+      @required Duration recoverDuration,
+      @required Duration setupDuration,
+      @required int laps}) = _TimlyModel;
 }

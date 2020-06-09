@@ -43,7 +43,14 @@ class _TimerPageState extends State<TimerPage> {
                 },
               );
             },
-            finished: () => Container(),
+            finished: () {
+              return FloatingActionButton(
+                child: Icon(Icons.refresh),
+                onPressed: () {
+                  context.bloc<TimerBloc>().add(TimerEvent.replay());
+                },
+              );
+            },
             orElse: () {
               return FloatingActionButton(
                 child: Icon(Icons.pause),
@@ -94,7 +101,6 @@ class CounterWidget extends StatelessWidget {
         ),
         Center(
             child: CustomPaint(
-          // TODO: Implement circular decrease animation
           painter: TimerProgressPainter(
               lapPercentage: context.bloc<TimerBloc>().lapPercentage,
               intervalProgress: context.bloc<TimerBloc>().intervalPercentage,

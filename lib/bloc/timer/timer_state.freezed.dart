@@ -53,7 +53,6 @@ mixin _$TimerState {
     @required Result recover(TimlyModel remaining),
     @required Result finished(),
   });
-
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result setup(TimlyModel remaining),
@@ -63,7 +62,6 @@ mixin _$TimerState {
     Result finished(),
     @required Result orElse(),
   });
-
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result setup(Setup value),
@@ -72,7 +70,6 @@ mixin _$TimerState {
     @required Result recover(Recover value),
     @required Result finished(Finished value),
   });
-
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result setup(Setup value),
@@ -94,7 +91,6 @@ class _$TimerStateCopyWithImpl<$Res> implements $TimerStateCopyWith<$Res> {
   _$TimerStateCopyWithImpl(this._value, this._then);
 
   final TimerState _value;
-
   // ignore: unused_field
   final $Res Function(TimerState) _then;
 }
@@ -104,6 +100,8 @@ abstract class $SetupCopyWith<$Res> {
       _$SetupCopyWithImpl<$Res>;
 
   $Res call({TimlyModel remaining});
+
+  $TimlyModelCopyWith<$Res> get remaining;
 }
 
 class _$SetupCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
@@ -121,6 +119,16 @@ class _$SetupCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
     return _then(Setup(
       remaining == freezed ? _value.remaining : remaining as TimlyModel,
     ));
+  }
+
+  @override
+  $TimlyModelCopyWith<$Res> get remaining {
+    if (_value.remaining == null) {
+      return null;
+    }
+    return $TimlyModelCopyWith<$Res>(_value.remaining, (value) {
+      return _then(_value.copyWith(remaining: value));
+    });
   }
 }
 
@@ -233,15 +241,16 @@ abstract class Setup implements TimerState {
   const factory Setup(TimlyModel remaining) = _$Setup;
 
   TimlyModel get remaining;
-
   $SetupCopyWith<Setup> get copyWith;
 }
 
 abstract class $RunningCopyWith<$Res> {
   factory $RunningCopyWith(Running value, $Res Function(Running) then) =
-      _$RunningCopyWithImpl<$Res>;
+  _$RunningCopyWithImpl<$Res>;
 
   $Res call({TimlyModel remaining});
+
+  $TimlyModelCopyWith<$Res> get remaining;
 }
 
 class _$RunningCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
@@ -259,6 +268,16 @@ class _$RunningCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
     return _then(Running(
       remaining == freezed ? _value.remaining : remaining as TimlyModel,
     ));
+  }
+
+  @override
+  $TimlyModelCopyWith<$Res> get remaining {
+    if (_value.remaining == null) {
+      return null;
+    }
+    return $TimlyModelCopyWith<$Res>(_value.remaining, (value) {
+      return _then(_value.copyWith(remaining: value));
+    });
   }
 }
 
@@ -371,14 +390,12 @@ abstract class Running implements TimerState {
   const factory Running(TimlyModel remaining) = _$Running;
 
   TimlyModel get remaining;
-
   $RunningCopyWith<Running> get copyWith;
 }
 
 abstract class $PausedCopyWith<$Res> {
   factory $PausedCopyWith(Paused value, $Res Function(Paused) then) =
       _$PausedCopyWithImpl<$Res>;
-
   $Res call({TimerState lastState});
 }
 
@@ -509,15 +526,16 @@ abstract class Paused implements TimerState {
   const factory Paused(TimerState lastState) = _$Paused;
 
   TimerState get lastState;
-
   $PausedCopyWith<Paused> get copyWith;
 }
 
 abstract class $RecoverCopyWith<$Res> {
   factory $RecoverCopyWith(Recover value, $Res Function(Recover) then) =
-      _$RecoverCopyWithImpl<$Res>;
+  _$RecoverCopyWithImpl<$Res>;
 
   $Res call({TimlyModel remaining});
+
+  $TimlyModelCopyWith<$Res> get remaining;
 }
 
 class _$RecoverCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
@@ -535,6 +553,16 @@ class _$RecoverCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
     return _then(Recover(
       remaining == freezed ? _value.remaining : remaining as TimlyModel,
     ));
+  }
+
+  @override
+  $TimlyModelCopyWith<$Res> get remaining {
+    if (_value.remaining == null) {
+      return null;
+    }
+    return $TimlyModelCopyWith<$Res>(_value.remaining, (value) {
+      return _then(_value.copyWith(remaining: value));
+    });
   }
 }
 
@@ -647,7 +675,6 @@ abstract class Recover implements TimerState {
   const factory Recover(TimlyModel remaining) = _$Recover;
 
   TimlyModel get remaining;
-
   $RecoverCopyWith<Recover> get copyWith;
 }
 

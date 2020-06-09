@@ -36,11 +36,19 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
         runningTick: () => mapRunningEventToState(event),
         recoverTick: () => mapRecoverEventToState(event),
         pause: () => mapPauseEventToState(event),
-        resume: () => mapResumeEventToState(event));
+        resume: () => mapResumeEventToState(event),
+        replay: () => mapReplayEventToState(event));
+  }
+
+  Stream<TimerState> mapReplayEventToState(Replay event) async* {
+    _timer?.cancel();
+    _remaining = _initial;
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) => _tickHandler());
+    yield TimerState.setup(_remaining);
   }
 
   Stream<TimerState> mapSetupEventToState(SetupTick event) async* {
-    if([1,2].contains(_remaining.setupDuration.inSeconds)) {
+    if ([1, 2].contains(_remaining.setupDuration.inSeconds)) {
       _soundBloc.add(SoundEvent.longBeep());
     }
     if (_remaining.setupDuration.inSeconds == 1) {

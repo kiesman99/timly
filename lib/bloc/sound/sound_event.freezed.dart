@@ -30,20 +30,17 @@ mixin _$SoundEvent {
     @required Result shortBeep(),
     @required Result longBeep(),
   });
-
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result shortBeep(),
     Result longBeep(),
     @required Result orElse(),
   });
-
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result shortBeep(LongBeep value),
     @required Result longBeep(ShortBeep value),
   });
-
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result shortBeep(LongBeep value),
@@ -62,7 +59,6 @@ class _$SoundEventCopyWithImpl<$Res> implements $SoundEventCopyWith<$Res> {
   _$SoundEventCopyWithImpl(this._value, this._then);
 
   final SoundEvent _value;
-
   // ignore: unused_field
   final $Res Function(SoundEvent) _then;
 }
