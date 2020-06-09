@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timly/bloc/sound/sound_bloc.dart';
+import 'package:timly/bloc/timer/timer_bloc.dart';
 import 'package:timly/model/timly_model.dart';
 import 'package:timly/pages/timer_page.dart';
-import 'package:timly/provider/sound_provider.dart';
-import 'package:timly/provider/timer_provider.dart';
 
 class PickerPage extends StatefulWidget {
   @override
@@ -11,7 +11,6 @@ class PickerPage extends StatefulWidget {
 }
 
 class _PickerPageState extends State<PickerPage> {
-
   int _laps;
   int _intervalDuration;
   int _recoverDuration;
@@ -29,48 +28,44 @@ class _PickerPageState extends State<PickerPage> {
           children: [
             TextField(
               onChanged: (text) {
-               _laps = int.parse(text);
+                _laps = int.parse(text);
               },
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                hintText: "Runden"
-              ),
+              decoration: InputDecoration(hintText: "Runden"),
             ),
             TextField(
               onChanged: (text) {
                 _intervalDuration = int.parse(text);
               },
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                hintText: "Intervall (in Sekunden)"
-              ),
+              decoration: InputDecoration(hintText: "Intervall (in Sekunden)"),
             ),
             TextField(
               onChanged: (text) {
                 _recoverDuration = int.parse(text);
               },
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                hintText: "Pause (in Sekunden)"
-              ),
+              decoration: InputDecoration(hintText: "Pause (in Sekunden)"),
             )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check),
-        onPressed: (){
-          Navigator.of(context).push(MaterialPageRoute(builder: (_) => ChangeNotifierProvider(
-            create: (_) => TimerProvider(
-                TimlyModel(
-                    intervalDuration:  Duration(seconds: _intervalDuration),
-                    recoverDuration: Duration(seconds: _recoverDuration),
-                    setupDuration: const Duration(seconds: 5),
-                    laps: _laps
-                ),
-                context.read<SoundProvider>()),
-            child: TimerPage(),
-          )));
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (_) => BlocProvider(
+                    create: (_) => TimerBloc(
+                        TimlyModel(
+                            intervalDuration:
+                                Duration(seconds: _intervalDuration),
+                            recoverDuration:
+                                Duration(seconds: _recoverDuration),
+                            setupDuration: const Duration(seconds: 5),
+                            laps: _laps),
+                        context.bloc<SoundBloc>()),
+                    child: TimerPage(),
+                  )));
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

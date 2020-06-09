@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:timly/bloc/sound/sound_bloc.dart';
 import 'package:timly/pages/picker_page.dart';
-import 'package:timly/provider/sound_provider.dart';
 
 void main() {
   Provider.debugCheckInvalidValueType = null;
@@ -30,8 +31,8 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: ChangeNotifierProvider(
-        create: (context) => SoundProvider(),
+      home: BlocProvider(
+        create: (context) => SoundBloc(),
         child: PickerPage(),
       ),
     );

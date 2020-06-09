@@ -1,23 +1,25 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class TimerProgressPainter extends CustomPainter {
-
   /// Setup Progress from 0 to 100
   final double setupProgress;
+
   /// Recover Progress from 0 to 100
   final double recoverProgress;
+
   /// Interval Progress from 0 to 100
   final double intervalProgress;
+
   /// Lap Progress from 0 to 100
   final double lapPercentage;
 
-  TimerProgressPainter({
-    @required this.setupProgress,
-    @required this.recoverProgress,
-    @required this.intervalProgress,
-    @required this.lapPercentage
-  });
+  TimerProgressPainter(
+      {@required this.setupProgress,
+      @required this.recoverProgress,
+      @required this.intervalProgress,
+      @required this.lapPercentage});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -48,39 +50,23 @@ class TimerProgressPainter extends CustomPainter {
     Offset center = Offset(size.width / 2, size.height / 2);
 
     if (setupProgress != 0) {
-      canvas.drawArc(
-          new Rect.fromCircle(center: center, radius: 250),
-          -pi/2, -2 * pi * (setupProgress/100),
-          false,
-          setupPaint
-      );
+      canvas.drawArc(new Rect.fromCircle(center: center, radius: 250), -pi / 2,
+          -2 * pi * (setupProgress / 100), false, setupPaint);
     }
 
     if (lapPercentage != 0) {
-      canvas.drawArc(
-          new Rect.fromCircle(center: center, radius: 200),
-          -pi/2, -2 * pi * (lapPercentage/100),
-          false,
-          lapPaint
-      );
+      canvas.drawArc(new Rect.fromCircle(center: center, radius: 200), -pi / 2,
+          -2 * pi * (lapPercentage / 100), false, lapPaint);
     }
 
     if (recoverProgress != 0) {
-      canvas.drawArc(
-          new Rect.fromCircle(center: center, radius: 140),
-          -pi/2, -2 * pi * (recoverProgress/100),
-          false,
-          recoverPaint
-      );
+      canvas.drawArc(new Rect.fromCircle(center: center, radius: 140), -pi / 2,
+          -2 * pi * (recoverProgress / 100), false, recoverPaint);
     }
 
     if (intervalProgress != 0) {
-      canvas.drawArc(
-          new Rect.fromCircle(center: center, radius: 90),
-          -pi/2, -2 * pi * (intervalProgress/100),
-          false,
-          intervalPaint
-      );
+      canvas.drawArc(new Rect.fromCircle(center: center, radius: 90), -pi / 2,
+          -2 * pi * (intervalProgress / 100), false, intervalPaint);
     }
   }
 
@@ -88,5 +74,4 @@ class TimerProgressPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) {
     return false;
   }
-
 }
