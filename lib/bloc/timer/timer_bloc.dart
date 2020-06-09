@@ -40,6 +40,9 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   }
 
   Stream<TimerState> mapSetupEventToState(SetupTick event) async* {
+    if([1,2].contains(_remaining.setupDuration.inSeconds)) {
+      _soundBloc.add(SoundEvent.longBeep());
+    }
     if (_remaining.setupDuration.inSeconds == 1) {
       yield TimerState.running(_remaining);
     } else {
@@ -74,6 +77,11 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
       yield TimerState.running(_remaining);
     } else {
       // TODO: implement sounds
+      if ([2,3].contains(_remaining.recoverDuration.inSeconds)) {
+        _soundBloc.add(SoundEvent.shortBeep());
+      } else if (_remaining.recoverDuration.inSeconds == 1) {
+        _soundBloc.add(SoundEvent.longBeep());
+      }
       _remaining = _remaining.copyWith(
           recoverDuration:
               _remaining.recoverDuration - const Duration(seconds: 1));
