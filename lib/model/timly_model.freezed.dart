@@ -31,11 +31,8 @@ const $TimlyModel = _$TimlyModelTearOff();
 
 mixin _$TimlyModel {
   Duration get intervalDuration;
-
   Duration get recoverDuration;
-
   Duration get setupDuration;
-
   int get laps;
 
   $TimlyModelCopyWith<TimlyModel> get copyWith;
@@ -45,7 +42,6 @@ abstract class $TimlyModelCopyWith<$Res> {
   factory $TimlyModelCopyWith(
           TimlyModel value, $Res Function(TimlyModel) then) =
       _$TimlyModelCopyWithImpl<$Res>;
-
   $Res call(
       {Duration intervalDuration,
       Duration recoverDuration,
@@ -57,7 +53,6 @@ class _$TimlyModelCopyWithImpl<$Res> implements $TimlyModelCopyWith<$Res> {
   _$TimlyModelCopyWithImpl(this._value, this._then);
 
   final TimlyModel _value;
-
   // ignore: unused_field
   final $Res Function(TimlyModel) _then;
 
@@ -87,7 +82,6 @@ abstract class _$TimlyModelCopyWith<$Res> implements $TimlyModelCopyWith<$Res> {
   factory _$TimlyModelCopyWith(
           _TimlyModel value, $Res Function(_TimlyModel) then) =
       __$TimlyModelCopyWithImpl<$Res>;
-
   @override
   $Res call(
       {Duration intervalDuration,
@@ -202,16 +196,12 @@ abstract class _TimlyModel implements TimlyModel {
 
   @override
   Duration get intervalDuration;
-
   @override
   Duration get recoverDuration;
-
   @override
   Duration get setupDuration;
-
   @override
   int get laps;
-
   @override
   _$TimlyModelCopyWith<_TimlyModel> get copyWith;
 }

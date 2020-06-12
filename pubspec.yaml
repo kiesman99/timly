@@ -29,6 +29,8 @@ dependencies:
   # shared_preferences_web: ^0.1.2+5
   soundpool: ^1.1.1
   freezed_annotation: ^0.7.1
+  hive: ^1.4.1+1
+  hive_flutter: ^0.3.0+2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -38,7 +40,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   freezed: ^0.10.9
+  hive_generator: ^0.7.0+2
   build_runner: ^1.10.0
+
+# This should be removed if hive updates it's dependencies
+dependency_overrides:
+  dartx: ^0.4.1
 
 
 # For information on the generic Dart part of this file, see the

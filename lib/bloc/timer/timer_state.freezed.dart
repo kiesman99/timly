@@ -98,7 +98,6 @@ class _$TimerStateCopyWithImpl<$Res> implements $TimerStateCopyWith<$Res> {
 abstract class $SetupCopyWith<$Res> {
   factory $SetupCopyWith(Setup value, $Res Function(Setup) then) =
       _$SetupCopyWithImpl<$Res>;
-
   $Res call({TimlyModel remaining});
 
   $TimlyModelCopyWith<$Res> get remaining;
@@ -246,8 +245,7 @@ abstract class Setup implements TimerState {
 
 abstract class $RunningCopyWith<$Res> {
   factory $RunningCopyWith(Running value, $Res Function(Running) then) =
-  _$RunningCopyWithImpl<$Res>;
-
+      _$RunningCopyWithImpl<$Res>;
   $Res call({TimlyModel remaining});
 
   $TimlyModelCopyWith<$Res> get remaining;
@@ -532,7 +530,6 @@ abstract class Paused implements TimerState {
 abstract class $RecoverCopyWith<$Res> {
   factory $RecoverCopyWith(Recover value, $Res Function(Recover) then) =
   _$RecoverCopyWithImpl<$Res>;
-
   $Res call({TimlyModel remaining});
 
   $TimlyModelCopyWith<$Res> get remaining;

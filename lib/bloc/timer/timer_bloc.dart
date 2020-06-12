@@ -16,6 +16,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   final TimlyModel _initial;
   TimlyModel _remaining;
 
+  // TODO: restructure to use [Exercise]
   TimerBloc(this._initial, this._soundBloc) {
     if (_timer == null) {
       _timer = Timer.periodic(
@@ -32,22 +33,22 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   @override
   Stream<TimerState> mapEventToState(TimerEvent event) async* {
     yield* event.when(
-        setupTick: () => mapSetupEventToState(event),
-        runningTick: () => mapRunningEventToState(event),
-        recoverTick: () => mapRecoverEventToState(event),
-        pause: () => mapPauseEventToState(event),
-        resume: () => mapResumeEventToState(event),
-        replay: () => mapReplayEventToState(event));
+        setupTick: () => _mapSetupEventToState(event),
+        runningTick: () => _mapRunningEventToState(event),
+        recoverTick: () => _mapRecoverEventToState(event),
+        pause: () => _mapPauseEventToState(event),
+        resume: () => _mapResumeEventToState(event),
+        replay: () => _mapReplayEventToState(event));
   }
 
-  Stream<TimerState> mapReplayEventToState(Replay event) async* {
+  Stream<TimerState> _mapReplayEventToState(Replay event) async* {
     _timer?.cancel();
     _remaining = _initial;
     _timer = Timer.periodic(const Duration(seconds: 1), (_) => _tickHandler());
     yield TimerState.setup(_remaining);
   }
 
-  Stream<TimerState> mapSetupEventToState(SetupTick event) async* {
+  Stream<TimerState> _mapSetupEventToState(SetupTick event) async* {
     if ([1, 2].contains(_remaining.setupDuration.inSeconds)) {
       _soundBloc.add(SoundEvent.longBeep());
     }
@@ -60,7 +61,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     }
   }
 
-  Stream<TimerState> mapRunningEventToState(RunningTick event) async* {
+  Stream<TimerState> _mapRunningEventToState(RunningTick event) async* {
     if (_remaining.laps == 0) {
       yield TimerState.finished();
     } else {
@@ -78,14 +79,14 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     }
   }
 
-  Stream<TimerState> mapRecoverEventToState(RecoverTick event) async* {
+  Stream<TimerState> _mapRecoverEventToState(RecoverTick event) async* {
     if (_remaining.recoverDuration.inSeconds == 1) {
       _remaining = _remaining.copyWith(
           recoverDuration: _initial.recoverDuration, laps: _remaining.laps - 1);
       yield TimerState.running(_remaining);
     } else {
       // TODO: implement sounds
-      if ([2,3].contains(_remaining.recoverDuration.inSeconds)) {
+      if ([2, 3].contains(_remaining.recoverDuration.inSeconds)) {
         _soundBloc.add(SoundEvent.shortBeep());
       } else if (_remaining.recoverDuration.inSeconds == 1) {
         _soundBloc.add(SoundEvent.longBeep());
@@ -97,13 +98,13 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     }
   }
 
-  Stream<TimerState> mapPauseEventToState(Pause event) async* {
+  Stream<TimerState> _mapPauseEventToState(Pause event) async* {
     _timer.cancel();
     _timer = null;
     yield TimerState.paused(state);
   }
 
-  Stream<TimerState> mapResumeEventToState(Resume event) async* {
+  Stream<TimerState> _mapResumeEventToState(Resume event) async* {
     if (state is Paused) {
       yield (state as Paused).lastState;
       if (_timer == null) {
