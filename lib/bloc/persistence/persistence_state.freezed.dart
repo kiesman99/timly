@@ -37,7 +37,6 @@ mixin _$PersistenceState {
     @required Result init(),
     @required Result loaded(List<Exercise> exercises),
   });
-
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result error(),
@@ -45,14 +44,12 @@ mixin _$PersistenceState {
     Result loaded(List<Exercise> exercises),
     @required Result orElse(),
   });
-
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result error(Error value),
     @required Result init(Init value),
     @required Result loaded(Loaded value),
   });
-
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result error(Error value),
@@ -73,7 +70,6 @@ class _$PersistenceStateCopyWithImpl<$Res>
   _$PersistenceStateCopyWithImpl(this._value, this._then);
 
   final PersistenceState _value;
-
   // ignore: unused_field
   final $Res Function(PersistenceState) _then;
 }
@@ -275,7 +271,6 @@ abstract class Init implements PersistenceState {
 abstract class $LoadedCopyWith<$Res> {
   factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) then) =
       _$LoadedCopyWithImpl<$Res>;
-
   $Res call({List<Exercise> exercises});
 }
 
@@ -394,6 +389,5 @@ abstract class Loaded implements PersistenceState {
   const factory Loaded(List<Exercise> exercises) = _$Loaded;
 
   List<Exercise> get exercises;
-
   $LoadedCopyWith<Loaded> get copyWith;
 }

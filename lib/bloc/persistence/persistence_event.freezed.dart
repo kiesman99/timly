@@ -60,7 +60,6 @@ mixin _$PersistenceEvent {
     @required Result deleteAll(List<Exercise> exercises),
     @required Result update(Exercise exercise),
   });
-
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result loadAll(),
@@ -71,7 +70,6 @@ mixin _$PersistenceEvent {
     Result update(Exercise exercise),
     @required Result orElse(),
   });
-
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result loadAll(LoadAll value),
@@ -81,7 +79,6 @@ mixin _$PersistenceEvent {
     @required Result deleteAll(DeleteAll value),
     @required Result update(Update value),
   });
-
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result loadAll(LoadAll value),
@@ -105,7 +102,6 @@ class _$PersistenceEventCopyWithImpl<$Res>
   _$PersistenceEventCopyWithImpl(this._value, this._then);
 
   final PersistenceEvent _value;
-
   // ignore: unused_field
   final $Res Function(PersistenceEvent) _then;
 }
@@ -228,7 +224,6 @@ abstract class LoadAll implements PersistenceEvent {
 abstract class $LoadCopyWith<$Res> {
   factory $LoadCopyWith(Load value, $Res Function(Load) then) =
       _$LoadCopyWithImpl<$Res>;
-
   $Res call({Exercise exercise});
 }
 
@@ -365,14 +360,12 @@ abstract class Load implements PersistenceEvent {
   const factory Load(Exercise exercise) = _$Load;
 
   Exercise get exercise;
-
   $LoadCopyWith<Load> get copyWith;
 }
 
 abstract class $AddCopyWith<$Res> {
   factory $AddCopyWith(Add value, $Res Function(Add) then) =
       _$AddCopyWithImpl<$Res>;
-
   $Res call({Exercise exercise});
 }
 
@@ -508,14 +501,12 @@ abstract class Add implements PersistenceEvent {
   const factory Add(Exercise exercise) = _$Add;
 
   Exercise get exercise;
-
   $AddCopyWith<Add> get copyWith;
 }
 
 abstract class $DeleteCopyWith<$Res> {
   factory $DeleteCopyWith(Delete value, $Res Function(Delete) then) =
       _$DeleteCopyWithImpl<$Res>;
-
   $Res call({Exercise exercise});
 }
 
@@ -652,14 +643,12 @@ abstract class Delete implements PersistenceEvent {
   const factory Delete(Exercise exercise) = _$Delete;
 
   Exercise get exercise;
-
   $DeleteCopyWith<Delete> get copyWith;
 }
 
 abstract class $DeleteAllCopyWith<$Res> {
   factory $DeleteAllCopyWith(DeleteAll value, $Res Function(DeleteAll) then) =
       _$DeleteAllCopyWithImpl<$Res>;
-
   $Res call({List<Exercise> exercises});
 }
 
@@ -796,14 +785,12 @@ abstract class DeleteAll implements PersistenceEvent {
   const factory DeleteAll(List<Exercise> exercises) = _$DeleteAll;
 
   List<Exercise> get exercises;
-
   $DeleteAllCopyWith<DeleteAll> get copyWith;
 }
 
 abstract class $UpdateCopyWith<$Res> {
   factory $UpdateCopyWith(Update value, $Res Function(Update) then) =
       _$UpdateCopyWithImpl<$Res>;
-
   $Res call({Exercise exercise});
 }
 
@@ -940,6 +927,5 @@ abstract class Update implements PersistenceEvent {
   const factory Update(Exercise exercise) = _$Update;
 
   Exercise get exercise;
-
   $UpdateCopyWith<Update> get copyWith;
 }

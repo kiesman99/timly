@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timly/bloc/sound/sound_bloc.dart';
 import 'package:timly/bloc/timer/timer_bloc.dart';
-import 'package:timly/model/timly_model.dart';
+import 'package:timly/model/exercise.dart';
 import 'package:timly/pages/timer_page.dart';
 
 class PickerPage extends StatefulWidget {
@@ -56,12 +56,10 @@ class _PickerPageState extends State<PickerPage> {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (_) => BlocProvider(
                     create: (_) => TimerBloc(
-                        TimlyModel(
-                            intervalDuration:
-                                Duration(seconds: _intervalDuration),
-                            recoverDuration:
-                                Duration(seconds: _recoverDuration),
-                            setupDuration: const Duration(seconds: 5),
+                        Exercise(
+                            name: '',
+                            interval: Duration(seconds: _intervalDuration),
+                            recover: Duration(seconds: _recoverDuration),
                             laps: _laps),
                         context.bloc<SoundBloc>()),
                     child: TimerPage(),

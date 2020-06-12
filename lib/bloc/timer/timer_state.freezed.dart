@@ -12,13 +12,14 @@ T _$identity<T>(T value) => value;
 class _$TimerStateTearOff {
   const _$TimerStateTearOff();
 
-  Setup setup(TimlyModel remaining) {
+  Setup setup(Duration setupDuration, Exercise remaining) {
     return Setup(
+      setupDuration,
       remaining,
     );
   }
 
-  Running running(TimlyModel remaining) {
+  Running running(Exercise remaining) {
     return Running(
       remaining,
     );
@@ -30,7 +31,7 @@ class _$TimerStateTearOff {
     );
   }
 
-  Recover recover(TimlyModel remaining) {
+  Recover recover(Exercise remaining) {
     return Recover(
       remaining,
     );
@@ -47,18 +48,18 @@ const $TimerState = _$TimerStateTearOff();
 mixin _$TimerState {
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result setup(TimlyModel remaining),
-    @required Result running(TimlyModel remaining),
+    @required Result setup(Duration setupDuration, Exercise remaining),
+    @required Result running(Exercise remaining),
     @required Result paused(TimerState lastState),
-    @required Result recover(TimlyModel remaining),
+    @required Result recover(Exercise remaining),
     @required Result finished(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result setup(TimlyModel remaining),
-    Result running(TimlyModel remaining),
+    Result setup(Duration setupDuration, Exercise remaining),
+    Result running(Exercise remaining),
     Result paused(TimerState lastState),
-    Result recover(TimlyModel remaining),
+    Result recover(Exercise remaining),
     Result finished(),
     @required Result orElse(),
   });
@@ -98,9 +99,8 @@ class _$TimerStateCopyWithImpl<$Res> implements $TimerStateCopyWith<$Res> {
 abstract class $SetupCopyWith<$Res> {
   factory $SetupCopyWith(Setup value, $Res Function(Setup) then) =
       _$SetupCopyWithImpl<$Res>;
-  $Res call({TimlyModel remaining});
 
-  $TimlyModelCopyWith<$Res> get remaining;
+  $Res call({Duration setupDuration, Exercise remaining});
 }
 
 class _$SetupCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
@@ -113,33 +113,31 @@ class _$SetupCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object setupDuration = freezed,
     Object remaining = freezed,
   }) {
     return _then(Setup(
-      remaining == freezed ? _value.remaining : remaining as TimlyModel,
+      setupDuration == freezed
+          ? _value.setupDuration
+          : setupDuration as Duration,
+      remaining == freezed ? _value.remaining : remaining as Exercise,
     ));
-  }
-
-  @override
-  $TimlyModelCopyWith<$Res> get remaining {
-    if (_value.remaining == null) {
-      return null;
-    }
-    return $TimlyModelCopyWith<$Res>(_value.remaining, (value) {
-      return _then(_value.copyWith(remaining: value));
-    });
   }
 }
 
 class _$Setup with DiagnosticableTreeMixin implements Setup {
-  const _$Setup(this.remaining) : assert(remaining != null);
+  const _$Setup(this.setupDuration, this.remaining)
+      : assert(setupDuration != null),
+        assert(remaining != null);
 
   @override
-  final TimlyModel remaining;
+  final Duration setupDuration;
+  @override
+  final Exercise remaining;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TimerState.setup(remaining: $remaining)';
+    return 'TimerState.setup(setupDuration: $setupDuration, remaining: $remaining)';
   }
 
   @override
@@ -147,6 +145,7 @@ class _$Setup with DiagnosticableTreeMixin implements Setup {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'TimerState.setup'))
+      ..add(DiagnosticsProperty('setupDuration', setupDuration))
       ..add(DiagnosticsProperty('remaining', remaining));
   }
 
@@ -154,6 +153,9 @@ class _$Setup with DiagnosticableTreeMixin implements Setup {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is Setup &&
+            (identical(other.setupDuration, setupDuration) ||
+                const DeepCollectionEquality()
+                    .equals(other.setupDuration, setupDuration)) &&
             (identical(other.remaining, remaining) ||
                 const DeepCollectionEquality()
                     .equals(other.remaining, remaining)));
@@ -161,7 +163,9 @@ class _$Setup with DiagnosticableTreeMixin implements Setup {
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(remaining);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(setupDuration) ^
+      const DeepCollectionEquality().hash(remaining);
 
   @override
   $SetupCopyWith<Setup> get copyWith =>
@@ -170,10 +174,10 @@ class _$Setup with DiagnosticableTreeMixin implements Setup {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result setup(TimlyModel remaining),
-    @required Result running(TimlyModel remaining),
+    @required Result setup(Duration setupDuration, Exercise remaining),
+    @required Result running(Exercise remaining),
     @required Result paused(TimerState lastState),
-    @required Result recover(TimlyModel remaining),
+    @required Result recover(Exercise remaining),
     @required Result finished(),
   }) {
     assert(setup != null);
@@ -181,22 +185,22 @@ class _$Setup with DiagnosticableTreeMixin implements Setup {
     assert(paused != null);
     assert(recover != null);
     assert(finished != null);
-    return setup(remaining);
+    return setup(setupDuration, remaining);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result setup(TimlyModel remaining),
-    Result running(TimlyModel remaining),
+    Result setup(Duration setupDuration, Exercise remaining),
+    Result running(Exercise remaining),
     Result paused(TimerState lastState),
-    Result recover(TimlyModel remaining),
+    Result recover(Exercise remaining),
     Result finished(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (setup != null) {
-      return setup(remaining);
+      return setup(setupDuration, remaining);
     }
     return orElse();
   }
@@ -237,18 +241,20 @@ class _$Setup with DiagnosticableTreeMixin implements Setup {
 }
 
 abstract class Setup implements TimerState {
-  const factory Setup(TimlyModel remaining) = _$Setup;
+  const factory Setup(Duration setupDuration, Exercise remaining) = _$Setup;
 
-  TimlyModel get remaining;
+  Duration get setupDuration;
+
+  Exercise get remaining;
+
   $SetupCopyWith<Setup> get copyWith;
 }
 
 abstract class $RunningCopyWith<$Res> {
   factory $RunningCopyWith(Running value, $Res Function(Running) then) =
       _$RunningCopyWithImpl<$Res>;
-  $Res call({TimlyModel remaining});
 
-  $TimlyModelCopyWith<$Res> get remaining;
+  $Res call({Exercise remaining});
 }
 
 class _$RunningCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
@@ -264,18 +270,8 @@ class _$RunningCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
     Object remaining = freezed,
   }) {
     return _then(Running(
-      remaining == freezed ? _value.remaining : remaining as TimlyModel,
+      remaining == freezed ? _value.remaining : remaining as Exercise,
     ));
-  }
-
-  @override
-  $TimlyModelCopyWith<$Res> get remaining {
-    if (_value.remaining == null) {
-      return null;
-    }
-    return $TimlyModelCopyWith<$Res>(_value.remaining, (value) {
-      return _then(_value.copyWith(remaining: value));
-    });
   }
 }
 
@@ -283,7 +279,7 @@ class _$Running with DiagnosticableTreeMixin implements Running {
   const _$Running(this.remaining) : assert(remaining != null);
 
   @override
-  final TimlyModel remaining;
+  final Exercise remaining;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -318,10 +314,10 @@ class _$Running with DiagnosticableTreeMixin implements Running {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result setup(TimlyModel remaining),
-    @required Result running(TimlyModel remaining),
+    @required Result setup(Duration setupDuration, Exercise remaining),
+    @required Result running(Exercise remaining),
     @required Result paused(TimerState lastState),
-    @required Result recover(TimlyModel remaining),
+    @required Result recover(Exercise remaining),
     @required Result finished(),
   }) {
     assert(setup != null);
@@ -335,10 +331,10 @@ class _$Running with DiagnosticableTreeMixin implements Running {
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result setup(TimlyModel remaining),
-    Result running(TimlyModel remaining),
+    Result setup(Duration setupDuration, Exercise remaining),
+    Result running(Exercise remaining),
     Result paused(TimerState lastState),
-    Result recover(TimlyModel remaining),
+    Result recover(Exercise remaining),
     Result finished(),
     @required Result orElse(),
   }) {
@@ -385,9 +381,10 @@ class _$Running with DiagnosticableTreeMixin implements Running {
 }
 
 abstract class Running implements TimerState {
-  const factory Running(TimlyModel remaining) = _$Running;
+  const factory Running(Exercise remaining) = _$Running;
 
-  TimlyModel get remaining;
+  Exercise get remaining;
+
   $RunningCopyWith<Running> get copyWith;
 }
 
@@ -454,10 +451,10 @@ class _$Paused with DiagnosticableTreeMixin implements Paused {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result setup(TimlyModel remaining),
-    @required Result running(TimlyModel remaining),
+    @required Result setup(Duration setupDuration, Exercise remaining),
+    @required Result running(Exercise remaining),
     @required Result paused(TimerState lastState),
-    @required Result recover(TimlyModel remaining),
+    @required Result recover(Exercise remaining),
     @required Result finished(),
   }) {
     assert(setup != null);
@@ -471,10 +468,10 @@ class _$Paused with DiagnosticableTreeMixin implements Paused {
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result setup(TimlyModel remaining),
-    Result running(TimlyModel remaining),
+    Result setup(Duration setupDuration, Exercise remaining),
+    Result running(Exercise remaining),
     Result paused(TimerState lastState),
-    Result recover(TimlyModel remaining),
+    Result recover(Exercise remaining),
     Result finished(),
     @required Result orElse(),
   }) {
@@ -530,9 +527,8 @@ abstract class Paused implements TimerState {
 abstract class $RecoverCopyWith<$Res> {
   factory $RecoverCopyWith(Recover value, $Res Function(Recover) then) =
   _$RecoverCopyWithImpl<$Res>;
-  $Res call({TimlyModel remaining});
 
-  $TimlyModelCopyWith<$Res> get remaining;
+  $Res call({Exercise remaining});
 }
 
 class _$RecoverCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
@@ -548,18 +544,8 @@ class _$RecoverCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
     Object remaining = freezed,
   }) {
     return _then(Recover(
-      remaining == freezed ? _value.remaining : remaining as TimlyModel,
+      remaining == freezed ? _value.remaining : remaining as Exercise,
     ));
-  }
-
-  @override
-  $TimlyModelCopyWith<$Res> get remaining {
-    if (_value.remaining == null) {
-      return null;
-    }
-    return $TimlyModelCopyWith<$Res>(_value.remaining, (value) {
-      return _then(_value.copyWith(remaining: value));
-    });
   }
 }
 
@@ -567,7 +553,7 @@ class _$Recover with DiagnosticableTreeMixin implements Recover {
   const _$Recover(this.remaining) : assert(remaining != null);
 
   @override
-  final TimlyModel remaining;
+  final Exercise remaining;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -602,10 +588,10 @@ class _$Recover with DiagnosticableTreeMixin implements Recover {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result setup(TimlyModel remaining),
-    @required Result running(TimlyModel remaining),
+    @required Result setup(Duration setupDuration, Exercise remaining),
+    @required Result running(Exercise remaining),
     @required Result paused(TimerState lastState),
-    @required Result recover(TimlyModel remaining),
+    @required Result recover(Exercise remaining),
     @required Result finished(),
   }) {
     assert(setup != null);
@@ -619,10 +605,10 @@ class _$Recover with DiagnosticableTreeMixin implements Recover {
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result setup(TimlyModel remaining),
-    Result running(TimlyModel remaining),
+    Result setup(Duration setupDuration, Exercise remaining),
+    Result running(Exercise remaining),
     Result paused(TimerState lastState),
-    Result recover(TimlyModel remaining),
+    Result recover(Exercise remaining),
     Result finished(),
     @required Result orElse(),
   }) {
@@ -669,9 +655,10 @@ class _$Recover with DiagnosticableTreeMixin implements Recover {
 }
 
 abstract class Recover implements TimerState {
-  const factory Recover(TimlyModel remaining) = _$Recover;
+  const factory Recover(Exercise remaining) = _$Recover;
 
-  TimlyModel get remaining;
+  Exercise get remaining;
+
   $RecoverCopyWith<Recover> get copyWith;
 }
 
@@ -714,10 +701,10 @@ class _$Finished with DiagnosticableTreeMixin implements Finished {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result setup(TimlyModel remaining),
-    @required Result running(TimlyModel remaining),
+    @required Result setup(Duration setupDuration, Exercise remaining),
+    @required Result running(Exercise remaining),
     @required Result paused(TimerState lastState),
-    @required Result recover(TimlyModel remaining),
+    @required Result recover(Exercise remaining),
     @required Result finished(),
   }) {
     assert(setup != null);
@@ -731,10 +718,10 @@ class _$Finished with DiagnosticableTreeMixin implements Finished {
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result setup(TimlyModel remaining),
-    Result running(TimlyModel remaining),
+    Result setup(Duration setupDuration, Exercise remaining),
+    Result running(Exercise remaining),
     Result paused(TimerState lastState),
-    Result recover(TimlyModel remaining),
+    Result recover(Exercise remaining),
     Result finished(),
     @required Result orElse(),
   }) {

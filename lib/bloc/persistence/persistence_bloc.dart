@@ -6,8 +6,6 @@ import 'package:timly/bloc/persistence/persistence_state.dart';
 import 'package:timly/repository/exercise_hive_repository.dart';
 import 'package:timly/repository/exercise_repository.dart';
 
-import './bloc.dart';
-
 class PersistenceBloc extends Bloc<PersistenceEvent, PersistenceState> {
   ExerciseRepository repository = ExerciseHiveRepository();
 

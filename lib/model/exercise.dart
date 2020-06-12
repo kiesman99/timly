@@ -19,13 +19,4 @@ class Exercise extends HiveObject {
       @required this.interval,
       @required this.recover,
       @required this.laps});
-
-  Exercise copyWith(
-      {String name, Duration interval, Duration recover, int laps}) {
-    return Exercise(
-        name: name ?? this.name,
-        interval: interval ?? this.interval,
-        recover: recover ?? this.recover,
-        laps: laps ?? this.laps);
-  }
 }

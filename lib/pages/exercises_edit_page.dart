@@ -108,14 +108,14 @@ class _ExercisesEditPageState extends State<ExercisesEditPage> {
   void _submit(BuildContext pageContext) {
     if (_valid()) {
       if (updating) {
-        widget.persistenceBloc.add(PersistenceEvent.update(widget.exercise
-            .copyWith(
-                laps: int.parse(_lapsController.text),
-                interval:
-                    Duration(seconds: int.parse(_intervalController.text)),
-                name: _nameController.text,
-                recover:
-                    Duration(seconds: int.parse(_recoverController.text)))));
+        print("Updating ${widget.exercise.key}");
+
+        Exercise e = widget.exercise;
+        e.name = _nameController.text;
+        e.laps = int.parse(_lapsController.text);
+        e.interval = Duration(seconds: int.parse(_intervalController.text));
+        e.recover = Duration(seconds: int.parse(_recoverController.text));
+        widget.persistenceBloc.add(PersistenceEvent.update(e));
       } else {
         widget.persistenceBloc.add(PersistenceEvent.add(Exercise(
             laps: int.parse(_lapsController.text),

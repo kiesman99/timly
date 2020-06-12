@@ -31,6 +31,7 @@ class ExerciseHiveRepository extends ExerciseRepository {
 
   @override
   Future<Exercise> update(Exercise exercise) {
+    print(exercise.key.runtimeType);
     _exerciseBox.put(exercise.key, exercise);
     return Future.value(exercise);
   }

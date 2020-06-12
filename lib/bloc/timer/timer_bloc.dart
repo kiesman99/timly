@@ -5,18 +5,21 @@ import 'package:timly/bloc/sound/sound_bloc.dart';
 import 'package:timly/bloc/sound/sound_event.dart';
 import 'package:timly/bloc/timer/timer_event.dart';
 import 'package:timly/bloc/timer/timer_state.dart';
-import 'package:timly/model/timly_model.dart';
+import 'package:timly/model/exercise.dart';
 
-// TODO: Remove all copyWith Statements. Implement functions for these calls.
+// TODO: get from SettingsBloc
+const _initialSetupDuration = Duration(seconds: 5);
+
 class TimerBloc extends Bloc<TimerEvent, TimerState> {
+  Duration _setupDuration = _initialSetupDuration;
+
   SoundBloc _soundBloc;
 
   Timer _timer;
 
-  final TimlyModel _initial;
-  TimlyModel _remaining;
+  final Exercise _initial;
+  Exercise _remaining;
 
-  // TODO: restructure to use [Exercise]
   TimerBloc(this._initial, this._soundBloc) {
     if (_timer == null) {
       _timer = Timer.periodic(
@@ -28,7 +31,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   }
 
   @override
-  TimerState get initialState => TimerState.setup(_initial);
+  TimerState get initialState => TimerState.setup(_setupDuration, _initial);
 
   @override
   Stream<TimerState> mapEventToState(TimerEvent event) async* {
@@ -44,20 +47,20 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   Stream<TimerState> _mapReplayEventToState(Replay event) async* {
     _timer?.cancel();
     _remaining = _initial;
+    _setupDuration = _initialSetupDuration;
     _timer = Timer.periodic(const Duration(seconds: 1), (_) => _tickHandler());
-    yield TimerState.setup(_remaining);
+    yield TimerState.setup(_setupDuration, _remaining);
   }
 
   Stream<TimerState> _mapSetupEventToState(SetupTick event) async* {
-    if ([1, 2].contains(_remaining.setupDuration.inSeconds)) {
+    if ([1, 2].contains(_setupDuration.inSeconds)) {
       _soundBloc.add(SoundEvent.longBeep());
     }
-    if (_remaining.setupDuration.inSeconds == 1) {
+    if (_setupDuration.inSeconds == 1) {
       yield TimerState.running(_remaining);
     } else {
-      _remaining = _remaining.copyWith(
-          setupDuration: _remaining.setupDuration - const Duration(seconds: 1));
-      yield TimerState.setup(_remaining);
+      _setupDuration -= const Duration(seconds: 1);
+      yield TimerState.setup(_setupDuration, _remaining);
     }
   }
 
@@ -65,35 +68,30 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     if (_remaining.laps == 0) {
       yield TimerState.finished();
     } else {
-      if (_remaining.intervalDuration.inSeconds == 1) {
+      if (_remaining.interval.inSeconds == 1) {
         _soundBloc.add(SoundEvent.longBeep());
-        _remaining =
-            _remaining.copyWith(intervalDuration: _initial.intervalDuration);
+        _remaining.interval = _initial.interval;
         yield TimerState.recover(_remaining);
       } else {
-        _remaining = _remaining.copyWith(
-            intervalDuration:
-                _remaining.intervalDuration - const Duration(seconds: 1));
+        _remaining.interval = _remaining.interval - const Duration(seconds: 1);
         yield TimerState.running(_remaining);
       }
     }
   }
 
   Stream<TimerState> _mapRecoverEventToState(RecoverTick event) async* {
-    if (_remaining.recoverDuration.inSeconds == 1) {
-      _remaining = _remaining.copyWith(
-          recoverDuration: _initial.recoverDuration, laps: _remaining.laps - 1);
+    if (_remaining.recover.inSeconds == 1) {
+      _remaining.recover = _initial.recover;
+      _remaining.laps = _remaining.laps - 1;
       yield TimerState.running(_remaining);
     } else {
       // TODO: implement sounds
-      if ([2, 3].contains(_remaining.recoverDuration.inSeconds)) {
+      if ([2, 3].contains(_remaining.recover.inSeconds)) {
         _soundBloc.add(SoundEvent.shortBeep());
-      } else if (_remaining.recoverDuration.inSeconds == 1) {
+      } else if (_remaining.recover.inSeconds == 1) {
         _soundBloc.add(SoundEvent.longBeep());
       }
-      _remaining = _remaining.copyWith(
-          recoverDuration:
-              _remaining.recoverDuration - const Duration(seconds: 1));
+      _remaining.recover = _remaining.recover - const Duration(seconds: 1);
       yield TimerState.recover(_remaining);
     }
   }
@@ -118,26 +116,26 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   /// which are invoked each second by the [_timer]
   void _tickHandler() {
     state.maybeWhen(
-        setup: (_) => add(TimerEvent.setupTick()),
+        setup: (_, __) => add(TimerEvent.setupTick()),
         running: (_) => add(TimerEvent.runningTick()),
         recover: (_) => add(TimerEvent.recoverTick()),
         orElse: () {} // event was not a tick
-        );
+    );
   }
 
   @override
   Future<void> close() {
-    _timer.cancel();
+    _timer?.cancel();
     _timer = null;
     return super.close();
   }
 
   double get intervalPercentage {
-    return (_remaining.intervalDuration.inSeconds / _initial.intervalDuration.inSeconds) * 100;
+    return (_remaining.interval.inSeconds / _initial.interval.inSeconds) * 100;
   }
 
   double get recoverPercentage {
-    return (_remaining.recoverDuration.inSeconds / _initial.recoverDuration.inSeconds) * 100.0;
+    return (_remaining.recover.inSeconds / _initial.recover.inSeconds) * 100.0;
   }
 
   double get lapPercentage {
@@ -145,9 +143,9 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   }
 
   double get setupPercentage {
-    if (_remaining.setupDuration.inSeconds == 1) {
+    if (_setupDuration.inSeconds == 1) {
       return 0.0;
     }
-    return (_remaining.setupDuration.inSeconds / _initial.setupDuration.inSeconds) * 100.0;
+    return (_setupDuration.inSeconds / _initialSetupDuration.inSeconds) * 100.0;
   }
 }

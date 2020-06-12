@@ -78,19 +78,22 @@ class CounterWidget extends StatelessWidget {
     int laps;
     int duration;
 
-    if (state is Running) {
+    state.maybeWhen(running: (exercise) {
       style = style.copyWith(color: Colors.black);
-      laps = (state as Running).remaining.laps;
-      duration = (state as Running).remaining.intervalDuration.inSeconds;
-    } else if (state is Setup) {
+      laps = exercise.laps;
+      duration = exercise.interval.inSeconds;
+    }, setup: (setup, exercise) {
       style = style.copyWith(color: Colors.green);
-      laps = (state as Setup).remaining.laps;
-      duration = (state as Setup).remaining.setupDuration.inSeconds;
-    } else if (state is Recover) {
+      laps = exercise.laps;
+      duration = setup.inSeconds;
+    }, recover: (exercise) {
       style = style.copyWith(color: Colors.red);
-      laps = (state as Recover).remaining.laps;
-      duration = (state as Recover).remaining.recoverDuration.inSeconds;
-    }
+      laps = exercise.laps;
+      duration = exercise.recover.inSeconds;
+    }, orElse: () {
+      laps = 0;
+      duration = 0;
+    });
 
     return Stack(
       children: [

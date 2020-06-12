@@ -6,7 +6,6 @@ import 'package:timly/bloc/persistence/persistence_state.dart';
 import 'package:timly/bloc/sound/sound_bloc.dart';
 import 'package:timly/bloc/timer/timer_bloc.dart';
 import 'package:timly/model/exercise.dart';
-import 'package:timly/model/timly_model.dart';
 import 'package:timly/pages/exercises_edit_page.dart';
 import 'package:timly/pages/timer_page.dart';
 
@@ -135,12 +134,7 @@ class __ExercisesListState extends State<_ExercisesList> {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (_) => BlocProvider(
                             create: (_) => TimerBloc(
-                                TimlyModel(
-                                    intervalDuration: e.interval,
-                                    recoverDuration: e.recover,
-                                    setupDuration: const Duration(seconds: 5),
-                                    laps: e.laps),
-                                context.bloc<SoundBloc>()),
+                                e, context.bloc<SoundBloc>()),
                             child: TimerPage(),
                           )));
                 }
