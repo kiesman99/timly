@@ -6,6 +6,7 @@ import 'package:timly/bloc/sound/sound_event.dart';
 import 'package:timly/bloc/timer/timer_event.dart';
 import 'package:timly/bloc/timer/timer_state.dart';
 import 'package:timly/model/exercise.dart';
+import 'package:wakelock/wakelock.dart';
 
 // TODO: get from SettingsBloc
 const _initialSetupDuration = Duration(seconds: 5);
@@ -29,6 +30,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   Exercise _remaining;
 
   TimerBloc(this._initial, this._soundBloc) {
+    Wakelock.enable();
     if (_remaining == null) {
       _remaining = Exercise(
           laps: _initial.laps,
@@ -178,6 +180,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   Future<void> close() {
     _timer?.cancel();
     _timer = null;
+    Wakelock.disable();
     return super.close();
   }
 

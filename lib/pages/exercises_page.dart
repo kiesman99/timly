@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timly/bloc/burn_in/burn_in_bloc.dart';
 import 'package:timly/bloc/persistence/persistence_bloc.dart';
 import 'package:timly/bloc/persistence/persistence_event.dart';
 import 'package:timly/bloc/persistence/persistence_state.dart';
@@ -132,9 +133,16 @@ class __ExercisesListState extends State<_ExercisesList> {
                   _toggleSelect(index);
                 } else {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => BlocProvider(
-                            create: (_) => TimerBloc(
-                                e, context.bloc<SoundBloc>()),
+                      builder: (_) => MultiBlocProvider(
+                            providers: [
+                              BlocProvider(
+                                create: (_) =>
+                                    TimerBloc(e, context.bloc<SoundBloc>()),
+                              ),
+                              BlocProvider(
+                                create: (_) => BurnInBloc(),
+                              )
+                            ],
                             child: TimerPage(),
                           )));
                 }
