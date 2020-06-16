@@ -17,6 +17,8 @@ class ExercisesEditPage extends StatefulWidget {
 class _ExercisesEditPageState extends State<ExercisesEditPage> {
   bool get updating => widget.exercise != null;
 
+  final errorSnackbar = SnackBar(content: Text('Bitte fülle alle Felder aus.'));
+
   TextEditingController _nameController;
   TextEditingController _intervalController;
   TextEditingController _recoverController;
@@ -45,54 +47,63 @@ class _ExercisesEditPageState extends State<ExercisesEditPage> {
       appBar: AppBar(
         title: Text(widget.exercise == null ? "Hinzufügen" : "Bearbeiten"),
       ),
-      body: Container(
-        padding: EdgeInsets.all(15.0),
-        child: Column(
-          children: <Widget>[
-            TextField(
-              focusNode: _nameFocusNode,
-              controller: _nameController,
-              decoration: InputDecoration(hintText: 'Name der Übung'),
-              onSubmitted: (_) =>
-                  {FocusScope.of(context).requestFocus(_lapsFocusNode)},
+      body: Builder(
+        builder: (BuildContext builderContext) {
+          return Container(
+            padding: EdgeInsets.all(15.0),
+            child: Column(
+              children: <Widget>[
+                TextField(
+                  focusNode: _nameFocusNode,
+                  controller: _nameController,
+                  decoration: InputDecoration(hintText: 'Name der Übung'),
+                  onSubmitted: (_) =>
+                      {FocusScope.of(context).requestFocus(_lapsFocusNode)},
+                ),
+                TextField(
+                  focusNode: _lapsFocusNode,
+                  controller: _lapsController,
+                  inputFormatters: _numberFormatter,
+                  keyboardType: TextInputType.numberWithOptions(
+                      decimal: false, signed: false),
+                  decoration: InputDecoration(hintText: 'Rundenanzahl'),
+                  onSubmitted: (_) =>
+                      {FocusScope.of(context).requestFocus(_intervalFocusNode)},
+                ),
+                TextField(
+                  focusNode: _intervalFocusNode,
+                  controller: _intervalController,
+                  inputFormatters: _numberFormatter,
+                  keyboardType: TextInputType.numberWithOptions(
+                      decimal: false, signed: false),
+                  decoration:
+                      InputDecoration(hintText: 'Intervall in Sekunden'),
+                  onSubmitted: (_) =>
+                      {FocusScope.of(context).requestFocus(_recoverFocusNode)},
+                ),
+                TextField(
+                  focusNode: _recoverFocusNode,
+                  controller: _recoverController,
+                  inputFormatters: _numberFormatter,
+                  keyboardType: TextInputType.numberWithOptions(
+                      decimal: false, signed: false),
+                  decoration:
+                      InputDecoration(hintText: 'Erholungszeit in Senkunden'),
+                  onSubmitted: (_) => _submit(builderContext),
+                )
+              ],
             ),
-            TextField(
-              focusNode: _lapsFocusNode,
-              controller: _lapsController,
-              inputFormatters: _numberFormatter,
-              keyboardType: TextInputType.numberWithOptions(
-                  decimal: false, signed: false),
-              decoration: InputDecoration(hintText: 'Rundenanzahl'),
-              onSubmitted: (_) =>
-                  {FocusScope.of(context).requestFocus(_intervalFocusNode)},
-            ),
-            TextField(
-              focusNode: _intervalFocusNode,
-              controller: _intervalController,
-              inputFormatters: _numberFormatter,
-              keyboardType: TextInputType.numberWithOptions(
-                  decimal: false, signed: false),
-              decoration: InputDecoration(hintText: 'Intervall in Sekunden'),
-              onSubmitted: (_) =>
-                  {FocusScope.of(context).requestFocus(_recoverFocusNode)},
-            ),
-            TextField(
-              focusNode: _recoverFocusNode,
-              controller: _recoverController,
-              inputFormatters: _numberFormatter,
-              keyboardType: TextInputType.numberWithOptions(
-                  decimal: false, signed: false),
-              decoration:
-                  InputDecoration(hintText: 'Erholungszeit in Senkunden'),
-              onSubmitted: (_) => _submit(pageContext),
-            )
-          ],
-        ),
+          );
+        },
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.save),
-        onPressed: () {
-          _submit(pageContext);
+      floatingActionButton: Builder(
+        builder: (BuildContext builderContext) {
+          return FloatingActionButton(
+            child: Icon(Icons.save),
+            onPressed: () {
+              _submit(builderContext);
+            },
+          );
         },
       ),
     );
@@ -105,7 +116,7 @@ class _ExercisesEditPageState extends State<ExercisesEditPage> {
         _recoverController.text.isNotEmpty);
   }
 
-  void _submit(BuildContext pageContext) {
+  void _submit(BuildContext builderContext) {
     if (_valid()) {
       if (updating) {
         print("Updating ${widget.exercise.key}");
@@ -125,7 +136,7 @@ class _ExercisesEditPageState extends State<ExercisesEditPage> {
       }
       Navigator.of(context).pop();
     } else {
-      // TODO: add Message that all fields should be filled
+      Scaffold.of(builderContext).showSnackBar(errorSnackbar);
     }
   }
 

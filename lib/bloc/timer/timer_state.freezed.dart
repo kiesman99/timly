@@ -99,7 +99,6 @@ class _$TimerStateCopyWithImpl<$Res> implements $TimerStateCopyWith<$Res> {
 abstract class $SetupCopyWith<$Res> {
   factory $SetupCopyWith(Setup value, $Res Function(Setup) then) =
       _$SetupCopyWithImpl<$Res>;
-
   $Res call({Duration setupDuration, Exercise remaining});
 }
 
@@ -244,16 +243,13 @@ abstract class Setup implements TimerState {
   const factory Setup(Duration setupDuration, Exercise remaining) = _$Setup;
 
   Duration get setupDuration;
-
   Exercise get remaining;
-
   $SetupCopyWith<Setup> get copyWith;
 }
 
 abstract class $RunningCopyWith<$Res> {
   factory $RunningCopyWith(Running value, $Res Function(Running) then) =
       _$RunningCopyWithImpl<$Res>;
-
   $Res call({Exercise remaining});
 }
 
@@ -384,7 +380,6 @@ abstract class Running implements TimerState {
   const factory Running(Exercise remaining) = _$Running;
 
   Exercise get remaining;
-
   $RunningCopyWith<Running> get copyWith;
 }
 
@@ -526,8 +521,7 @@ abstract class Paused implements TimerState {
 
 abstract class $RecoverCopyWith<$Res> {
   factory $RecoverCopyWith(Recover value, $Res Function(Recover) then) =
-  _$RecoverCopyWithImpl<$Res>;
-
+      _$RecoverCopyWithImpl<$Res>;
   $Res call({Exercise remaining});
 }
 
@@ -658,7 +652,6 @@ abstract class Recover implements TimerState {
   const factory Recover(Exercise remaining) = _$Recover;
 
   Exercise get remaining;
-
   $RecoverCopyWith<Recover> get copyWith;
 }
 

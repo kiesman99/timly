@@ -19,17 +19,14 @@ class _TimerPageState extends State<TimerPage> {
       ),
       body: BlocBuilder<TimerBloc, TimerState>(
         builder: (BuildContext context, TimerState state) {
-          if (state is Paused) {
-            return Center(
-              child: Text("Paused!", style: finishText),
-            );
-          } else if (state is Finished) {
-            return Center(
-              child: Text("Finished!", style: finishText),
-            );
-          } else {
-            return CounterWidget(state: state);
-          }
+          return state.maybeWhen(
+              paused: (_) => Center(
+                    child: Text("Paused!", style: finishText),
+                  ),
+              finished: () => Center(
+                    child: Text("Finished!", style: finishText),
+                  ),
+              orElse: () => CounterWidget(state: state));
         },
       ),
       floatingActionButton: BlocBuilder<TimerBloc, TimerState>(
