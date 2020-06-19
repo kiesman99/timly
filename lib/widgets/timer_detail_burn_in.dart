@@ -7,13 +7,23 @@ class TimerDetailBurnIn extends StatelessWidget {
   final Duration duration;
   final double leftPadding;
   final double topPadding;
+  final Color durationTextColor;
 
   TimerDetailBurnIn(
       {@required this.lapPercentage,
       @required this.laps,
       @required this.duration,
       @required this.leftPadding,
-      @required this.topPadding});
+      @required this.topPadding,
+      this.durationTextColor = Colors.white});
+
+  TimerDetailBurnIn.recover(
+      {@required this.lapPercentage,
+      @required this.laps,
+      @required this.duration,
+      @required this.leftPadding,
+      @required this.topPadding,
+      this.durationTextColor = Colors.red});
 
   @override
   Widget build(BuildContext context) {
@@ -26,15 +36,17 @@ class TimerDetailBurnIn extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text('Runden: $laps',
-                style: Theme.of(context)
+                style: Theme
+                    .of(context)
                     .textTheme
                     .subtitle1
                     .copyWith(color: Colors.white)),
             Text('${duration.inSeconds}s',
-                style: Theme.of(context)
+                style: Theme
+                    .of(context)
                     .textTheme
                     .headline3
-                    .copyWith(color: Colors.white)),
+                    .copyWith(color: durationTextColor)),
           ],
         ),
       ),

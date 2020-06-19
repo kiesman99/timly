@@ -52,7 +52,7 @@ class TimerPageBurnIn extends StatelessWidget {
                     );
                   }, recover: (remaining) {
                     return Center(
-                      child: TimerDetailBurnIn(
+                      child: TimerDetailBurnIn.recover(
                         lapPercentage: lapPercentage,
                         duration: remaining.recover,
                         laps: remaining.laps,
