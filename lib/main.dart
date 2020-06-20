@@ -33,15 +33,29 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-          primarySwatch: Colors.blue,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+            primarySwatch: Colors.teal,
+            backgroundColor: Colors.teal[700],
+            scaffoldBackgroundColor: Colors.teal[700],
+            appBarTheme: AppBarTheme(elevation: 0.0, color: Colors.teal[700]),
+            primaryTextTheme:
+                TextTheme(bodyText1: TextStyle(color: Colors.white)),
             visualDensity: VisualDensity.adaptivePlatformDensity,
             textTheme: TextTheme(
-                headline1: TextStyle(fontSize: 120.0),
-                headline3: TextStyle(fontSize: 60.0),
-                headline6: TextStyle(fontSize: 20.0),
-                subtitle1: TextStyle(fontSize: 25.0))),
+              headline1: TextStyle(fontSize: 120.0, color: Colors.white),
+              headline2: TextStyle(color: Colors.white),
+              headline3: TextStyle(fontSize: 60.0, color: Colors.white),
+              headline4: TextStyle(color: Colors.white),
+              headline5: TextStyle(color: Colors.white),
+              headline6: TextStyle(fontSize: 20.0, color: Colors.white),
+              subtitle1: TextStyle(fontSize: 25.0, color: Colors.white),
+              // ListTile title
+              bodyText1: TextStyle(color: Colors.white),
+              bodyText2: TextStyle(color: Colors.white),
+              caption: TextStyle(color: Colors.white),
+              overline: TextStyle(color: Colors.white),
+            )),
         home: MultiBlocProvider(
           providers: [
             BlocProvider(

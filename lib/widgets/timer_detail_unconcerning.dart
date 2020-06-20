@@ -42,10 +42,7 @@ class TimerDetailUnconcerning extends StatelessWidget {
         Center(
             child: CustomPaint(
           painter: TimerProgressPainter(
-              lapPercentage: context.bloc<TimerBloc>().lapPercentage,
-              intervalProgress: context.bloc<TimerBloc>().intervalPercentage,
-              setupProgress: context.bloc<TimerBloc>().setupPercentage,
-              recoverProgress: context.bloc<TimerBloc>().recoverPercentage),
+              intervalProgress: context.bloc<TimerBloc>().intervalPercentage),
           child: Text("$duration", style: style),
         )),
       ],
