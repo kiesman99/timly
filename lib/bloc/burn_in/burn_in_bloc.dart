@@ -5,7 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:timly/bloc/burn_in/burn_in_event.dart';
 import 'package:timly/bloc/burn_in/burn_in_state.dart';
 
-const protectTimeoutDuration = const Duration(seconds: 10);
+const protectTimeoutDuration = const Duration(seconds: 30);
 
 class BurnInBloc extends Bloc<BurnInEvent, BurnInState> {
   Timer _timer;

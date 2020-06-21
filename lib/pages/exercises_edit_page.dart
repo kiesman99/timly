@@ -52,11 +52,13 @@ class _ExercisesEditPageState extends State<ExercisesEditPage> {
           return Container(
             padding: EdgeInsets.all(15.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 TextField(
                   focusNode: _nameFocusNode,
                   controller: _nameController,
-                  decoration: InputDecoration(hintText: 'Name der Übung'),
+                  decoration: InputDecoration(hintText: 'Übung'),
                   onSubmitted: (_) =>
                       {FocusScope.of(context).requestFocus(_lapsFocusNode)},
                 ),
@@ -66,9 +68,10 @@ class _ExercisesEditPageState extends State<ExercisesEditPage> {
                   inputFormatters: _numberFormatter,
                   keyboardType: TextInputType.numberWithOptions(
                       decimal: false, signed: false),
-                  decoration: InputDecoration(hintText: 'Rundenanzahl'),
+                  decoration: InputDecoration(
+                      hintText: 'Rundenanzahl', suffixText: 'x'),
                   onSubmitted: (_) =>
-                      {FocusScope.of(context).requestFocus(_intervalFocusNode)},
+                  {FocusScope.of(context).requestFocus(_intervalFocusNode)},
                 ),
                 TextField(
                   focusNode: _intervalFocusNode,
@@ -76,10 +79,10 @@ class _ExercisesEditPageState extends State<ExercisesEditPage> {
                   inputFormatters: _numberFormatter,
                   keyboardType: TextInputType.numberWithOptions(
                       decimal: false, signed: false),
-                  decoration:
-                      InputDecoration(hintText: 'Intervall in Sekunden'),
+                  decoration: InputDecoration(
+                      hintText: 'Intervall', suffixText: "s"),
                   onSubmitted: (_) =>
-                      {FocusScope.of(context).requestFocus(_recoverFocusNode)},
+                  {FocusScope.of(context).requestFocus(_recoverFocusNode)},
                 ),
                 TextField(
                   focusNode: _recoverFocusNode,
@@ -87,8 +90,8 @@ class _ExercisesEditPageState extends State<ExercisesEditPage> {
                   inputFormatters: _numberFormatter,
                   keyboardType: TextInputType.numberWithOptions(
                       decimal: false, signed: false),
-                  decoration:
-                      InputDecoration(hintText: 'Erholungszeit in Senkunden'),
+                  decoration: InputDecoration(
+                      hintText: 'Erholungszeit', suffixText: 's'),
                   onSubmitted: (_) => _submit(builderContext),
                 )
               ],
@@ -96,10 +99,11 @@ class _ExercisesEditPageState extends State<ExercisesEditPage> {
           );
         },
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Builder(
         builder: (BuildContext builderContext) {
-          return FloatingActionButton(
-            child: Icon(Icons.save),
+          return FloatingActionButton.extended(
+            label: Text('Speichern'),
             onPressed: () {
               _submit(builderContext);
             },

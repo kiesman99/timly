@@ -16,15 +16,12 @@ class TimerDetailUnconcerning extends StatelessWidget {
     int duration;
 
     state.maybeWhen(running: (exercise) {
-      style = style.copyWith(color: Colors.black);
       laps = exercise.laps;
       duration = exercise.interval.inSeconds;
     }, setup: (setup, exercise) {
-      style = style.copyWith(color: Colors.green);
       laps = exercise.laps;
       duration = setup.inSeconds;
     }, recover: (exercise) {
-      style = style.copyWith(color: Colors.red);
       laps = exercise.laps;
       duration = exercise.recover.inSeconds;
     }, orElse: () {

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
@@ -42,6 +43,15 @@ class MyApp extends StatelessWidget {
             primaryTextTheme:
                 TextTheme(bodyText1: TextStyle(color: Colors.white)),
             visualDensity: VisualDensity.adaptivePlatformDensity,
+            inputDecorationTheme: InputDecorationTheme(
+                focusedBorder: UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Colors.teal[800], width: 3.0)),
+                hintStyle: TextStyle(
+                  color: Colors.teal[300],
+                  fontSize: 40.0,
+                ),
+                border: InputBorder.none),
             textTheme: TextTheme(
               headline1: TextStyle(fontSize: 120.0, color: Colors.white),
               headline2: TextStyle(color: Colors.white),
@@ -49,7 +59,7 @@ class MyApp extends StatelessWidget {
               headline4: TextStyle(color: Colors.white),
               headline5: TextStyle(color: Colors.white),
               headline6: TextStyle(fontSize: 20.0, color: Colors.white),
-              subtitle1: TextStyle(fontSize: 25.0, color: Colors.white),
+              subtitle1: TextStyle(fontSize: 40.0, color: Colors.white),
               // ListTile title
               bodyText1: TextStyle(color: Colors.white),
               bodyText2: TextStyle(color: Colors.white),
