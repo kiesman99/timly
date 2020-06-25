@@ -6,19 +6,28 @@ class TimerProgressPainter extends CustomPainter {
 
   /// Interval Progress from 0 to 100
   final double intervalProgress;
+  final double radiusPercentage;
 
-  TimerProgressPainter({@required this.intervalProgress});
+  final MaterialColor _color;
+
+  TimerProgressPainter(
+      {@required this.intervalProgress, this.radiusPercentage = 1.0})
+      : this._color = Colors.teal;
+
+  TimerProgressPainter.recover(
+      {@required this.intervalProgress, this.radiusPercentage = 1.0})
+      : this._color = Colors.amber;
 
   @override
   void paint(Canvas canvas, Size size) {
     var backgroundPaint = Paint()
-      ..color = Colors.teal[800]
+      ..color = _color[800]
       ..strokeWidth = 15.0
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
 
     var intervalPaint = Paint()
-      ..color = Colors.teal[300]
+      ..color = _color[300]
       ..strokeWidth = 15.0
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
@@ -29,13 +38,17 @@ class TimerProgressPainter extends CustomPainter {
         -2 * pi, false, backgroundPaint);
 
     if (intervalProgress != 0) {
-      canvas.drawArc(new Rect.fromCircle(center: center, radius: 150), -pi / 2,
-          -2 * pi * (intervalProgress / 100), false, intervalPaint);
+      canvas.drawArc(
+          new Rect.fromCircle(center: center, radius: 150 * radiusPercentage),
+          -pi / 2,
+          -2 * pi * (intervalProgress / 100),
+          false,
+          intervalPaint);
     }
   }
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
+    return true;
   }
 }

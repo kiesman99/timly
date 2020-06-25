@@ -23,7 +23,7 @@ class TimerDetailBurnIn extends StatelessWidget {
       @required this.duration,
       @required this.leftPadding,
       @required this.topPadding,
-      this.durationTextColor = Colors.red});
+      this.durationTextColor = Colors.amber});
 
   @override
   Widget build(BuildContext context) {

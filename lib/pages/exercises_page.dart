@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:timly/bloc/burn_in/burn_in_bloc.dart';
 import 'package:timly/bloc/persistence/persistence_bloc.dart';
 import 'package:timly/bloc/persistence/persistence_event.dart';
@@ -123,35 +124,50 @@ class __ExercisesListState extends State<_ExercisesList> {
         title: Text("Übungen"),
         actions: _actions(),
       ),
-      body: ListView.builder(
+      body: ListView.separated(
+        padding: EdgeInsets.all(15.0),
+        separatorBuilder: (context, index) {
+          return SizedBox(
+            height: 20.0,
+          );
+        },
         itemCount: widget._exercises.length,
         itemBuilder: (_, index) {
           Exercise e = widget._exercises.elementAt(index);
+
           return ListTile(
               onTap: () {
                 if (_selecting) {
                   _toggleSelect(index);
                 } else {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => MultiBlocProvider(
-                            providers: [
-                              BlocProvider(
-                                create: (_) =>
-                                    TimerBloc(e, context.bloc<SoundBloc>()),
-                              ),
-                              BlocProvider(
-                                create: (_) => BurnInBloc(),
-                              )
-                            ],
-                            child: TimerPage(),
+                      builder: (_) => Provider.value(
+                            value: e,
+                            child: MultiBlocProvider(
+                              providers: [
+                                BlocProvider(
+                                  create: (_) =>
+                                      TimerBloc(e, context.bloc<SoundBloc>()),
+                                ),
+                                BlocProvider(
+                                  create: (_) => BurnInBloc(),
+                                )
+                              ],
+                              child: TimerPage(
+                                  //exercise: e,
+                                  ),
+                            ),
                           )));
                 }
               },
               onLongPress: () => _toggleSelect(index),
               title: Text(e.name),
               selected: _isSelected(index),
-              leading: Text(e.laps.toString()),
-              subtitle: Text("Interval: ${e.interval.toString()}"));
+              leading: CircleAvatar(
+                  child: _isSelected(index)
+                      ? Icon(Icons.check)
+                      : Text("${e.laps}x"),
+                  backgroundColor: Colors.teal[800]));
         },
       ),
       floatingActionButton: _floatingButton(),

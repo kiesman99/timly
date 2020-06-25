@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
                 ),
                 border: InputBorder.none),
             textTheme: TextTheme(
-              headline1: TextStyle(fontSize: 120.0, color: Colors.white),
+              headline1: TextStyle(fontSize: 100.0, color: Colors.white),
               headline2: TextStyle(color: Colors.white),
               headline3: TextStyle(fontSize: 60.0, color: Colors.white),
               headline4: TextStyle(color: Colors.white),

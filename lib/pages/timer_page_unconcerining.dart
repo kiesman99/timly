@@ -15,13 +15,17 @@ class TimerPageUnconcerning extends StatelessWidget {
       body: BlocBuilder<TimerBloc, TimerState>(
         builder: (BuildContext context, TimerState state) {
           return state.maybeWhen(
-              paused: (_) => Center(
+              paused: (_, __) => Center(
                     child: Text("Paused!",
                         style: Theme.of(context).textTheme.headline3),
                   ),
-              finished: () => Center(
+              finished: (_) =>
+                  Center(
                     child: Text("Finished!",
-                        style: Theme.of(context).textTheme.headline3),
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline3),
                   ),
               orElse: () => TimerDetailUnconcerning(state: state));
         },
@@ -29,7 +33,7 @@ class TimerPageUnconcerning extends StatelessWidget {
       floatingActionButton: BlocBuilder<TimerBloc, TimerState>(
         builder: (BuildContext context, TimerState state) {
           return state.maybeWhen(
-            paused: (_) {
+            paused: (_, __) {
               return FloatingActionButton(
                 child: Icon(Icons.play_arrow),
                 onPressed: () {
@@ -37,7 +41,7 @@ class TimerPageUnconcerning extends StatelessWidget {
                 },
               );
             },
-            finished: () {
+            finished: (_) {
               return FloatingActionButton(
                 child: Icon(Icons.refresh),
                 onPressed: () {

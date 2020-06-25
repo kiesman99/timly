@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:timly/bloc/burn_in/burn_in_bloc.dart';
 import 'package:timly/bloc/burn_in/burn_in_event.dart';
 import 'package:timly/bloc/timer/timer_bloc.dart';
 import 'package:timly/bloc/timer/timer_event.dart';
 import 'package:timly/bloc/timer/timer_state.dart';
+import 'package:timly/model/exercise.dart';
 import 'package:timly/widgets/timer_detail_burn_in.dart';
 
 class TimerPageBurnIn extends StatelessWidget {
@@ -29,7 +31,9 @@ class TimerPageBurnIn extends StatelessWidget {
               decoration: BoxDecoration(color: Colors.black),
               child: BlocBuilder<TimerBloc, TimerState>(
                 builder: (context, state) {
-                  var lapPercentage = context.bloc<TimerBloc>().lapPercentage;
+                  var lapPercentage =
+                      (context.watch<Exercise>().laps / state.remaining.laps) *
+                          100.0;
                   return state.when(setup: (setup, remaining) {
                     return Center(
                       child: TimerDetailBurnIn(
@@ -50,36 +54,39 @@ class TimerPageBurnIn extends StatelessWidget {
                         leftPadding: leftPadding,
                       ),
                     );
-                  }, recover: (remaining) {
-                    return Center(
-                      child: TimerDetailBurnIn.recover(
-                        lapPercentage: lapPercentage,
-                        duration: remaining.recover,
-                        laps: remaining.laps,
-                        topPadding: topPadding,
-                        leftPadding: leftPadding,
-                      ),
-                    );
-                  }, paused: (_) {
-                    return Padding(
-                        padding:
+                  },
+                      recover: (remaining) {
+                        return Center(
+                          child: TimerDetailBurnIn.recover(
+                            lapPercentage: lapPercentage,
+                            duration: remaining.recover,
+                            laps: remaining.laps,
+                            topPadding: topPadding,
+                            leftPadding: leftPadding,
+                          ),
+                        );
+                      },
+                      paused: (_, __) {
+                        return Padding(
+                            padding:
                             EdgeInsets.only(left: leftPadding, top: topPadding),
-                        child: Center(
-                          child: Text('Pause',
-                              style: TextStyle(
-                                  fontSize: 30.0, color: Colors.white)),
-                        ));
-                  }, finished: () {
-                    return Padding(
-                      padding:
+                            child: Center(
+                              child: Text('Pause',
+                                  style: TextStyle(
+                                      fontSize: 30.0, color: Colors.white)),
+                            ));
+                      },
+                      finished: (_) {
+                        return Padding(
+                          padding:
                           EdgeInsets.only(left: leftPadding, top: topPadding),
-                      child: Center(
-                        child: Text('Finished',
-                            style:
+                          child: Center(
+                            child: Text('Finished',
+                                style:
                                 TextStyle(fontSize: 30.0, color: Colors.white)),
-                      ),
-                    );
-                  });
+                          ),
+                        );
+                      });
                 },
               ),
             );

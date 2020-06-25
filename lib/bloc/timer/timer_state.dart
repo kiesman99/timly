@@ -11,9 +11,10 @@ abstract class TimerState with _$TimerState {
 
   const factory TimerState.running(Exercise remaining) = Running;
 
-  const factory TimerState.paused(TimerState lastState) = Paused;
+  const factory TimerState.paused(TimerState lastState,
+      Exercise remaining) = Paused;
 
   const factory TimerState.recover(Exercise remaining) = Recover;
 
-  const factory TimerState.finished() = Finished;
+  const factory TimerState.finished(Exercise remaining) = Finished;
 }

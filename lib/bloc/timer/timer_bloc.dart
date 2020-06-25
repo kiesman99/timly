@@ -69,7 +69,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
         setup: (_, __) => add(TimerEvent.setupTick()),
         running: (_) => add(TimerEvent.runningTick()),
         recover: (_) => add(TimerEvent.recoverTick()),
-        finished: () {
+        finished: (_) {
           // TODO: add finish Event to stop timer
         },
         orElse: () {
@@ -103,10 +103,10 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   /// yield an [Recover] state to start decreasing the [_remaining.recover]
   Stream<TimerState> _mapRunningEventToState(RunningTick event) async* {
     if (_remaining.laps == 0) {
-      yield TimerState.finished();
+      yield TimerState.finished(_remaining);
     } else if (_remaining.interval.inSeconds == 1) {
       _soundBloc.add(SoundEvent.longBeep());
-      _remaining.interval = _initial.interval;
+      _remaining = _remaining.copyWith(interval: _initial.interval);
       yield TimerState.recover(_remaining);
     } else {
       _remaining = _remaining.copyWith(
@@ -144,7 +144,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   Stream<TimerState> _mapPauseEventToState(Pause event) async* {
     _timer?.cancel();
     _timer = null;
-    yield TimerState.paused(state);
+    yield TimerState.paused(state, _remaining);
   }
 
   /// Gets invoked if a [Resume] event hits the [TimerBloc]
@@ -182,24 +182,5 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     _timer = null;
     Wakelock.disable();
     return super.close();
-  }
-
-  double get intervalPercentage {
-    return (_remaining.interval.inSeconds / _initial.interval.inSeconds) * 100;
-  }
-
-  double get recoverPercentage {
-    return (_remaining.recover.inSeconds / _initial.recover.inSeconds) * 100.0;
-  }
-
-  double get lapPercentage {
-    return (_remaining.laps / _initial.laps) * 100.0;
-  }
-
-  double get setupPercentage {
-    if (_setupDuration.inSeconds == 1) {
-      return 0.0;
-    }
-    return (_setupDuration.inSeconds / _initialSetupDuration.inSeconds) * 100.0;
   }
 }
