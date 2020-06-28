@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -14,9 +15,9 @@ class SetupDetail extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final animationController =
-        useAnimationController(duration: const Duration(milliseconds: 300));
+    useAnimationController(duration: const Duration(milliseconds: 300));
     final Animation fadeScaleAnimation =
-        useFadeScaleAnimation(animationController);
+    useFadeScaleAnimation(animationController);
 
     return Container(
         width: MediaQuery.of(context).size.width,
@@ -26,9 +27,9 @@ class SetupDetail extends HookWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Start in...',
+              'timer.starting_in',
               style: Theme.of(context).textTheme.headline3,
-            ),
+            ).tr(),
             SizedBox(height: 30.0),
             ScaleTransition(
               scale: fadeScaleAnimation,

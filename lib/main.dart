@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,7 +27,13 @@ void main() async {
   await Hive.initFlutter();
   await _initialOpenHiveBoxes();
 
-  runApp(MyApp());
+  runApp(EasyLocalization(
+    supportedLocales: [Locale('en'), Locale('de')],
+    path: 'assets/translations',
+    fallbackLocale: Locale('de', 'DE'),
+    //assetLoader: CodegenLoader(),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -35,6 +42,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Flutter Demo',
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
         theme: ThemeData(
             primarySwatch: Colors.teal,
             backgroundColor: Colors.teal[700],
@@ -46,7 +56,7 @@ class MyApp extends StatelessWidget {
             inputDecorationTheme: InputDecorationTheme(
                 focusedBorder: UnderlineInputBorder(
                     borderSide:
-                        BorderSide(color: Colors.teal[800], width: 3.0)),
+                    BorderSide(color: Colors.teal[800], width: 3.0)),
                 hintStyle: TextStyle(
                   color: Colors.teal[300],
                   fontSize: 40.0,

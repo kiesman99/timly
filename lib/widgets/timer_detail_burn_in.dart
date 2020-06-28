@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:timly/bloc/timer/timer_state.dart';
@@ -13,21 +14,19 @@ class TimerDetailBurnIn extends HookWidget {
   final Color durationTextColor;
   final Color durationProgressColor;
 
-  TimerDetailBurnIn(
-      {@required this.intervalPercentage,
-      @required this.leftPadding,
-      @required this.topPadding,
-      @required this.timerState,
-      this.durationTextColor = Colors.white,
-      this.durationProgressColor = Colors.white});
+  TimerDetailBurnIn({@required this.intervalPercentage,
+    @required this.leftPadding,
+    @required this.topPadding,
+    @required this.timerState,
+    this.durationTextColor = Colors.white,
+    this.durationProgressColor = Colors.white});
 
-  TimerDetailBurnIn.recover(
-      {@required this.intervalPercentage,
-      @required this.leftPadding,
-      @required this.topPadding,
-      @required this.timerState,
-      this.durationTextColor = Colors.amber,
-      this.durationProgressColor = Colors.amber});
+  TimerDetailBurnIn.recover({@required this.intervalPercentage,
+    @required this.leftPadding,
+    @required this.topPadding,
+    @required this.timerState,
+    this.durationTextColor = Colors.amber,
+    this.durationProgressColor = Colors.amber});
 
   Duration get _duration {
     return timerState.when(
@@ -41,7 +40,7 @@ class TimerDetailBurnIn extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final progressAnimationController =
-        useAnimationController(duration: const Duration(milliseconds: 100));
+    useAnimationController(duration: const Duration(milliseconds: 100));
     final progressAnimation = useTimerProgressAnimation(
         controller: progressAnimationController, progress: intervalPercentage);
 
@@ -55,14 +54,16 @@ class TimerDetailBurnIn extends HookWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text('Runden: ${timerState.remaining.laps}',
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1
-                    .copyWith(color: Colors.white)),
+            Text('timer.rounds',
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        .copyWith(color: Colors.white))
+                .tr(namedArgs: {
+              'rounds': timerState.remaining.laps.toString()
+            }),
             Text('${_duration.inSeconds}s',
-                style: Theme
-                    .of(context)
+                style: Theme.of(context)
                     .textTheme
                     .headline3
                     .copyWith(color: durationTextColor)),

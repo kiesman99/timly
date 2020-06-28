@@ -1,0 +1,26 @@
+{
+  "title": "Timly",
+  "exercises_page": {
+    "title": "Übungen",
+    "no_exercises": "Es gibt noch keine Übungen."
+  },
+  "timer": {
+    "finish": "Fertig!",
+    "pause": "Pause",
+    "starting_in": "Startet in...",
+    "rounds": "Runden: {rounds}"
+  },
+  "exercise_edit": {
+    "error_fill_all_fields": "Bitte fülle alle Felder aus",
+    "add": "Hinzufügen",
+    "edit": "Bearbeiten",
+    "hint_exercise": "Übung",
+    "hint_laps": "Rundenanzahl",
+    "hint_interval_time": "Intervall",
+    "hint_recover_time": "Erholungszeit",
+    "button_save": "Speichern"
+  },
+  "bloc_persistence": {
+    "error_loading": "Es ist ein Fehler beim Laden der Übungen passiert.\nBitte starte die App neu."
+  }
+}

@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class TimerProgressPainter extends CustomPainter {
-
   /// Interval Progress from 0 to 100
   final double intervalProgress;
   final double radiusPercentage;

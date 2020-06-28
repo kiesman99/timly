@@ -74,4 +74,5 @@
 # Flutter build runner
 **/*.g.dart
 **/*.freezed.dart
+lib/generated
 .flutter-plugins-dependencies

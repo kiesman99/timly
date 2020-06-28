@@ -35,6 +35,7 @@ dependencies:
   hive_flutter: ^0.3.0+2
   equatable: ^1.2.0
   wakelock: ^0.1.4+1
+  easy_localization: ^2.3.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -65,8 +66,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/sounds/beep_long.mp3
-    - assets/sounds/beep_short.mp3
+    - assets/sounds/
+    - assets/translations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

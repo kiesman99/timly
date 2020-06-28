@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -14,10 +15,9 @@ class TimerPageBurnIn extends StatelessWidget {
   final double topPadding;
   final TimerState timerState;
 
-  TimerPageBurnIn(
-      {this.leftPadding = 0.0,
-      this.topPadding = 0.0,
-      @required this.timerState});
+  TimerPageBurnIn({this.leftPadding = 0.0,
+    this.topPadding = 0.0,
+    @required this.timerState});
 
   Widget _bodyWidget(BuildContext pageContext) {
     var interval = pageContext.select((Exercise e) => e.interval);
@@ -25,8 +25,8 @@ class TimerPageBurnIn extends StatelessWidget {
         (timerState.remaining.interval.inSeconds / interval.inSeconds) * 100.0;
 
     return timerState.maybeWhen(
-        finished: (_) => _textWidget('Fertig!'),
-        paused: (_, __) => _textWidget('Pause'),
+        finished: (_) => _textWidget('timer.finish'.tr()),
+        paused: (_, __) => _textWidget('timer.pause'.tr()),
         orElse: () {
           return Center(
             child: TimerDetailBurnIn(
@@ -43,8 +43,9 @@ class TimerPageBurnIn extends StatelessWidget {
     return Padding(
         padding: EdgeInsets.only(left: leftPadding, top: topPadding),
         child: Center(
-          child: Text('Pause',
-              style: TextStyle(fontSize: 30.0, color: Colors.white)),
+          child: Text('timer.pause',
+                  style: TextStyle(fontSize: 30.0, color: Colors.white))
+              .tr(),
         ));
   }
 

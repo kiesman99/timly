@@ -75,7 +75,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
         orElse: () {
           print("Something else!");
         } // event was not a tick
-    );
+        );
   }
 
   /// Gets invoked if a [SetupTick] event hits the [TimerBloc]
@@ -167,7 +167,8 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   /// and restart the timer
   Stream<TimerState> _mapReplayEventToState(Replay event) async* {
     _timer?.cancel();
-    _remaining = Exercise(laps: _initial.laps,
+    _remaining = Exercise(
+        laps: _initial.laps,
         recover: _initial.recover,
         interval: _initial.interval,
         name: _initial.name);

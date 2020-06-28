@@ -1,0 +1,26 @@
+{
+  "title": "Timly",
+  "exercises_page": {
+    "title": "Exercises",
+    "no_exercises": "There are no exercises available."
+  },
+  "timer": {
+    "finish": "Finish!",
+    "pause": "Pause",
+    "starting_in": "Starting in...",
+    "rounds": "Laps: {rounds}"
+  },
+  "exercise_edit": {
+    "error_fill_all_fields": "Please fill in all fields",
+    "add": "Add",
+    "edit": "Edit",
+    "hint_exercise": "Exercise",
+    "hint_laps": "Laps",
+    "hint_interval_time": "Interval",
+    "hint_recover_time": "Recover",
+    "button_save": "Save"
+  },
+  "bloc_persistence": {
+    "error_loading": "Something went wrong while loading the exercises.\nPlease restart the application."
+  }
+}

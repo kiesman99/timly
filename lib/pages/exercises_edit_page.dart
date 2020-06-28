@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:timly/bloc/persistence/persistence_bloc.dart';
@@ -18,7 +19,7 @@ class _ExercisesEditPageState extends State<ExercisesEditPage> {
   bool get updating => widget.exercise != null;
 
   final errorSnackbar = SnackBar(
-      content: Text('Bitte fülle alle Felder aus.'),
+      content: Text('exercise_edit.error_fill_all_fields').tr(),
       backgroundColor: Colors.red);
 
   TextEditingController _nameController;
@@ -33,7 +34,7 @@ class _ExercisesEditPageState extends State<ExercisesEditPage> {
   @override
   void initState() {
     _nameController =
-        new TextEditingController(text: widget.exercise?.name ?? "");
+    new TextEditingController(text: widget.exercise?.name ?? "");
     _intervalController = new TextEditingController(
         text: widget.exercise?.interval?.inSeconds?.toString() ?? "");
     _recoverController = new TextEditingController(
@@ -47,7 +48,10 @@ class _ExercisesEditPageState extends State<ExercisesEditPage> {
   Widget build(BuildContext pageContext) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.exercise == null ? "Hinzufügen" : "Bearbeiten"),
+        title: Text(widget.exercise == null
+                ? 'exercise_edit.add'
+                : 'exercise_edit.edit')
+            .tr(),
       ),
       body: Builder(
         builder: (BuildContext builderContext) {
@@ -60,9 +64,10 @@ class _ExercisesEditPageState extends State<ExercisesEditPage> {
                 TextField(
                   focusNode: _nameFocusNode,
                   controller: _nameController,
-                  decoration: InputDecoration(hintText: 'Übung'),
+                  decoration: InputDecoration(
+                      hintText: 'exercise_edit.hint_exercise'.tr()),
                   onSubmitted: (_) =>
-                      {FocusScope.of(context).requestFocus(_lapsFocusNode)},
+                  {FocusScope.of(context).requestFocus(_lapsFocusNode)},
                 ),
                 TextField(
                   focusNode: _lapsFocusNode,
@@ -71,7 +76,8 @@ class _ExercisesEditPageState extends State<ExercisesEditPage> {
                   keyboardType: TextInputType.numberWithOptions(
                       decimal: false, signed: false),
                   decoration: InputDecoration(
-                      hintText: 'Rundenanzahl', suffixText: 'x'),
+                      hintText: 'exercise_edit.hint_laps'.tr(),
+                      suffixText: 'x'),
                   onSubmitted: (_) =>
                   {FocusScope.of(context).requestFocus(_intervalFocusNode)},
                 ),
@@ -82,7 +88,8 @@ class _ExercisesEditPageState extends State<ExercisesEditPage> {
                   keyboardType: TextInputType.numberWithOptions(
                       decimal: false, signed: false),
                   decoration: InputDecoration(
-                      hintText: 'Intervall', suffixText: "s"),
+                      hintText: 'exercise_edit.hint_interval_time'.tr(),
+                      suffixText: "s"),
                   onSubmitted: (_) =>
                   {FocusScope.of(context).requestFocus(_recoverFocusNode)},
                 ),
@@ -93,7 +100,8 @@ class _ExercisesEditPageState extends State<ExercisesEditPage> {
                   keyboardType: TextInputType.numberWithOptions(
                       decimal: false, signed: false),
                   decoration: InputDecoration(
-                      hintText: 'Erholungszeit', suffixText: 's'),
+                      hintText: 'exercise_edit.hint_recover_time'.tr(),
+                      suffixText: 's'),
                   onSubmitted: (_) => _submit(builderContext),
                 )
               ],
@@ -105,7 +113,7 @@ class _ExercisesEditPageState extends State<ExercisesEditPage> {
       floatingActionButton: Builder(
         builder: (BuildContext builderContext) {
           return FloatingActionButton.extended(
-            label: Text('Speichern'),
+            label: Text('exercise_edit.button_save').tr(),
             onPressed: () {
               _submit(builderContext);
             },

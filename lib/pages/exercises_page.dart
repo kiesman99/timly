@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -28,8 +29,9 @@ class _ExercisesPageState extends State<ExercisesPage> {
     return BlocBuilder<PersistenceBloc, PersistenceState>(
       builder: (context, state) {
         return state.when(
-            error: () =>
-                Scaffold(body: Center(child: Text('Ein Fehler ist passiert.'))),
+            error: () => Scaffold(
+                body:
+                    Center(child: Text('bloc_persistence.error_loading').tr())),
             init: () =>
                 Scaffold(body: Center(child: CircularProgressIndicator())),
             loaded: (exercises) =>
@@ -81,7 +83,7 @@ class __ExercisesListState extends State<_ExercisesList> {
       onPressed: () {
         persistenceBloc.add(PersistenceEvent.deleteAll(List.generate(
             _indexOfSelected.length,
-            (index) => widget._exercises.elementAt(_indexOfSelected[index]))));
+                (index) => widget._exercises.elementAt(_indexOfSelected[index]))));
         _resetSelection();
       },
     );
@@ -95,10 +97,10 @@ class __ExercisesListState extends State<_ExercisesList> {
           onPressed: () {
             Navigator.of(context)
                 .push(MaterialPageRoute(
-                    builder: (context) => ExercisesEditPage(
-                        persistenceBloc: persistenceBloc,
-                        exercise: widget._exercises
-                            .elementAt(_indexOfSelected.elementAt(0)))))
+                builder: (context) => ExercisesEditPage(
+                    persistenceBloc: persistenceBloc,
+                    exercise: widget._exercises
+                        .elementAt(_indexOfSelected.elementAt(0)))))
                 .then((value) => _resetSelection());
           },
         )
@@ -113,7 +115,7 @@ class __ExercisesListState extends State<_ExercisesList> {
     if (widget._exercises.isEmpty) {
       return Scaffold(
         body: Center(
-          child: Text('Es gibt noch keine gespeicherten Übungen.'),
+          child: Text('exercises_page.no_exercises').tr(),
         ),
         floatingActionButton: _floatingButton(),
       );
@@ -121,7 +123,7 @@ class __ExercisesListState extends State<_ExercisesList> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Übungen"),
+        title: Text("exercises_page.title").tr(),
         actions: _actions(),
       ),
       body: ListView.separated(
@@ -142,22 +144,22 @@ class __ExercisesListState extends State<_ExercisesList> {
                 } else {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (_) => Provider.value(
-                            value: e,
-                            child: MultiBlocProvider(
-                              providers: [
-                                BlocProvider(
-                                  create: (_) =>
-                                      TimerBloc(e, context.bloc<SoundBloc>()),
-                                ),
-                                BlocProvider(
-                                  create: (_) => BurnInBloc(),
-                                )
-                              ],
-                              child: TimerPage(
-                                  //exercise: e,
-                                  ),
+                        value: e,
+                        child: MultiBlocProvider(
+                          providers: [
+                            BlocProvider(
+                              create: (_) =>
+                                  TimerBloc(e, context.bloc<SoundBloc>()),
                             ),
-                          )));
+                            BlocProvider(
+                              create: (_) => BurnInBloc(),
+                            )
+                          ],
+                          child: TimerPage(
+                            //exercise: e,
+                          ),
+                        ),
+                      )));
                 }
               },
               onLongPress: () => _toggleSelect(index),

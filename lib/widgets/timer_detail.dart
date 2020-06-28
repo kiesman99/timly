@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:provider/provider.dart';
@@ -42,12 +43,12 @@ class TimerDetail extends HookWidget {
         (currentInterval.inSeconds / interval.inSeconds) * 100.0;
 
     final initAnimationController =
-        useAnimationController(duration: const Duration(milliseconds: 400));
+    useAnimationController(duration: const Duration(milliseconds: 400));
     final progressAnimationController =
-        useAnimationController(duration: const Duration(milliseconds: 100));
+    useAnimationController(duration: const Duration(milliseconds: 100));
 
     final Animation initAnimation =
-        useBounceScaleAnimation(initAnimationController);
+    useBounceScaleAnimation(initAnimationController);
     final Animation progressAnimation = useTimerProgressAnimation(
         controller: progressAnimationController, progress: intervalProgress);
 
@@ -57,36 +58,37 @@ class TimerDetail extends HookWidget {
           top: 20.0,
           right: 20.0,
           child:
-              Text("${_laps}x", style: Theme.of(context).textTheme.headline6),
+          Text("${_laps}x", style: Theme.of(context).textTheme.headline6),
         ),
         Center(
             child: ScaleTransition(
-          scale: initAnimation,
-          child: AnimatedBuilder(
-            animation: progressAnimation,
-            builder: (context, child) {
-              return CustomPaint(
-                painter: timerState.maybeWhen(
-                    recover: (_) => TimerProgressPainter.recover(),
-                    orElse: () => TimerProgressPainter(
-                        intervalProgress: progressAnimation.value)),
-                child: child,
-              );
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
+              scale: initAnimation,
+              child: AnimatedBuilder(
+                animation: progressAnimation,
+                builder: (context, child) {
+                  return CustomPaint(
+                    painter: timerState.maybeWhen(
+                        recover: (_) => TimerProgressPainter.recover(),
+                        orElse: () => TimerProgressPainter(
+                            intervalProgress: progressAnimation.value)),
+                    child: child,
+                  );
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
                 if (timerState is Recover)
-                  Text('Pause',
-                      style: TextStyle(
-                          fontSize: 30.0,
-                          color: Colors.amber[300],
-                          fontWeight: FontWeight.bold)),
+                  Text('timer.pause',
+                          style: TextStyle(
+                              fontSize: 30.0,
+                              color: Colors.amber[300],
+                              fontWeight: FontWeight.bold))
+                      .tr(),
                 Text("$_duration", style: Theme.of(context).textTheme.headline1)
               ],
-            ),
-          ),
-        )),
+                ),
+              ),
+            )),
       ],
     );
   }
