@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 
 class TimerProgressBurnInPaint extends CustomPainter {
   final double lapPercentage;
+  final Color color;
 
-  TimerProgressBurnInPaint({@required this.lapPercentage});
+  TimerProgressBurnInPaint(
+      {@required this.lapPercentage, @required this.color});
 
   @override
   void paint(Canvas canvas, Size size) {
     var lapPaint = Paint()
-      ..color = Colors.white
+      ..color = color
       ..strokeWidth = 10.0
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;

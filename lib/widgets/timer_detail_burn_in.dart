@@ -1,47 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:timly/bloc/timer/timer_state.dart';
+import 'package:timly/hooks/timer_progress_animation.dart';
 import 'package:timly/paints/timer_progress_burn_in_paint.dart';
 
-class TimerDetailBurnIn extends StatelessWidget {
-  final double lapPercentage;
-  final int laps;
-  final Duration duration;
+@immutable
+class TimerDetailBurnIn extends HookWidget {
+  final TimerState timerState;
+  final double intervalPercentage;
   final double leftPadding;
   final double topPadding;
   final Color durationTextColor;
+  final Color durationProgressColor;
 
   TimerDetailBurnIn(
-      {@required this.lapPercentage,
-      @required this.laps,
-      @required this.duration,
+      {@required this.intervalPercentage,
       @required this.leftPadding,
       @required this.topPadding,
-      this.durationTextColor = Colors.white});
+      @required this.timerState,
+      this.durationTextColor = Colors.white,
+      this.durationProgressColor = Colors.white});
 
   TimerDetailBurnIn.recover(
-      {@required this.lapPercentage,
-      @required this.laps,
-      @required this.duration,
+      {@required this.intervalPercentage,
       @required this.leftPadding,
       @required this.topPadding,
-      this.durationTextColor = Colors.amber});
+      @required this.timerState,
+      this.durationTextColor = Colors.amber,
+      this.durationProgressColor = Colors.amber});
+
+  Duration get _duration {
+    return timerState.when(
+        setup: (setup, _) => setup,
+        running: (remaining) => remaining.interval,
+        paused: (lastState, remaining) => const Duration(milliseconds: 0),
+        recover: (remaining) => remaining.recover,
+        finished: (_) => const Duration(milliseconds: 0));
+  }
 
   @override
   Widget build(BuildContext context) {
+    final progressAnimationController =
+        useAnimationController(duration: const Duration(milliseconds: 100));
+    final progressAnimation = useTimerProgressAnimation(
+        controller: progressAnimationController, progress: intervalPercentage);
+
     return Padding(
       padding: EdgeInsets.only(top: topPadding, left: leftPadding),
       child: CustomPaint(
-        painter: TimerProgressBurnInPaint(lapPercentage: this.lapPercentage),
+        painter: TimerProgressBurnInPaint(
+            color: durationProgressColor,
+            lapPercentage: progressAnimation.value),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text('Runden: $laps',
-                style: Theme
-                    .of(context)
+            Text('Runden: ${timerState.remaining.laps}',
+                style: Theme.of(context)
                     .textTheme
                     .subtitle1
                     .copyWith(color: Colors.white)),
-            Text('${duration.inSeconds}s',
+            Text('${_duration.inSeconds}s',
                 style: Theme
                     .of(context)
                     .textTheme

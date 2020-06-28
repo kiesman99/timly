@@ -15,7 +15,7 @@ class TimerProgressPainter extends CustomPainter {
       : this._color = Colors.teal;
 
   TimerProgressPainter.recover(
-      {@required this.intervalProgress, this.radiusPercentage = 1.0})
+      {this.intervalProgress = 100.0, this.radiusPercentage = 1.0})
       : this._color = Colors.amber;
 
   @override

@@ -17,7 +17,9 @@ class ExercisesEditPage extends StatefulWidget {
 class _ExercisesEditPageState extends State<ExercisesEditPage> {
   bool get updating => widget.exercise != null;
 
-  final errorSnackbar = SnackBar(content: Text('Bitte fülle alle Felder aus.'));
+  final errorSnackbar = SnackBar(
+      content: Text('Bitte fülle alle Felder aus.'),
+      backgroundColor: Colors.red);
 
   TextEditingController _nameController;
   TextEditingController _intervalController;

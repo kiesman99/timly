@@ -12,8 +12,41 @@ import 'package:timly/widgets/timer_detail_burn_in.dart';
 class TimerPageBurnIn extends StatelessWidget {
   final double leftPadding;
   final double topPadding;
+  final TimerState timerState;
 
-  TimerPageBurnIn({this.leftPadding = 0.0, this.topPadding = 0.0});
+  TimerPageBurnIn(
+      {this.leftPadding = 0.0,
+      this.topPadding = 0.0,
+      @required this.timerState});
+
+  Widget _bodyWidget(BuildContext pageContext) {
+    var interval = pageContext.select((Exercise e) => e.interval);
+    var intervalPercentage =
+        (timerState.remaining.interval.inSeconds / interval.inSeconds) * 100.0;
+
+    return timerState.maybeWhen(
+        finished: (_) => _textWidget('Fertig!'),
+        paused: (_, __) => _textWidget('Pause'),
+        orElse: () {
+          return Center(
+            child: TimerDetailBurnIn(
+              intervalPercentage: intervalPercentage,
+              topPadding: topPadding,
+              leftPadding: leftPadding,
+              timerState: timerState,
+            ),
+          );
+        });
+  }
+
+  Widget _textWidget(String text) {
+    return Padding(
+        padding: EdgeInsets.only(left: leftPadding, top: topPadding),
+        child: Center(
+          child: Text('Pause',
+              style: TextStyle(fontSize: 30.0, color: Colors.white)),
+        ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,66 +62,7 @@ class TimerPageBurnIn extends StatelessWidget {
               width: constraints.maxWidth,
               height: constraints.maxHeight,
               decoration: BoxDecoration(color: Colors.black),
-              child: BlocBuilder<TimerBloc, TimerState>(
-                builder: (context, state) {
-                  var lapPercentage =
-                      (context.watch<Exercise>().laps / state.remaining.laps) *
-                          100.0;
-                  return state.when(setup: (setup, remaining) {
-                    return Center(
-                      child: TimerDetailBurnIn(
-                        lapPercentage: lapPercentage,
-                        duration: setup,
-                        laps: remaining.laps,
-                        topPadding: topPadding,
-                        leftPadding: leftPadding,
-                      ),
-                    );
-                  }, running: (remaining) {
-                    return Center(
-                      child: TimerDetailBurnIn(
-                        lapPercentage: lapPercentage,
-                        duration: remaining.interval,
-                        laps: remaining.laps,
-                        topPadding: topPadding,
-                        leftPadding: leftPadding,
-                      ),
-                    );
-                  },
-                      recover: (remaining) {
-                        return Center(
-                          child: TimerDetailBurnIn.recover(
-                            lapPercentage: lapPercentage,
-                            duration: remaining.recover,
-                            laps: remaining.laps,
-                            topPadding: topPadding,
-                            leftPadding: leftPadding,
-                          ),
-                        );
-                      },
-                      paused: (_, __) {
-                        return Padding(
-                            padding:
-                            EdgeInsets.only(left: leftPadding, top: topPadding),
-                            child: Center(
-                              child: Text('Pause',
-                                  style: TextStyle(
-                                      fontSize: 30.0, color: Colors.white)),
-                            ));
-                      },
-                      finished: (_) {
-                        return Padding(
-                          padding:
-                          EdgeInsets.only(left: leftPadding, top: topPadding),
-                          child: Center(
-                            child: Text('Finished',
-                                style:
-                                TextStyle(fontSize: 30.0, color: Colors.white)),
-                          ),
-                        );
-                      });
-                },
-              ),
+              child: _bodyWidget(context),
             );
           },
         ),
