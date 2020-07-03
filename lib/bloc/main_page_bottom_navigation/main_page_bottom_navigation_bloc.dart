@@ -6,9 +6,8 @@ import 'main_page_bottom_navigation_state.dart';
 
 class MainPageBottomNavigationBloc
     extends Bloc<MainPageBottomNavigationEvent, MainPageBottomNavigationState> {
-  @override
-  MainPageBottomNavigationState get initialState =>
-      MainPageBottomNavigationState.exercises();
+  MainPageBottomNavigationBloc()
+      : super(MainPageBottomNavigationState.exercises());
 
   @override
   Stream<MainPageBottomNavigationState> mapEventToState(

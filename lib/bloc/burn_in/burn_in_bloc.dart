@@ -10,15 +10,12 @@ const protectTimeoutDuration = const Duration(seconds: 30);
 class BurnInBloc extends Bloc<BurnInEvent, BurnInState> {
   Timer _timer;
 
-  BurnInBloc() {
+  BurnInBloc() : super(BurnInState.unconcerning()) {
     if (this._timer == null) {
       _timer = Timer.periodic(
           protectTimeoutDuration, (_) => this.add(BurnInEvent.protect()));
     }
   }
-
-  @override
-  BurnInState get initialState => BurnInState.unconcerning();
 
   @override
   Stream<BurnInState> mapEventToState(BurnInEvent event) async* {

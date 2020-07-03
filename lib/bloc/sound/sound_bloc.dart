@@ -13,7 +13,7 @@ class SoundBloc extends Bloc<SoundEvent, SoundState> {
   /// The id of the long beep sound file
   Future<int> _longBeepId;
 
-  SoundBloc() {
+  SoundBloc() : super(SoundState.idle()) {
     if (_soundpool == null) {
       _soundpool = Soundpool();
     }
@@ -22,9 +22,6 @@ class SoundBloc extends Bloc<SoundEvent, SoundState> {
     _shortBeepId = _loadShortBeep();
     _longBeepId = _loadLongBeep();
   }
-
-  @override
-  get initialState => SoundState.idle();
 
   @override
   Stream<SoundState> mapEventToState(SoundEvent event) async* {

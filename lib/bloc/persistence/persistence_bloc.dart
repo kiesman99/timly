@@ -9,8 +9,7 @@ import 'package:timly/repository/exercise_repository.dart';
 class PersistenceBloc extends Bloc<PersistenceEvent, PersistenceState> {
   ExerciseRepository repository = ExerciseHiveRepository();
 
-  @override
-  PersistenceState get initialState => PersistenceState.init();
+  PersistenceBloc() : super(PersistenceState.init());
 
   @override
   Stream<PersistenceState> mapEventToState(PersistenceEvent event) async* {

@@ -29,7 +29,8 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   /// exercise is left over
   Exercise _remaining;
 
-  TimerBloc(this._initial, this._soundBloc) {
+  TimerBloc(this._initial, this._soundBloc)
+      : super(TimerState.setup(_initialSetupDuration, _initial)) {
     Wakelock.enable();
     if (_remaining == null) {
       _remaining = Exercise(
@@ -43,9 +44,6 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
           const Duration(milliseconds: 1000), (_) => _tickHandler());
     }
   }
-
-  @override
-  TimerState get initialState => TimerState.setup(_setupDuration, _initial);
 
   @override
   Stream<TimerState> mapEventToState(TimerEvent event) async* {
