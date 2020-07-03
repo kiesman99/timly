@@ -22,5 +22,21 @@
   },
   "bloc_persistence": {
     "error_loading": "Something went wrong while loading the exercises.\nPlease restart the application."
+  },
+  "main_page": {
+    "bottom_navigation_exercises": "Exercises",
+    "bottom_navigation_quick_timer": "Quick Timer",
+    "bottom_navigation_settings": "Settings"
+  },
+  "quick_timer_page": {
+    "title": "Quick Timer",
+    "hint_laps": "Laps",
+    "hint_interval": "Interval",
+    "hint_recover": "Recover time"
+  },
+  "settings_page": {
+    "title": "Settings",
+    "burn_in_protection_title": "Burn-In-Protection",
+    "burn_in_protection_description": "This settings protects the device from getting burn-ins from the visual parts of the Timer. This Settings should NOT be deactivated."
   }
 }

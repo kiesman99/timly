@@ -22,5 +22,23 @@
   },
   "bloc_persistence": {
     "error_loading": "Es ist ein Fehler beim Laden der Übungen passiert.\nBitte starte die App neu."
+  },
+  "main_page": {
+    "bottom_navigation_exercises": "Übungen",
+    "bottom_navigation_quick_timer": "Schneller Timer",
+    "bottom_navigation_settings": "Einstellungen"
+  },
+  "quick_timer_page": {
+    "title": "Schneller Timer",
+    "hint_laps": "Rundenanzahl",
+    "hint_interval": "Intervall",
+    "hint_recover": "Erholungszeit"
+  },
+  "settings_page": {
+    "title": "Einstellungen",
+    "setup_time_title": "Vorbereitunszeit",
+    "setup_time_description": "Die Zeit, welche vor dem Beginn des Timers abläuft. Sie kann genutzt werden, um sich in die Startposition zu begeben.",
+    "burn_in_protection_title": "Einbrennschutz",
+    "burn_in_protection_description": "Diese Einstellung schützt das Gerät davor, dass sich die visuellen Elemente in das Display einbrennen. Es ist empfohlen diese Einstellung NICHT auszustellen."
   }
 }

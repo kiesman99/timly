@@ -127,10 +127,9 @@ class __ExercisesListState extends State<_ExercisesList> {
         actions: _actions(),
       ),
       body: ListView.separated(
-        padding: EdgeInsets.all(15.0),
         separatorBuilder: (context, index) {
           return SizedBox(
-            height: 20.0,
+            height: 2.0,
           );
         },
         itemCount: widget._exercises.length,

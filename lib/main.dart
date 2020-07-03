@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:timly/bloc/main_page_bottom_navigation/main_page_bottom_navigation_bloc.dart';
 import 'package:timly/bloc/persistence/persistence_bloc.dart';
 import 'package:timly/bloc/sound/sound_bloc.dart';
 import 'package:timly/model/exercise.dart';
-import 'package:timly/pages/exercises_page.dart';
+import 'package:timly/pages/main_page.dart';
 import 'package:timly/type_adapter/duration_type_adapter.dart';
 
 import './globals.dart';
@@ -54,14 +55,16 @@ class MyApp extends StatelessWidget {
                 TextTheme(bodyText1: TextStyle(color: Colors.white)),
             visualDensity: VisualDensity.adaptivePlatformDensity,
             inputDecorationTheme: InputDecorationTheme(
-                focusedBorder: UnderlineInputBorder(
-                    borderSide:
-                    BorderSide(color: Colors.teal[800], width: 3.0)),
-                hintStyle: TextStyle(
-                  color: Colors.teal[300],
-                  fontSize: 40.0,
-                ),
-                border: InputBorder.none),
+              border: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.teal[800], width: 3.0)),
+              focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.teal[400], width: 3.0)),
+              hintStyle: TextStyle(
+                color: Colors.teal[300],
+                fontSize: 40.0,
+              ),
+            ),
+            iconTheme: IconThemeData(color: Colors.white),
             textTheme: TextTheme(
               headline1: TextStyle(fontSize: 100.0, color: Colors.white),
               headline2: TextStyle(color: Colors.white),
@@ -69,7 +72,7 @@ class MyApp extends StatelessWidget {
               headline4: TextStyle(color: Colors.white),
               headline5: TextStyle(color: Colors.white),
               headline6: TextStyle(fontSize: 20.0, color: Colors.white),
-              subtitle1: TextStyle(fontSize: 40.0, color: Colors.white),
+              subtitle1: TextStyle(fontSize: 20.0, color: Colors.white),
               // ListTile title
               bodyText1: TextStyle(color: Colors.white),
               bodyText2: TextStyle(color: Colors.white),
@@ -83,9 +86,12 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider(
               create: (context) => PersistenceBloc(),
+            ),
+            BlocProvider(
+              create: (context) => MainPageBottomNavigationBloc(),
             )
           ],
-          child: ExercisesPage(),
+          child: MainPage(),
         ));
   }
 }
