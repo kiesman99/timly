@@ -1,17 +1,23 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:logger/logger.dart';
 import 'package:timly/bloc/sound/sound_bloc.dart';
 import 'package:timly/bloc/sound/sound_event.dart';
 import 'package:timly/bloc/timer/timer_event.dart';
 import 'package:timly/bloc/timer/timer_state.dart';
 import 'package:timly/model/exercise.dart';
+import 'package:timly/utils/custom_timer.dart';
+import 'package:timly/utils/real_timer.dart';
 import 'package:wakelock/wakelock.dart';
 
 // TODO: get from SettingsBloc
 const _initialSetupDuration = Duration(seconds: 5);
 
 class TimerBloc extends Bloc<TimerEvent, TimerState> {
+
+  Logger _logger = Logger();
+
   Duration _setupDuration = _initialSetupDuration;
 
   /// The bloc which handles playing sound
@@ -19,7 +25,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
 
   /// The timer used to produce a tick each
   /// second. It'll invoke [_tickHandler]
-  Timer _timer;
+  CustomTimer _customTimer;
 
   /// The initial [Exercise] the [TimerBloc] was
   /// started with.
@@ -29,9 +35,11 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   /// exercise is left over
   Exercise _remaining;
 
-  TimerBloc(this._initial, this._soundBloc)
+  // TODO: make setup duration work here
+  TimerBloc(this._initial, this._soundBloc, [this._customTimer])
       : super(TimerState.setup(_initialSetupDuration, _initial)) {
-    Wakelock.enable();
+    // Wakelock.enable();
+    _logger.d('Creating new TimerBloc');
     if (_remaining == null) {
       _remaining = Exercise(
           laps: _initial.laps,
@@ -39,30 +47,30 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
           interval: _initial.interval,
           name: _initial.name);
     }
-    if (_timer == null) {
-      _timer = Timer.periodic(
-          const Duration(milliseconds: 1000), (_) => _tickHandler());
+    if(_customTimer == null) {
+      _customTimer = RealTimer(interval: const Duration(seconds: 1));
+    } else {
+      _logger.d("Using custom Timer: ${_customTimer.runtimeType}");
     }
+    _customTimer.callback = _tickHandler;
+    _customTimer.start();
   }
 
   @override
   Stream<TimerState> mapEventToState(TimerEvent event) async* {
-    var i = event.when(
+    yield* event.when(
         setupTick: () => _mapSetupEventToState(event),
         runningTick: () => _mapRunningEventToState(event),
         recoverTick: () => _mapRecoverEventToState(event),
         pause: () => _mapPauseEventToState(event),
         resume: () => _mapResumeEventToState(event),
         replay: () => _mapReplayEventToState(event));
-
-    yield* i;
-    //print("Remaining:\t$_remaining");
-    //print("Initial:\t$_initial");
   }
 
   /// This function will handle the different ticks
   /// which are invoked each second by the [_timer]
   void _tickHandler() {
+    _logger.d('Tick Handler invoked');
     state.maybeWhen(
         setup: (_, __) => add(TimerEvent.setupTick()),
         running: (_) => add(TimerEvent.runningTick()),
@@ -82,6 +90,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   /// or yield a [Setup] state with one second setup duration less, if
   /// the setup has time remaining.
   Stream<TimerState> _mapSetupEventToState(SetupTick event) async* {
+    _logger.d("Setup Tick: $_setupDuration");
     if ([1, 2].contains(_setupDuration.inSeconds)) {
       _soundBloc.add(SoundEvent.longBeep());
     }
@@ -140,8 +149,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   ///
   /// This function will stop the [_timer]
   Stream<TimerState> _mapPauseEventToState(Pause event) async* {
-    _timer?.cancel();
-    _timer = null;
+    _customTimer.stop();
     yield TimerState.paused(state, _remaining);
   }
 
@@ -152,10 +160,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   Stream<TimerState> _mapResumeEventToState(Resume event) async* {
     if (state is Paused) {
       yield (state as Paused).lastState;
-      if (_timer == null) {
-        _timer = new Timer.periodic(
-            const Duration(milliseconds: 1000), (_) => _tickHandler());
-      }
+      _customTimer.start();
     }
   }
 
@@ -164,22 +169,22 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   /// This function will reset the [_remaining] to [_initial]
   /// and restart the timer
   Stream<TimerState> _mapReplayEventToState(Replay event) async* {
-    _timer?.cancel();
+    _customTimer.stop();
     _remaining = Exercise(
         laps: _initial.laps,
         recover: _initial.recover,
         interval: _initial.interval,
         name: _initial.name);
     _setupDuration = _initialSetupDuration;
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) => _tickHandler());
+    _customTimer.start();
     yield TimerState.setup(_setupDuration, _remaining);
   }
 
   @override
   Future<void> close() {
-    _timer?.cancel();
-    _timer = null;
-    Wakelock.disable();
+    _logger.d('Closing TimerBloc');
+    _customTimer.stop();
+    // Wakelock.disable();
     return super.close();
   }
 }

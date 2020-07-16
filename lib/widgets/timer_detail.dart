@@ -7,6 +7,7 @@ import 'package:timly/hooks/bounce_scale_animation.dart';
 import 'package:timly/hooks/timer_progress_animation.dart';
 import 'package:timly/model/exercise.dart';
 import 'package:timly/paints/timer_progress_paint.dart';
+import 'package:timly/widgets/timer_progress_unconcerning_widget.dart';
 
 /// Shows the given [timerState] in a visual representation
 class TimerDetail extends HookWidget {
@@ -66,27 +67,17 @@ class TimerDetail extends HookWidget {
               child: AnimatedBuilder(
                 animation: progressAnimation,
                 builder: (context, child) {
-                  return CustomPaint(
-                    painter: timerState.maybeWhen(
-                        recover: (_) => TimerProgressPainter.recover(),
-                        orElse: () => TimerProgressPainter(
-                            intervalProgress: progressAnimation.value)),
-                    child: child,
-                  );
+                  if (timerState is Recover) {
+                    return TimerProgressUnconcerningWidget.recover(
+                      text: _duration.toString(),
+                    );
+                  }
+
+                  return TimerProgressUnconcerningWidget(
+                      intervalProgress: progressAnimation.value,
+                      text: _duration.toString(),
+                    );
                 },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                if (timerState is Recover)
-                  Text('timer.pause',
-                          style: TextStyle(
-                              fontSize: 30.0,
-                              color: Colors.amber[300],
-                              fontWeight: FontWeight.bold))
-                      .tr(),
-                Text("$_duration", style: Theme.of(context).textTheme.headline1)
-              ],
-                ),
               ),
             )),
       ],

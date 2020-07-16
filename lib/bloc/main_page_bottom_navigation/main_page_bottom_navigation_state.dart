@@ -1,7 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'bottom_navigation_page.dart';
+
 part 'main_page_bottom_navigation_state.freezed.dart';
 
+// TODO: use [BottomNavigationPage]
 @freezed
 abstract class MainPageBottomNavigationState
     with _$MainPageBottomNavigationState {
