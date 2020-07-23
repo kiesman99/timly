@@ -45,8 +45,6 @@ dev_dependencies:
     sdk: flutter
   freezed: ^0.10.9
   hive_generator: ^0.7.0+2
-  build_runner: ^1.10.0
-  bloc_test: ^6.0.0
 
 # This should be removed if hive updates it's dependencies
 dependency_overrides:
