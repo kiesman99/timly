@@ -27,6 +27,8 @@ dependencies:
   flutter_bloc: ^5.0.0
   provider: ^4.1.3
   flutter_hooks: ^0.10.0
+  # shared_preferences: ^0.5.7+1
+  # shared_preferences_web: ^0.1.2+5
   soundpool: ^1.1.1
   freezed_annotation: ^0.7.1
   hive: ^1.4.1+1
@@ -45,6 +47,7 @@ dev_dependencies:
     sdk: flutter
   freezed: ^0.10.9
   hive_generator: ^0.7.0+2
+  build_runner: ^1.10.0
 
 # This should be removed if hive updates it's dependencies
 dependency_overrides:

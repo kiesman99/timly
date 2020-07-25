@@ -1,23 +1,21 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:logger/logger.dart';
 import 'package:timly/bloc/sound/sound_bloc.dart';
 import 'package:timly/bloc/sound/sound_event.dart';
 import 'package:timly/bloc/timer/timer_event.dart';
 import 'package:timly/bloc/timer/timer_state.dart';
 import 'package:timly/model/exercise.dart';
 import 'package:timly/utils/custom_timer.dart';
+import 'package:timly/utils/logger.dart';
 import 'package:timly/utils/real_timer.dart';
 import 'package:wakelock/wakelock.dart';
 
 // TODO: get from SettingsBloc
 const _initialSetupDuration = Duration(seconds: 5);
 
-class TimerBloc extends Bloc<TimerEvent, TimerState> {
-
-  Logger _logger = Logger();
-
+class TimerBloc extends Bloc<TimerEvent, TimerState> with LoggerMixin {
+  
   Duration _setupDuration = _initialSetupDuration;
 
   /// The bloc which handles playing sound
@@ -39,7 +37,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   TimerBloc(this._initial, this._soundBloc, [this._customTimer])
       : super(TimerState.setup(_initialSetupDuration, _initial)) {
     // Wakelock.enable();
-    _logger.d('Creating new TimerBloc');
+    loggerNS.d('Creating new TimerBloc');
     if (_remaining == null) {
       _remaining = Exercise(
           laps: _initial.laps,
@@ -50,7 +48,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     if(_customTimer == null) {
       _customTimer = RealTimer(interval: const Duration(seconds: 1));
     } else {
-      _logger.d("Using custom Timer: ${_customTimer.runtimeType}");
+      loggerNS.d("Using custom Timer: ${_customTimer.runtimeType}");
     }
     _customTimer.callback = _tickHandler;
     _customTimer.start();
@@ -70,7 +68,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   /// This function will handle the different ticks
   /// which are invoked each second by the [_timer]
   void _tickHandler() {
-    _logger.d('Tick Handler invoked');
+    loggerNS.d('Tick Handler invoked');
     state.maybeWhen(
         setup: (_, __) => add(TimerEvent.setupTick()),
         running: (_) => add(TimerEvent.runningTick()),
@@ -90,7 +88,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   /// or yield a [Setup] state with one second setup duration less, if
   /// the setup has time remaining.
   Stream<TimerState> _mapSetupEventToState(SetupTick event) async* {
-    _logger.d("Setup Tick: $_setupDuration");
+    loggerNS.d("Setup Tick: $_setupDuration");
     if ([1, 2].contains(_setupDuration.inSeconds)) {
       _soundBloc.add(SoundEvent.longBeep());
     }
@@ -182,7 +180,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
 
   @override
   Future<void> close() {
-    _logger.d('Closing TimerBloc');
+    loggerNS.d('Closing TimerBloc');
     _customTimer.stop();
     // Wakelock.disable();
     return super.close();

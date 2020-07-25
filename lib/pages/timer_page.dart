@@ -19,7 +19,7 @@ class _TimerPageState extends State<TimerPage> {
       builder: (context, timerState) {
         return BlocBuilder<BurnInBloc, BurnInState>(
           builder: (context, state) {
-            return state.when(
+            return state == null ? Text("failed") : state.when(
                 protecting: (left, top) => TimerPageBurnIn(
                       leftPadding: left,
                       topPadding: top,

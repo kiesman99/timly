@@ -5,14 +5,17 @@ import 'package:timly/bloc/persistence/persistence_event.dart';
 import 'package:timly/bloc/persistence/persistence_state.dart';
 import 'package:timly/repository/exercise_hive_repository.dart';
 import 'package:timly/repository/exercise_repository.dart';
+import 'package:timly/utils/logger.dart';
 
-class PersistenceBloc extends Bloc<PersistenceEvent, PersistenceState> {
+class PersistenceBloc extends Bloc<PersistenceEvent, PersistenceState> with LoggerMixin {
   ExerciseRepository repository = ExerciseHiveRepository();
 
   PersistenceBloc() : super(PersistenceState.init());
 
   @override
   Stream<PersistenceState> mapEventToState(PersistenceEvent event) async* {
+    _logging(event);
+
     yield* event.when(
         loadAll: () => _mapLoadAllEventToState(event),
         load: (_) => _mapLoadEventToState(event),
@@ -49,5 +52,16 @@ class PersistenceBloc extends Bloc<PersistenceEvent, PersistenceState> {
   Stream<PersistenceState> _mapUpdateEventToState(Update event) async* {
     await repository.update(event.exercise);
     this.add(PersistenceEvent.loadAll());
+  }
+
+  void _logging(PersistenceEvent event) {
+    event.when(
+        loadAll: () => loggerNS.i("Loading all Exercises."),
+        load: (exercise) => loggerNS.i("Loading $exercise"),
+        add: (exercise) => loggerNS.i("Storing $exercise into DB"),
+        delete: (exercise) =>  loggerNS.i("Deleting $exercise"),
+        deleteAll: (exercises) => loggerNS.i("Deleting Exercises: $exercises"),
+        update: (exercise) => loggerNS.i("Upading $exercise.")
+    );
   }
 }
