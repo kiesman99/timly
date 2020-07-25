@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:provider/provider.dart';
-import 'package:timly/bloc/burn_in/burn_in_bloc.dart';
-import 'package:timly/bloc/sound/sound_bloc.dart';
-import 'package:timly/bloc/timer/timer_bloc.dart';
-import 'package:timly/modals/time_picker_bottom_sheet.dart';
-import 'package:timly/model/exercise.dart';
-import 'package:timly/pages/timer_page.dart';
+import 'package:tyme/bloc/burn_in/burn_in_bloc.dart';
+import 'package:tyme/bloc/sound/sound_bloc.dart';
+import 'package:tyme/bloc/timer/timer_bloc.dart';
+import 'package:tyme/modals/time_picker_bottom_sheet.dart';
+import 'package:tyme/model/exercise.dart';
+import 'package:tyme/pages/timer_page.dart';
 
 class QuickTimerPage extends HookWidget {
   @override

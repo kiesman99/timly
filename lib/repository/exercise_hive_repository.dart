@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
-import 'package:timly/globals.dart';
-import 'package:timly/model/exercise.dart';
-import 'package:timly/repository/exercise_repository.dart';
+import 'package:tyme/globals.dart';
+import 'package:tyme/model/exercise.dart';
+import 'package:tyme/repository/exercise_repository.dart';
 
 class ExerciseHiveRepository extends ExerciseRepository {
   static final ExerciseHiveRepository _instance = ExerciseHiveRepository._();

@@ -2,15 +2,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:timly/bloc/burn_in/burn_in_bloc.dart';
-import 'package:timly/bloc/persistence/persistence_bloc.dart';
-import 'package:timly/bloc/persistence/persistence_event.dart';
-import 'package:timly/bloc/persistence/persistence_state.dart';
-import 'package:timly/bloc/sound/sound_bloc.dart';
-import 'package:timly/bloc/timer/timer_bloc.dart';
-import 'package:timly/model/exercise.dart';
-import 'package:timly/pages/exercises_edit_page.dart';
-import 'package:timly/pages/timer_page.dart';
+import 'package:tyme/bloc/burn_in/burn_in_bloc.dart';
+import 'package:tyme/bloc/persistence/persistence_bloc.dart';
+import 'package:tyme/bloc/persistence/persistence_event.dart';
+import 'package:tyme/bloc/persistence/persistence_state.dart';
+import 'package:tyme/bloc/sound/sound_bloc.dart';
+import 'package:tyme/bloc/timer/timer_bloc.dart';
+import 'package:tyme/model/exercise.dart';
+import 'package:tyme/pages/exercises_edit_page.dart';
+import 'package:tyme/pages/timer_page.dart';
 
 class ExercisesPage extends StatefulWidget {
   @override

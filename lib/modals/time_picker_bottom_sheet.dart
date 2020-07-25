@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timly/utils/list_utils.dart';
+import 'package:tyme/utils/list_utils.dart';
 
 Future<Duration> showTimePickerBottomSheet(BuildContext context) async {
   return await showModalBottomSheet<Duration>(

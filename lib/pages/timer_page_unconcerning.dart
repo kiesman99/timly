@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:timly/bloc/timer/timer_bloc.dart';
-import 'package:timly/bloc/timer/timer_event.dart';
-import 'package:timly/bloc/timer/timer_state.dart';
-import 'package:timly/widgets/timer_detail_unconcerning.dart';
+import 'package:tyme/bloc/timer/timer_bloc.dart';
+import 'package:tyme/bloc/timer/timer_event.dart';
+import 'package:tyme/bloc/timer/timer_state.dart';
+import 'package:tyme/widgets/timer_detail_unconcerning.dart';
 
 class TimerPageUnconcerning extends StatelessWidget {
   final TimerState timerState;

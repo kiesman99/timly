@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:timly/bloc/main_page_bottom_navigation/main_page_bottom_navigation_bloc.dart';
-import 'package:timly/bloc/persistence/persistence_bloc.dart';
-import 'package:timly/bloc/sound/sound_bloc.dart';
-import 'package:timly/model/exercise.dart';
-import 'package:timly/pages/main_page.dart';
-import 'package:timly/type_adapter/duration_type_adapter.dart';
+import 'package:tyme/bloc/main_page_bottom_navigation/main_page_bottom_navigation_bloc.dart';
+import 'package:tyme/bloc/persistence/persistence_bloc.dart';
+import 'package:tyme/bloc/sound/sound_bloc.dart';
+import 'package:tyme/model/exercise.dart';
+import 'package:tyme/pages/main_page.dart';
+import 'package:tyme/type_adapter/duration_type_adapter.dart';
 
 import './globals.dart';
 

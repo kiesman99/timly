@@ -2,8 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:timly/bloc/timer/timer_state.dart';
-import 'package:timly/hooks/fade_scale_animation.dart';
+import 'package:tyme/bloc/timer/timer_state.dart';
+import 'package:tyme/hooks/fade_scale_animation.dart';
 
 class SetupDetail extends HookWidget {
   final Setup setupState;

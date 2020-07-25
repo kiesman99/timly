@@ -1,7 +1,7 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:timly/paints/timer_progress_paint.dart';
+import 'package:tyme/paints/timer_progress_paint.dart';
 
 /// This function will provide an animation that will animate
 /// the given [progress] in respect of the old [progress] from an

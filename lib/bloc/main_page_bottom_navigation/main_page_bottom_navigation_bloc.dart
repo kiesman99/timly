@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:timly/bloc/main_page_bottom_navigation/main_page_bottom_navigation_event.dart';
-import 'package:timly/bloc/main_page_bottom_navigation/main_page_bottom_navigation_state.dart';
+import 'package:tyme/bloc/main_page_bottom_navigation/main_page_bottom_navigation_event.dart';
+import 'package:tyme/bloc/main_page_bottom_navigation/main_page_bottom_navigation_state.dart';
 
 import 'main_page_bottom_navigation_state.dart';
 

@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:timly/bloc/sound/sound_bloc.dart';
-import 'package:timly/bloc/sound/sound_event.dart';
-import 'package:timly/bloc/timer/timer_event.dart';
-import 'package:timly/bloc/timer/timer_state.dart';
-import 'package:timly/model/exercise.dart';
-import 'package:timly/utils/custom_timer.dart';
-import 'package:timly/utils/logger.dart';
-import 'package:timly/utils/real_timer.dart';
+import 'package:tyme/bloc/sound/sound_bloc.dart';
+import 'package:tyme/bloc/sound/sound_event.dart';
+import 'package:tyme/bloc/timer/timer_event.dart';
+import 'package:tyme/bloc/timer/timer_state.dart';
+import 'package:tyme/model/exercise.dart';
+import 'package:tyme/utils/custom_timer.dart';
+import 'package:tyme/utils/logger.dart';
+import 'package:tyme/utils/real_timer.dart';
 import 'package:wakelock/wakelock.dart';
 
 // TODO: get from SettingsBloc

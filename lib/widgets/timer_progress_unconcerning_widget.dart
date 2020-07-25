@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timly/paints/timer_progress_paint.dart';
+import 'package:tyme/paints/timer_progress_paint.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 @immutable

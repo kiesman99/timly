@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:timly/bloc/timer/timer_state.dart';
-import 'package:timly/widgets/setup_detail.dart';
-import 'package:timly/widgets/timer_detail.dart';
+import 'package:tyme/bloc/timer/timer_state.dart';
+import 'package:tyme/widgets/setup_detail.dart';
+import 'package:tyme/widgets/timer_detail.dart';
 
 @immutable
 class TimerDetailUnconcerning extends StatelessWidget {

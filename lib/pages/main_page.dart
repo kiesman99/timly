@@ -1,13 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:timly/bloc/main_page_bottom_navigation/main_page_bottom_navigation_bloc.dart';
-import 'package:timly/bloc/main_page_bottom_navigation/main_page_bottom_navigation_event.dart';
-import 'package:timly/bloc/main_page_bottom_navigation/main_page_bottom_navigation_state.dart';
-import 'package:timly/pages/exercises_page.dart';
-import 'package:timly/pages/quick_timer_page.dart';
-import 'package:timly/pages/settings_page.dart';
-import 'package:timly/widgets/bottom_navigation_transition.dart';
+import 'package:tyme/bloc/main_page_bottom_navigation/main_page_bottom_navigation_bloc.dart';
+import 'package:tyme/bloc/main_page_bottom_navigation/main_page_bottom_navigation_event.dart';
+import 'package:tyme/bloc/main_page_bottom_navigation/main_page_bottom_navigation_state.dart';
+import 'package:tyme/pages/exercises_page.dart';
+import 'package:tyme/pages/quick_timer_page.dart';
+import 'package:tyme/pages/settings_page.dart';
+import 'package:tyme/widgets/bottom_navigation_transition.dart';
 
 class MainPage extends StatelessWidget {
   @override

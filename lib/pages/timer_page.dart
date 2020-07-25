@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:timly/bloc/burn_in/burn_in_bloc.dart';
-import 'package:timly/bloc/burn_in/burn_in_state.dart';
-import 'package:timly/bloc/timer/timer_bloc.dart';
-import 'package:timly/bloc/timer/timer_state.dart';
-import 'package:timly/pages/timer_page_burn_in.dart';
-import 'package:timly/pages/timer_page_unconcerning.dart';
+import 'package:tyme/bloc/burn_in/burn_in_bloc.dart';
+import 'package:tyme/bloc/burn_in/burn_in_state.dart';
+import 'package:tyme/bloc/timer/timer_bloc.dart';
+import 'package:tyme/bloc/timer/timer_state.dart';
+import 'package:tyme/pages/timer_page_burn_in.dart';
+import 'package:tyme/pages/timer_page_unconcerning.dart';
 
 class TimerPage extends StatefulWidget {
   @override

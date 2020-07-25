@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:timly/bloc/persistence/persistence_event.dart';
-import 'package:timly/bloc/persistence/persistence_state.dart';
-import 'package:timly/repository/exercise_hive_repository.dart';
-import 'package:timly/repository/exercise_repository.dart';
-import 'package:timly/utils/logger.dart';
+import 'package:tyme/bloc/persistence/persistence_event.dart';
+import 'package:tyme/bloc/persistence/persistence_state.dart';
+import 'package:tyme/repository/exercise_hive_repository.dart';
+import 'package:tyme/repository/exercise_repository.dart';
+import 'package:tyme/utils/logger.dart';
 
 class PersistenceBloc extends Bloc<PersistenceEvent, PersistenceState> with LoggerMixin {
   ExerciseRepository repository = ExerciseHiveRepository();

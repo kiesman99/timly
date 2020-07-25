@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:bloc/bloc.dart';
-import 'package:timly/bloc/burn_in/burn_in_event.dart';
-import 'package:timly/bloc/burn_in/burn_in_state.dart';
-import 'package:timly/utils/logger.dart';
+import 'package:tyme/bloc/burn_in/burn_in_event.dart';
+import 'package:tyme/bloc/burn_in/burn_in_state.dart';
+import 'package:tyme/utils/logger.dart';
 
 const protectTimeoutDuration = const Duration(seconds: 30);
 

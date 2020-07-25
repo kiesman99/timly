@@ -2,10 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:timly/bloc/persistence/persistence_bloc.dart';
-import 'package:timly/bloc/persistence/persistence_event.dart';
-import 'package:timly/modals/time_picker_bottom_sheet.dart';
-import 'package:timly/model/exercise.dart';
+import 'package:tyme/bloc/persistence/persistence_bloc.dart';
+import 'package:tyme/bloc/persistence/persistence_event.dart';
+import 'package:tyme/modals/time_picker_bottom_sheet.dart';
+import 'package:tyme/model/exercise.dart';
 
 class ExercisesEditPage extends HookWidget {
   final PersistenceBloc persistenceBloc;

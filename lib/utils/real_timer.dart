@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:timly/utils/custom_timer.dart';
+import 'package:tyme/utils/custom_timer.dart';
 
 class RealTimer extends CustomTimer {
 

@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/services.dart';
 import 'package:soundpool/soundpool.dart';
-import 'package:timly/bloc/sound/sound_event.dart';
-import 'package:timly/bloc/sound/sound_state.dart';
+import 'package:tyme/bloc/sound/sound_event.dart';
+import 'package:tyme/bloc/sound/sound_state.dart';
 
 class SoundBloc extends Bloc<SoundEvent, SoundState> {
   Soundpool _soundpool;

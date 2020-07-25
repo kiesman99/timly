@@ -1,4 +1,4 @@
-import 'package:timly/model/exercise.dart';
+import 'package:tyme/model/exercise.dart';
 
 abstract class ExerciseRepository {
   /// This function will return all stored [Exercise]
