@@ -7,6 +7,7 @@ import 'package:tyme/bloc/timer/timer_event.dart';
 import 'package:tyme/bloc/timer/timer_state.dart';
 import 'package:tyme/model/exercise.dart';
 import 'package:tyme/utils/custom_timer.dart';
+import 'package:tyme/utils/device.dart';
 import 'package:tyme/utils/logger.dart';
 import 'package:tyme/utils/real_timer.dart';
 import 'package:wakelock/wakelock.dart';
@@ -36,7 +37,9 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> with LoggerMixin {
   // TODO: make setup duration work here
   TimerBloc(this._initial, this._soundBloc, [this._customTimer])
       : super(TimerState.setup(_initialSetupDuration, _initial)) {
-    // Wakelock.enable();
+    if(Device.isMobile) {
+      Wakelock.enable();
+    }
     loggerNS.d('Creating new TimerBloc');
     if (_remaining == null) {
       _remaining = Exercise(
@@ -182,7 +185,9 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> with LoggerMixin {
   Future<void> close() {
     loggerNS.d('Closing TimerBloc');
     _customTimer.stop();
-    // Wakelock.disable();
+    if (Device.isMobile) {
+      Wakelock.disable();
+    }
     return super.close();
   }
 }
