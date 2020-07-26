@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:tyme/bloc/burn_in/burn_in_bloc.dart';
 import 'package:tyme/bloc/sound/sound_bloc.dart';
 import 'package:tyme/bloc/timer/timer_bloc.dart';
-import 'package:tyme/modals/time_picker_bottom_sheet.dart';
+import 'package:bottom_sheet_duration_picker/bottom_sheet_duration_picker.dart';
 import 'package:tyme/model/exercise.dart';
 import 'package:tyme/pages/timer_page.dart';
 
@@ -42,7 +42,7 @@ class QuickTimerPage extends HookWidget {
               subtitle: Text("${intervalDuration.value.inSeconds}s"),
               onTap: () async {
                 intervalDuration.value =
-                    await showTimePickerBottomSheet(context) ??
+                    await showDurationPickerBottomSheet(context: context, label: 'quick_timer_page.hint_interval'.tr()) ??
                         intervalDuration.value;
               },
             ),
@@ -54,7 +54,7 @@ class QuickTimerPage extends HookWidget {
               subtitle: Text("${recoverDuration.value.inSeconds}s"),
               onTap: () async {
                 recoverDuration.value =
-                    await showTimePickerBottomSheet(context) ??
+                    await showDurationPickerBottomSheet(context: context, label: 'quick_timer_page.hint_recover'.tr()) ??
                         recoverDuration.value;
               },
             )

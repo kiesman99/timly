@@ -1,10 +1,10 @@
+import 'package:bottom_sheet_duration_picker/bottom_sheet_duration_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:tyme/bloc/persistence/persistence_bloc.dart';
 import 'package:tyme/bloc/persistence/persistence_event.dart';
-import 'package:tyme/modals/time_picker_bottom_sheet.dart';
 import 'package:tyme/model/exercise.dart';
 
 class ExercisesEditPage extends HookWidget {
@@ -70,7 +70,7 @@ class ExercisesEditPage extends HookWidget {
                   subtitle: Text("${intervalDuration.value.inSeconds}s"),
                   onTap: () async {
                     intervalDuration.value =
-                        await showTimePickerBottomSheet(context) ??
+                        await showDurationPickerBottomSheet(context: context) ??
                             intervalDuration.value;
                   },
                 ),
@@ -79,7 +79,7 @@ class ExercisesEditPage extends HookWidget {
                   subtitle: Text("${recoverDuration.value.inSeconds}s"),
                   onTap: () async {
                     recoverDuration.value =
-                        await showTimePickerBottomSheet(context) ??
+                        await showDurationPickerBottomSheet(context: context) ??
                             recoverDuration.value;
                   },
                 ),

@@ -50,6 +50,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  bottom_sheet_duration_picker:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: b42019a6bc6ade97b2566d1b8ccd844fc1ac9384
+      url: "https://github.com/kiesman99/bottom_sheet_duration_picker"
+    source: git
+    version: "0.0.1"
   build:
     dependency: transitive
     description:

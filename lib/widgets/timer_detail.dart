@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:provider/provider.dart';
@@ -6,7 +5,6 @@ import 'package:tyme/bloc/timer/timer_state.dart';
 import 'package:tyme/hooks/bounce_scale_animation.dart';
 import 'package:tyme/hooks/timer_progress_animation.dart';
 import 'package:tyme/model/exercise.dart';
-import 'package:tyme/paints/timer_progress_paint.dart';
 import 'package:tyme/widgets/timer_progress_unconcerning_widget.dart';
 
 /// Shows the given [timerState] in a visual representation

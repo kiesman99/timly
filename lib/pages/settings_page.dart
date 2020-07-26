@@ -1,7 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:tyme/modals/time_picker_bottom_sheet.dart';
+import 'package:bottom_sheet_duration_picker/bottom_sheet_duration_picker.dart';
+
 
 // TODO: IMPLEMENT DB
 class SettingsPage extends HookWidget {
@@ -22,7 +23,7 @@ class SettingsPage extends HookWidget {
               trailing: Text('${setupDuration.value.inSeconds}s'),
               onTap: () async {
                 setupDuration.value =
-                    await showTimePickerBottomSheet(context) ??
+                    await showDurationPickerBottomSheet(context: context) ??
                         setupDuration.value;
               },
             ),

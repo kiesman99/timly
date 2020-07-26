@@ -1,8 +1,6 @@
 
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
-
 /// This timer should be used as a timer for
 /// this application. It uses [Timer]
 abstract class CustomTimer {
