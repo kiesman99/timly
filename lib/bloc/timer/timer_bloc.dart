@@ -12,10 +12,6 @@ import 'package:tyme/utils/logger.dart';
 import 'package:tyme/utils/real_timer.dart';
 import 'package:wakelock/wakelock.dart';
 
-import '../../model/exercise.dart';
-import 'timer_event.dart';
-import 'timer_event.dart';
-
 class TimerBloc extends Bloc<TimerEvent, TimerState> with LoggerMixin {
   final Duration _initialSetupDuration;
 
