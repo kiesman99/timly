@@ -9,6 +9,7 @@ import 'package:tyme/bloc/timer/timer_bloc.dart';
 import 'package:bottom_sheet_duration_picker/bottom_sheet_duration_picker.dart';
 import 'package:tyme/model/exercise.dart';
 import 'package:tyme/pages/timer_page.dart';
+import 'package:tyme/theme.dart';
 
 class QuickTimerPage extends HookWidget {
   @override
@@ -41,9 +42,11 @@ class QuickTimerPage extends HookWidget {
               title: Text('quick_timer_page.hint_interval').tr(),
               subtitle: Text("${intervalDuration.value.inSeconds}s"),
               onTap: () async {
-                intervalDuration.value =
-                    await showDurationPickerBottomSheet(context: context, label: 'quick_timer_page.hint_interval'.tr()) ??
-                        intervalDuration.value;
+                intervalDuration.value = await showDurationPickerBottomSheet(
+                        context: context,
+                        label: 'quick_timer_page.hint_interval'.tr(),
+                        themeData: bottomSheetDurationPickerTheme(context)) ??
+                    intervalDuration.value;
               },
             ),
             SizedBox(
@@ -53,9 +56,11 @@ class QuickTimerPage extends HookWidget {
               title: Text('quick_timer_page.hint_recover').tr(),
               subtitle: Text("${recoverDuration.value.inSeconds}s"),
               onTap: () async {
-                recoverDuration.value =
-                    await showDurationPickerBottomSheet(context: context, label: 'quick_timer_page.hint_recover'.tr()) ??
-                        recoverDuration.value;
+                recoverDuration.value = await showDurationPickerBottomSheet(
+                        context: context,
+                        label: 'quick_timer_page.hint_recover'.tr(),
+                        themeData: bottomSheetDurationPickerTheme(context)) ??
+                    recoverDuration.value;
               },
             )
           ],

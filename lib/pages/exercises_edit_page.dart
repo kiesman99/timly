@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:tyme/bloc/persistence/persistence_bloc.dart';
 import 'package:tyme/bloc/persistence/persistence_event.dart';
 import 'package:tyme/model/exercise.dart';
+import 'package:tyme/theme.dart';
 
 class ExercisesEditPage extends HookWidget {
   final PersistenceBloc persistenceBloc;
@@ -52,7 +53,7 @@ class ExercisesEditPage extends HookWidget {
                     focusNode: _nameFocusNode,
                     controller: _nameController,
                     onSubmitted: (_) =>
-                    {FocusScope.of(context).requestFocus(_lapsFocusNode)},
+                        {FocusScope.of(context).requestFocus(_lapsFocusNode)},
                   ),
                 ),
                 ListTile(
@@ -70,7 +71,10 @@ class ExercisesEditPage extends HookWidget {
                   subtitle: Text("${intervalDuration.value.inSeconds}s"),
                   onTap: () async {
                     intervalDuration.value =
-                        await showDurationPickerBottomSheet(context: context) ??
+                        await showDurationPickerBottomSheet(
+                                context: context,
+                                themeData:
+                                    bottomSheetDurationPickerTheme(context)) ??
                             intervalDuration.value;
                   },
                 ),
@@ -78,9 +82,11 @@ class ExercisesEditPage extends HookWidget {
                   title: Text('exercise_edit.hint_recover_time').tr(),
                   subtitle: Text("${recoverDuration.value.inSeconds}s"),
                   onTap: () async {
-                    recoverDuration.value =
-                        await showDurationPickerBottomSheet(context: context) ??
-                            recoverDuration.value;
+                    recoverDuration.value = await showDurationPickerBottomSheet(
+                            context: context,
+                            themeData:
+                                bottomSheetDurationPickerTheme(context)) ??
+                        recoverDuration.value;
                   },
                 ),
               ],
@@ -101,9 +107,7 @@ class ExercisesEditPage extends HookWidget {
                       name: _nameController.text,
                       laps: int.parse(_lapsController.text),
                       interval: intervalDuration.value,
-                      recover: recoverDuration.value
-                  )
-              );
+                      recover: recoverDuration.value));
             },
           );
         },
@@ -111,11 +115,10 @@ class ExercisesEditPage extends HookWidget {
     );
   }
 
-  void _submit({
-    @required BuildContext builderContext,
-    @required BuildContext context,
-    @required Exercise exercise
-  }) {
+  void _submit(
+      {@required BuildContext builderContext,
+      @required BuildContext context,
+      @required Exercise exercise}) {
     // TODO: DO VALIDATION
     if (true) {
       if (updating) {
@@ -140,5 +143,4 @@ class ExercisesEditPage extends HookWidget {
     BlacklistingTextInputFormatter(RegExp("^0")),
     BlacklistingTextInputFormatter(RegExp("\s"))
   ];
-
 }
