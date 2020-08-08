@@ -38,5 +38,11 @@
     "title": "Settings",
     "burn_in_protection_title": "Burn-In-Protection",
     "burn_in_protection_description": "This settings protects the device from getting burn-ins from the visual parts of the Timer. This Settings should NOT be deactivated."
+  },
+  "errors": {
+    "not_a_number": "The entry isn't a number",
+    "textfield_empty": "Please provide a value",
+    "laps_lower_one": "You have to enter at least one lap",
+    "interval_lower_ten_seconds": "The interval has to be at least 10 seconds"
   }
 }

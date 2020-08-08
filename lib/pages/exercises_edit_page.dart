@@ -13,10 +13,6 @@ class ExercisesEditPage extends HookWidget {
 
   bool get updating => exercise.name.isNotEmpty;
 
-  final errorSnackbar = SnackBar(
-      content: Text('exercise_edit.error_fill_all_fields').tr(),
-      backgroundColor: Colors.red);
-
   ExercisesEditPage({@required this.persistenceBloc, this.exercise});
 
   @override
@@ -109,21 +105,28 @@ class ExercisesEditPage extends HookWidget {
 
   String _nameValidation(String name) {
     if (name.isEmpty) {
-      return "Please enter a name of the exercise.";
+      return "errors.textfield_empty".tr();
     }
     return null;
   }
 
   String _lapsValidation(String laps) {
     if (laps.isEmpty) {
-      return "You have to enter at least one lap";
+      return "errors.textfield_empty";
+    }
+    var number = int.tryParse(laps);
+    if (number == null) {
+      return "errors.not_a_number".tr();
+    }
+    if (number < 1) {
+      return "errors.laps_lower_one".tr();
     }
     return null;
   }
 
   String _intervalDurationValidation(Duration duration) {
     if (duration < const Duration(seconds: 10)) {
-      return "The interval you choose has to be at least 10 seconds";
+      return "errors.interval_lower_ten_seconds".tr();
     }
     return null;
   }

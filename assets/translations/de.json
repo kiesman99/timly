@@ -40,5 +40,11 @@
     "setup_time_description": "Die Zeit, welche vor dem Beginn des Timers abläuft. Sie kann genutzt werden, um sich in die Startposition zu begeben.",
     "burn_in_protection_title": "Einbrennschutz",
     "burn_in_protection_description": "Diese Einstellung schützt das Gerät davor, dass sich die visuellen Elemente in das Display einbrennen. Es ist empfohlen diese Einstellung NICHT auszustellen."
+  },
+  "errors": {
+    "not_a_number": "Die Angabe ist keine Nummer",
+    "textfield_empty": "Bitte gebe einen Wert ein",
+    "laps_lower_one": "Die Rundenanzahl muss mindestens 1 sein",
+    "interval_lower_ten_seconds": "Das Interval muss mindestens 10 Sekunden sein"
   }
 }

@@ -91,17 +91,16 @@ class QuickTimerPage extends HookWidget {
 
   String _lapsValidation(String value) {
     if (value.isEmpty) {
-      return "Es muss eine Rundenanzahl angegeben werden";
+      return "errors.textfield_empty".tr();
     }
-    int num;
-    try {
-      num = int.tryParse(value);
-    } catch (e, s) {
-      return "Die Rundenanzahl war keine Zahl";
+    int num = int.tryParse(value);
+
+    if (num == null) {
+      return "errors.not_a_number".tr();
     }
 
     if (num < 1) {
-      return "Es muss wenigstens eine Runde angebenen werden";
+      return  "errors.laps_lower_one".tr();
     }
 
     return null;
@@ -109,7 +108,7 @@ class QuickTimerPage extends HookWidget {
 
   String _intervalDurationValidation(Duration duration) {
     if (duration < const Duration(seconds: 10)) {
-      return "The duration has to be at least 10 seconds";
+      return "errors.interval_lower_ten_seconds".tr();
     }
     return null;
   }
