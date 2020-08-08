@@ -18,7 +18,7 @@ class Exercise extends HiveObject with EquatableMixin {
   dynamic key;
 
   Exercise(
-      {@required this.name,
+      {this.name = "",
       @required this.interval,
       @required this.recover,
       @required this.laps,

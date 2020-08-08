@@ -15,8 +15,9 @@ class QuickTimerPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final lapsTextEditingController = useTextEditingController();
-    var intervalDuration = useState(Duration(seconds: 0));
-    var recoverDuration = useState(Duration(seconds: 0));
+    final intervalDurationPickerController = useDurationPickerController();
+    final recoverDurationPickerController = useDurationPickerController();
+    var formKey = useState(GlobalKey<FormState>());
 
     return Scaffold(
       appBar: AppBar(
@@ -24,77 +25,92 @@ class QuickTimerPage extends HookWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(0),
-        child: ListView(
-          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            ListTile(
-              title: Text('quick_timer_page.hint_laps').tr(),
-              subtitle: TextField(
-                keyboardType: TextInputType.numberWithOptions(
-                    decimal: false, signed: false),
-                controller: lapsTextEditingController,
+        child: Form(
+          key: formKey.value,
+          child: ListView(
+            children: <Widget>[
+              ListTile(
+                title: Text('quick_timer_page.hint_laps').tr(),
+                subtitle: TextFormField(
+                  // ignore: missing_return
+                  validator: _lapsValidation,
+                  keyboardType: TextInputType.numberWithOptions(
+                      decimal: false, signed: false),
+                  controller: lapsTextEditingController,
+                ),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            ListTile(
-              title: Text('quick_timer_page.hint_interval').tr(),
-              subtitle: Text("${intervalDuration.value.inSeconds}s"),
-              onTap: () async {
-                intervalDuration.value = await showDurationPickerBottomSheet(
-                        context: context,
-                        label: 'quick_timer_page.hint_interval'.tr(),
-                        themeData: bottomSheetDurationPickerTheme(context)) ??
-                    intervalDuration.value;
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            ListTile(
-              title: Text('quick_timer_page.hint_recover').tr(),
-              subtitle: Text("${recoverDuration.value.inSeconds}s"),
-              onTap: () async {
-                recoverDuration.value = await showDurationPickerBottomSheet(
-                        context: context,
-                        label: 'quick_timer_page.hint_recover'.tr(),
-                        themeData: bottomSheetDurationPickerTheme(context)) ??
-                    recoverDuration.value;
-              },
-            )
-          ],
+              SizedBox(
+                height: 20,
+              ),
+              DurationPickerFormField(
+                controller: intervalDurationPickerController,
+                title: 'quick_timer_page.hint_interval'.tr(),
+                validator: _intervalDurationValidation,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              DurationPickerFormField(
+                controller: recoverDurationPickerController,
+                title: 'quick_timer_page.hint_recover'.tr(),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: Text('Los'),
         onPressed: () {
-          var e = Exercise(
-              laps: int.parse(lapsTextEditingController.text),
-              interval: intervalDuration.value,
-              recover: recoverDuration.value,
-              name: "");
+          if (formKey.value.currentState.validate()) {
+            var e = Exercise(
+                laps: int.parse(lapsTextEditingController.text),
+                interval: intervalDurationPickerController.value,
+                recover: recoverDurationPickerController.value);
 
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (_) => Provider.value(
-                    value: e,
-                    child: MultiBlocProvider(
-                      providers: [
-                        BlocProvider(
-                          create: (_) =>
-                              TimerBloc(e, context.bloc<SoundBloc>()),
-                        ),
-                        BlocProvider(
-                          create: (_) => BurnInBloc(),
-                        )
-                      ],
-                      child: TimerPage(
-                          //exercise: e,
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (_) => Provider.value(
+                      value: e,
+                      child: MultiBlocProvider(
+                        providers: [
+                          BlocProvider(
+                            create: (_) =>
+                                TimerBloc(e, context.bloc<SoundBloc>()),
                           ),
-                    ),
-                  )));
+                          BlocProvider(
+                            create: (_) => BurnInBloc(),
+                          )
+                        ],
+                        child: TimerPage(),
+                      ),
+                    )));
+          }
         },
       ),
     );
+  }
+
+  String _lapsValidation(String value) {
+    if (value.isEmpty) {
+      return "Es muss eine Rundenanzahl angegeben werden";
+    }
+    int num;
+    try {
+      num = int.tryParse(value);
+    } catch (e, s) {
+      return "Die Rundenanzahl war keine Zahl";
+    }
+
+    if (num < 1) {
+      return "Es muss wenigstens eine Runde angebenen werden";
+    }
+
+    return null;
+  }
+
+  String _intervalDurationValidation(Duration duration) {
+    if (duration < const Duration(seconds: 10)) {
+      return "The duration has to be at least 10 seconds";
+    }
+    return null;
   }
 }

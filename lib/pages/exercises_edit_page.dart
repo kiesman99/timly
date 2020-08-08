@@ -6,7 +6,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:tyme/bloc/persistence/persistence_bloc.dart';
 import 'package:tyme/bloc/persistence/persistence_event.dart';
 import 'package:tyme/model/exercise.dart';
-import 'package:tyme/theme.dart';
 
 class ExercisesEditPage extends HookWidget {
   final PersistenceBloc persistenceBloc;
@@ -41,55 +40,34 @@ class ExercisesEditPage extends HookWidget {
       ),
       body: Builder(
         builder: (BuildContext builderContext) {
-          return Container(
-            padding: EdgeInsets.all(15.0),
-            child: ListView(
-              //crossAxisAlignment: CrossAxisAlignment.center,
-              //mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                ListTile(
-                  title: Text('exercise_edit.hint_exercise').tr(),
-                  subtitle: TextField(
-                    focusNode: _nameFocusNode,
-                    controller: _nameController,
-                    onSubmitted: (_) =>
-                        {FocusScope.of(context).requestFocus(_lapsFocusNode)},
+          return Form(
+            child: Container(
+              padding: EdgeInsets.all(15.0),
+              child: ListView(
+                //crossAxisAlignment: CrossAxisAlignment.center,
+                //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  ListTile(
+                    title: Text('exercise_edit.hint_exercise').tr(),
+                    subtitle: TextFormField(
+                      focusNode: _nameFocusNode,
+                      controller: _nameController,
+                    ),
                   ),
-                ),
-                ListTile(
-                  title: Text('exercise_edit.hint_laps').tr(),
-                  subtitle: TextField(
-                    focusNode: _lapsFocusNode,
-                    controller: _lapsController,
-                    inputFormatters: _numberFormatter,
-                    keyboardType: TextInputType.numberWithOptions(
-                        decimal: false, signed: false),
+                  ListTile(
+                    title: Text('exercise_edit.hint_laps').tr(),
+                    subtitle: TextFormField(
+                      focusNode: _lapsFocusNode,
+                      controller: _lapsController,
+                      inputFormatters: _numberFormatter,
+                      keyboardType: TextInputType.numberWithOptions(
+                          decimal: false, signed: false),
+                    ),
                   ),
-                ),
-                ListTile(
-                  title: Text('exercise_edit.hint_interval_time').tr(),
-                  subtitle: Text("${intervalDuration.value.inSeconds}s"),
-                  onTap: () async {
-                    intervalDuration.value =
-                        await showDurationPickerBottomSheet(
-                                context: context,
-                                themeData:
-                                    bottomSheetDurationPickerTheme(context)) ??
-                            intervalDuration.value;
-                  },
-                ),
-                ListTile(
-                  title: Text('exercise_edit.hint_recover_time').tr(),
-                  subtitle: Text("${recoverDuration.value.inSeconds}s"),
-                  onTap: () async {
-                    recoverDuration.value = await showDurationPickerBottomSheet(
-                            context: context,
-                            themeData:
-                                bottomSheetDurationPickerTheme(context)) ??
-                        recoverDuration.value;
-                  },
-                ),
-              ],
+                  DurationPickerFormField(title: 'exercise_edit.hint_interval_time'.tr(), onSaved: (duration) => intervalDuration.value = duration),
+                  DurationPickerFormField(title: 'exercise_edit.hint_recover_time'.tr(), onSaved: (duration) => recoverDuration.value = duration),
+                ],
+              ),
             ),
           );
         },
@@ -139,8 +117,8 @@ class ExercisesEditPage extends HookWidget {
   }
 
   final List<TextInputFormatter> _numberFormatter = [
-    BlacklistingTextInputFormatter(RegExp("[.|,|-]")),
-    BlacklistingTextInputFormatter(RegExp("^0")),
-    BlacklistingTextInputFormatter(RegExp("\s"))
+    FilteringTextInputFormatter.deny("[.|,|-]"),
+    FilteringTextInputFormatter.deny("^0"),
+    FilteringTextInputFormatter.deny("\s")
   ];
 }
