@@ -5,11 +5,7 @@ part 'timer_event.freezed.dart';
 
 @freezed
 abstract class TimerEvent with _$TimerEvent {
-  const factory TimerEvent.setupTick() = SetupTick;
-
-  const factory TimerEvent.runningTick() = RunningTick;
-
-  const factory TimerEvent.recoverTick() = RecoverTick;
+  const factory TimerEvent.ticked() = TimerTicked;
 
   const factory TimerEvent.pause() = Pause;
 
