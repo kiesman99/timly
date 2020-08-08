@@ -21,16 +21,15 @@ class ExercisesEditPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _nameController =
+    var formKey = useState(GlobalKey<FormState>());
+    var _nameController =
         useTextEditingController(text: exercise?.name ?? "");
-    TextEditingController _lapsController =
+    var _lapsController =
         useTextEditingController(text: exercise?.laps?.toString() ?? "");
-    FocusNode _nameFocusNode = useFocusNode();
-    FocusNode _lapsFocusNode = useFocusNode();
-    var recoverDuration =
-        useState(Duration(seconds: exercise?.recover?.inSeconds ?? 0));
-    var intervalDuration =
-        useState(Duration(seconds: exercise?.interval?.inSeconds ?? 0));
+    var _nameFocusNode = useFocusNode();
+    var _lapsFocusNode = useFocusNode();
+    var intervalDurationController = useDurationPickerController();
+    var recoverDurationController = useDurationPickerController();
 
     return Scaffold(
       appBar: AppBar(
@@ -41,31 +40,44 @@ class ExercisesEditPage extends HookWidget {
       body: Builder(
         builder: (BuildContext builderContext) {
           return Form(
+            key: formKey.value,
             child: Container(
               padding: EdgeInsets.all(15.0),
               child: ListView(
-                //crossAxisAlignment: CrossAxisAlignment.center,
-                //mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   ListTile(
                     title: Text('exercise_edit.hint_exercise').tr(),
                     subtitle: TextFormField(
+                      validator: _nameValidation,
                       focusNode: _nameFocusNode,
                       controller: _nameController,
+                      onFieldSubmitted: (value) {
+                        _nameFocusNode.unfocus();
+                      },
                     ),
                   ),
                   ListTile(
                     title: Text('exercise_edit.hint_laps').tr(),
                     subtitle: TextFormField(
+                      validator: _lapsValidation,
                       focusNode: _lapsFocusNode,
                       controller: _lapsController,
                       inputFormatters: _numberFormatter,
                       keyboardType: TextInputType.numberWithOptions(
                           decimal: false, signed: false),
+                      onFieldSubmitted: (_) {
+                        _lapsFocusNode.unfocus();
+                      },
                     ),
                   ),
-                  DurationPickerFormField(title: 'exercise_edit.hint_interval_time'.tr(), onSaved: (duration) => intervalDuration.value = duration),
-                  DurationPickerFormField(title: 'exercise_edit.hint_recover_time'.tr(), onSaved: (duration) => recoverDuration.value = duration),
+                  DurationPickerFormField(
+                    controller: intervalDurationController,
+                      title: 'exercise_edit.hint_interval_time'.tr(),
+                    validator: _intervalDurationValidation,
+                  ),
+                  DurationPickerFormField(
+                    controller: recoverDurationController,
+                      title: 'exercise_edit.hint_recover_time'.tr(),),
                 ],
               ),
             ),
@@ -78,14 +90,16 @@ class ExercisesEditPage extends HookWidget {
           return FloatingActionButton.extended(
             label: Text('exercise_edit.button_save').tr(),
             onPressed: () {
-              _submit(
-                  builderContext: builderContext,
-                  context: context,
-                  exercise: Exercise(
-                      name: _nameController.text,
-                      laps: int.parse(_lapsController.text),
-                      interval: intervalDuration.value,
-                      recover: recoverDuration.value));
+              if (formKey.value.currentState.validate()) {
+                _submit(
+                    builderContext: builderContext,
+                    context: context,
+                    exercise: Exercise(
+                        name: _nameController.text,
+                        laps: int.parse(_lapsController.text),
+                        interval: intervalDurationController.value,
+                        recover: recoverDurationController.value));
+              }
             },
           );
         },
@@ -93,12 +107,31 @@ class ExercisesEditPage extends HookWidget {
     );
   }
 
+  String _nameValidation(String name) {
+    if (name.isEmpty) {
+      return "Please enter a name of the exercise.";
+    }
+    return null;
+  }
+
+  String _lapsValidation(String laps) {
+    if (laps.isEmpty) {
+      return "You have to enter at least one lap";
+    }
+    return null;
+  }
+
+  String _intervalDurationValidation(Duration duration) {
+    if (duration < const Duration(seconds: 10)) {
+      return "The interval you choose has to be at least 10 seconds";
+    }
+    return null;
+  }
+
   void _submit(
       {@required BuildContext builderContext,
       @required BuildContext context,
       @required Exercise exercise}) {
-    // TODO: DO VALIDATION
-    if (true) {
       if (updating) {
         print("Updating ${exercise.key}");
         Exercise e = this.exercise;
@@ -111,10 +144,7 @@ class ExercisesEditPage extends HookWidget {
         persistenceBloc.add(PersistenceEvent.add(exercise));
       }
       Navigator.of(context).pop();
-    } else {
-      Scaffold.of(builderContext).showSnackBar(errorSnackbar);
     }
-  }
 
   final List<TextInputFormatter> _numberFormatter = [
     FilteringTextInputFormatter.deny("[.|,|-]"),
