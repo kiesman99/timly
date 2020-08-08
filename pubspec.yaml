@@ -37,6 +37,7 @@ dependencies:
   wakelock: ^0.1.4+1
   easy_localization: ^2.3.2
   logger: ^0.9.1
+  flutter_tts: ^1.2.6
 
   # local libraries
   bottom_sheet_duration_picker:
