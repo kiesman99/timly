@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:tyme/i18n/strings.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -20,7 +20,7 @@ class QuickTimerPage extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('quick_timer_page.title').tr(),
+        title: Text(t.quick_timer_page.title),
       ),
       body: Padding(
         padding: const EdgeInsets.all(0),
@@ -29,7 +29,7 @@ class QuickTimerPage extends HookWidget {
           child: ListView(
             children: <Widget>[
               ListTile(
-                title: Text('quick_timer_page.hint_laps').tr(),
+                title: Text(t.quick_timer_page.hint_laps),
                 subtitle: TextFormField(
                   // ignore: missing_return
                   validator: _lapsValidation,
@@ -43,7 +43,7 @@ class QuickTimerPage extends HookWidget {
               ),
               DurationPickerFormField(
                 controller: intervalDurationPickerController,
-                title: 'quick_timer_page.hint_interval'.tr(),
+                title: t.quick_timer_page.hint_interval,
                 validator: _intervalDurationValidation,
               ),
               SizedBox(
@@ -51,7 +51,7 @@ class QuickTimerPage extends HookWidget {
               ),
               DurationPickerFormField(
                 controller: recoverDurationPickerController,
-                title: 'quick_timer_page.hint_recover'.tr(),
+                title: t.quick_timer_page.hint_recover,
               ),
             ],
           ),
@@ -90,16 +90,16 @@ class QuickTimerPage extends HookWidget {
 
   String _lapsValidation(String value) {
     if (value.isEmpty) {
-      return "errors.textfield_empty".tr();
+      return t.errors.textfield_empty;
     }
     int num = int.tryParse(value);
 
     if (num == null) {
-      return "errors.not_a_number".tr();
+      return t.errors.not_a_number;
     }
 
     if (num < 1) {
-      return  "errors.laps_lower_one".tr();
+      return  t.errors.laps_lower_one;
     }
 
     return null;
@@ -107,7 +107,7 @@ class QuickTimerPage extends HookWidget {
 
   String _intervalDurationValidation(Duration duration) {
     if (duration < const Duration(seconds: 10)) {
-      return "errors.interval_lower_ten_seconds".tr();
+      return t.errors.interval_lower_ten_seconds;
     }
     return null;
   }

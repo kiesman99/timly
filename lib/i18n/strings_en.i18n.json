@@ -8,7 +8,7 @@
     "finish": "Finish!",
     "pause": "Pause",
     "starting_in": "Starting in...",
-    "rounds": "Laps: {rounds}"
+    "rounds": "Laps: $rounds"
   },
   "exercise_edit": {
     "error_fill_all_fields": "Please fill in all fields",

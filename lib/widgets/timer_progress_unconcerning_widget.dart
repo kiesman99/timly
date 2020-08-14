@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tyme/paints/timer_progress_paint.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:tyme/i18n/strings.g.dart';
 
 @immutable
 class TimerProgressUnconcerningWidget extends StatelessWidget {
@@ -27,12 +27,11 @@ class TimerProgressUnconcerningWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text('timer.pause',
+        Text(t.timer.pause,
                 style: TextStyle(
                     fontSize: 30.0,
                     color: Colors.amber[300],
-                    fontWeight: FontWeight.bold))
-            .tr(),
+                    fontWeight: FontWeight.bold)),
         Text("$text", style: Theme.of(context).textTheme.headline1)
       ],
     );

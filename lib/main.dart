@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:fast_i18n/builder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +11,7 @@ import 'package:tyme/pages/main_page.dart';
 import 'package:tyme/type_adapter/duration_type_adapter.dart';
 
 import './globals.dart';
+import 'i18n/strings.g.dart';
 
 void _registerHiveAdapter() {
   Hive.registerAdapter(DurationTypeAdapter());
@@ -27,24 +28,29 @@ void main() async {
   await Hive.initFlutter();
   await _initialOpenHiveBoxes();
 
-  runApp(EasyLocalization(
-    supportedLocales: [Locale('en'), Locale('de')],
-    path: 'assets/translations',
-    fallbackLocale: Locale('de', 'DE'),
-    //assetLoader: CodegenLoader(),
-    child: MyApp(),
-  ));
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  @override
+  void initState() {
+    super.initState();
+    LocaleSettings.useDeviceLocale().whenComplete(() {
+      setState((){});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Flutter Demo',
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
         theme: ThemeData(
             primarySwatch: Colors.teal,
             backgroundColor: Colors.teal[700],

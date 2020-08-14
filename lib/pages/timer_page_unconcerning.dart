@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:tyme/i18n/strings.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tyme/bloc/timer/timer_bloc.dart';
@@ -15,21 +15,19 @@ class TimerPageUnconcerning extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("title").tr(),
+        title: Text(t.title),
       ),
       body: timerState.maybeWhen(
           paused: (_, __) => Center(
-                child: Text("timer.pause",
-                        style: Theme.of(context).textTheme.headline3)
-                    .tr(),
+                child: Text(t.timer.pause,
+                        style: Theme.of(context).textTheme.headline3),
               ),
           finished: (_) => Center(
-            child: Text("timer.finish",
+            child: Text(t.timer.finish,
                 style: Theme
                     .of(context)
                     .textTheme
-                    .headline3)
-                .tr(),
+                    .headline3),
           ),
           orElse: () => TimerDetailUnconcerning(state: timerState)),
       floatingActionButton: timerState.maybeWhen(

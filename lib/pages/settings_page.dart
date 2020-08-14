@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:tyme/i18n/strings.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:bottom_sheet_duration_picker/bottom_sheet_duration_picker.dart';
@@ -13,13 +13,13 @@ class SettingsPage extends HookWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('settings_page.title').tr(),
+          title: Text(t.settings_page.title),
         ),
         body: ListView(
           children: <Widget>[
             ListTile(
-              title: Text('settings_page.setup_time_title').tr(),
-              subtitle: Text('settings_page.setup_time_description').tr(),
+              title: Text(t.settings_page.setup_time_title),
+              subtitle: Text(t.settings_page.setup_time_description),
               trailing: Text('${setupDuration.value.inSeconds}s'),
               onTap: () async {
                 setupDuration.value =
@@ -31,9 +31,9 @@ class SettingsPage extends HookWidget {
             SwitchListTile(
               activeColor: Colors.teal[100],
               value: burnInProtection.value,
-              title: Text('settings_page.burn_in_protection_title').tr(),
+              title: Text(t.settings_page.burn_in_protection_title),
               subtitle:
-                  Text('settings_page.burn_in_protection_description').tr(),
+                  Text(t.settings_page.burn_in_protection_description),
               onChanged: (value) {
                 burnInProtection.value = value;
               },

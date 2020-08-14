@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:tyme/i18n/strings.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:tyme/bloc/timer/timer_state.dart';
@@ -54,14 +54,11 @@ class TimerDetailBurnIn extends HookWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text('timer.rounds',
+            Text(t.timer.rounds(rounds: timerState.remaining.laps.toString()),
                     style: Theme.of(context)
                         .textTheme
                         .subtitle1
-                        .copyWith(color: Colors.white))
-                .tr(namedArgs: {
-              'rounds': timerState.remaining.laps.toString()
-            }),
+                        .copyWith(color: Colors.white)),
             Text('${_duration.inSeconds}s',
                 style: Theme.of(context)
                     .textTheme

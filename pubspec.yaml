@@ -27,17 +27,14 @@ dependencies:
   flutter_bloc: ^5.0.0
   provider: ^4.1.3
   flutter_hooks: ^0.10.0
-  # shared_preferences: ^0.5.7+1
-  # shared_preferences_web: ^0.1.2+5
-  soundpool: ^1.1.1
   freezed_annotation: ^0.7.1
   hive: ^1.4.2
   hive_flutter: ^0.3.1
   equatable: ^1.2.0
   wakelock: ^0.1.4+1
-  easy_localization: ^2.3.2
   logger: ^0.9.1
   flutter_tts: ^1.2.6
+  fast_i18n: ^1.6.0
 
   # local libraries
   bottom_sheet_duration_picker:
@@ -73,9 +70,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  assets:
-    - assets/sounds/
-    - assets/translations/
+#  assets:
+#    - assets/sounds/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

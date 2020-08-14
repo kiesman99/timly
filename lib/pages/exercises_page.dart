@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +10,7 @@ import 'package:tyme/model/exercise.dart';
 import 'package:tyme/pages/exercises_edit_page.dart';
 import 'package:tyme/pages/timer_page.dart';
 import 'package:tyme/service/tts_service.dart';
+import 'package:tyme/i18n/strings.g.dart';
 
 class ExercisesPage extends StatefulWidget {
   @override
@@ -31,7 +31,7 @@ class _ExercisesPageState extends State<ExercisesPage> {
         return state.when(
             error: () => Scaffold(
                 body:
-                    Center(child: Text('bloc_persistence.error_loading').tr())),
+                    Center(child: Text(t.bloc_persistence.error_loading))),
             init: () =>
                 Scaffold(body: Center(child: CircularProgressIndicator())),
             loaded: (exercises) =>
@@ -115,7 +115,7 @@ class __ExercisesListState extends State<_ExercisesList> {
     if (widget._exercises.isEmpty) {
       return Scaffold(
         body: Center(
-          child: Text('exercises_page.no_exercises').tr(),
+          child: Text(t.exercises_page.no_exercises),
         ),
         floatingActionButton: _floatingButton(),
       );
@@ -123,7 +123,7 @@ class __ExercisesListState extends State<_ExercisesList> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("exercises_page.title").tr(),
+        title: Text(t.exercises_page.title),
         actions: _actions(),
       ),
       body: ListView.separated(

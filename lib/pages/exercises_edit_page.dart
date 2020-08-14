@@ -1,5 +1,5 @@
 import 'package:bottom_sheet_duration_picker/bottom_sheet_duration_picker.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:tyme/i18n/strings.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -30,8 +30,7 @@ class ExercisesEditPage extends HookWidget {
     return Scaffold(
       appBar: AppBar(
         title:
-            Text(exercise == null ? 'exercise_edit.add' : 'exercise_edit.edit')
-                .tr(),
+            Text(exercise == null ? t.exercise_edit.add : t.exercise_edit.edit),
       ),
       body: Builder(
         builder: (BuildContext builderContext) {
@@ -42,7 +41,7 @@ class ExercisesEditPage extends HookWidget {
               child: ListView(
                 children: <Widget>[
                   ListTile(
-                    title: Text('exercise_edit.hint_exercise').tr(),
+                    title: Text(t.exercise_edit.hint_exercise),
                     subtitle: TextFormField(
                       validator: _nameValidation,
                       focusNode: _nameFocusNode,
@@ -53,7 +52,7 @@ class ExercisesEditPage extends HookWidget {
                     ),
                   ),
                   ListTile(
-                    title: Text('exercise_edit.hint_laps').tr(),
+                    title: Text(t.exercise_edit.hint_laps),
                     subtitle: TextFormField(
                       validator: _lapsValidation,
                       focusNode: _lapsFocusNode,
@@ -68,12 +67,12 @@ class ExercisesEditPage extends HookWidget {
                   ),
                   DurationPickerFormField(
                     controller: intervalDurationController,
-                      title: 'exercise_edit.hint_interval_time'.tr(),
+                      title: t.exercise_edit.hint_interval_time,
                     validator: _intervalDurationValidation,
                   ),
                   DurationPickerFormField(
                     controller: recoverDurationController,
-                      title: 'exercise_edit.hint_recover_time'.tr(),),
+                      title: t.exercise_edit.hint_recover_time,),
                 ],
               ),
             ),
@@ -84,7 +83,7 @@ class ExercisesEditPage extends HookWidget {
       floatingActionButton: Builder(
         builder: (BuildContext builderContext) {
           return FloatingActionButton.extended(
-            label: Text('exercise_edit.button_save').tr(),
+            label: Text(t.exercise_edit.button_save),
             onPressed: () {
               if (formKey.value.currentState.validate()) {
                 _submit(
@@ -105,28 +104,28 @@ class ExercisesEditPage extends HookWidget {
 
   String _nameValidation(String name) {
     if (name.isEmpty) {
-      return "errors.textfield_empty".tr();
+      return t.errors.textfield_empty;
     }
     return null;
   }
 
   String _lapsValidation(String laps) {
     if (laps.isEmpty) {
-      return "errors.textfield_empty";
+      return t.errors.textfield_empty;
     }
     var number = int.tryParse(laps);
     if (number == null) {
-      return "errors.not_a_number".tr();
+      return t.errors.not_a_number;
     }
     if (number < 1) {
-      return "errors.laps_lower_one".tr();
+      return t.errors.laps_lower_one;
     }
     return null;
   }
 
   String _intervalDurationValidation(Duration duration) {
     if (duration < const Duration(seconds: 10)) {
-      return "errors.interval_lower_ten_seconds".tr();
+      return t.errors.interval_lower_ten_seconds;
     }
     return null;
   }

@@ -1,9 +1,9 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:tyme/bloc/timer/timer_state.dart';
 import 'package:tyme/hooks/fade_scale_animation.dart';
+import 'package:tyme/i18n/strings.g.dart';
 
 class SetupDetail extends HookWidget {
   final Setup setupState;
@@ -27,9 +27,9 @@ class SetupDetail extends HookWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text(
-              'timer.starting_in',
+              t.timer.starting_in,
               style: Theme.of(context).textTheme.headline3,
-            ).tr(),
+            ),
             SizedBox(height: 30.0),
             ScaleTransition(
               scale: fadeScaleAnimation,

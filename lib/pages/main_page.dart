@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:tyme/i18n/strings.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tyme/bloc/main_page_bottom_navigation/main_page_bottom_navigation_bloc.dart';
@@ -36,15 +36,15 @@ class MainPage extends StatelessWidget {
           currentIndex: state.index,
           items: [
             BottomNavigationBarItem(
-              title: Text('main_page.bottom_navigation_exercises').tr(),
+              title: Text(t.main_page.bottom_navigation_exercises),
               icon: Icon(Icons.list),
             ),
             BottomNavigationBarItem(
-              title: Text('main_page.bottom_navigation_quick_timer').tr(),
+              title: Text(t.main_page.bottom_navigation_quick_timer),
               icon: Icon(Icons.av_timer),
             ),
             BottomNavigationBarItem(
-                title: Text('main_page.bottom_navigation_settings').tr(),
+                title: Text(t.main_page.bottom_navigation_settings),
                 icon: Icon(Icons.settings))
           ],
         );
