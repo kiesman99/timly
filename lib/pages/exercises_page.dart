@@ -6,11 +6,11 @@ import 'package:tyme/bloc/burn_in/burn_in_bloc.dart';
 import 'package:tyme/bloc/persistence/persistence_bloc.dart';
 import 'package:tyme/bloc/persistence/persistence_event.dart';
 import 'package:tyme/bloc/persistence/persistence_state.dart';
-import 'package:tyme/bloc/sound/sound_bloc.dart';
 import 'package:tyme/bloc/timer/timer_bloc.dart';
 import 'package:tyme/model/exercise.dart';
 import 'package:tyme/pages/exercises_edit_page.dart';
 import 'package:tyme/pages/timer_page.dart';
+import 'package:tyme/service/tts_service.dart';
 
 class ExercisesPage extends StatefulWidget {
   @override
@@ -148,7 +148,7 @@ class __ExercisesListState extends State<_ExercisesList> {
                           providers: [
                             BlocProvider(
                               create: (_) =>
-                                  TimerBloc(e, context.bloc<SoundBloc>()),
+                                  TimerBloc(e, TTSService()),
                             ),
                             BlocProvider(
                               create: (_) => BurnInBloc(),

@@ -4,12 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:provider/provider.dart';
 import 'package:tyme/bloc/burn_in/burn_in_bloc.dart';
-import 'package:tyme/bloc/sound/sound_bloc.dart';
 import 'package:tyme/bloc/timer/timer_bloc.dart';
 import 'package:bottom_sheet_duration_picker/bottom_sheet_duration_picker.dart';
 import 'package:tyme/model/exercise.dart';
 import 'package:tyme/pages/timer_page.dart';
-import 'package:tyme/theme.dart';
+import 'package:tyme/service/tts_service.dart';
 
 class QuickTimerPage extends HookWidget {
   @override
@@ -60,7 +59,7 @@ class QuickTimerPage extends HookWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: Text('Los'),
-        onPressed: () {
+        onPressed: () async {
           if (formKey.value.currentState.validate()) {
             var e = Exercise(
                 laps: int.parse(lapsTextEditingController.text),
@@ -74,7 +73,7 @@ class QuickTimerPage extends HookWidget {
                         providers: [
                           BlocProvider(
                             create: (_) =>
-                                TimerBloc(e, context.bloc<SoundBloc>()),
+                                TimerBloc(e, TTSService()),
                           ),
                           BlocProvider(
                             create: (_) => BurnInBloc(),

@@ -1,11 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:tyme/bloc/sound/sound_bloc.dart';
-import 'package:tyme/bloc/sound/sound_event.dart';
 import 'package:tyme/bloc/timer/timer_event.dart';
 import 'package:tyme/bloc/timer/timer_state.dart';
 import 'package:tyme/model/exercise.dart';
+import 'package:tyme/service/tts_service.dart';
 import 'package:tyme/utils/custom_timer.dart';
 import 'package:tyme/utils/device.dart';
 import 'package:tyme/utils/logger.dart';
@@ -15,9 +14,6 @@ import 'package:wakelock/wakelock.dart';
 class TimerBloc extends Bloc<TimerEvent, TimerState> with LoggerMixin {
   final Duration _initialSetupDuration;
 
-  /// The bloc which handles playing sound
-  final SoundBloc _soundBloc;
-
   /// The timer used to produce a tick each
   /// second. It'll invoke [_tickHandler]
   CustomTimer _customTimer;
@@ -26,10 +22,11 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> with LoggerMixin {
   /// started with.
   final Exercise _initial;
 
-  // TODO: make setup duration work here
+  final TTSService _ttsService;
+
   TimerBloc(
     this._initial,
-    this._soundBloc, [
+    this._ttsService,[
     this._customTimer,
     // TODO: get from SettingsBloc
     this._initialSetupDuration = const Duration(seconds: 5),
@@ -46,6 +43,13 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> with LoggerMixin {
     }
     _customTimer.callback = () => add(TimerEvent.ticked());
     _customTimer.start();
+  }
+
+
+  @override
+  void onEvent(TimerEvent event) {
+    _ttsService.speakFromState(state);
+    super.onEvent(event);
   }
 
   @override
@@ -77,9 +81,6 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> with LoggerMixin {
     Exercise remaining,
   ) async* {
     loggerNS.d("Setup Tick: $setupDuration");
-    if (setupDuration.inSeconds <= 2) {
-      _soundBloc.add(SoundEvent.longBeep());
-    }
     if (setupDuration.inSeconds == 1) {
       yield TimerState.running(remaining);
     } else {
@@ -100,7 +101,6 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> with LoggerMixin {
     if (remaining.laps == 0) {
       yield TimerState.finished(remaining);
     } else if (remaining.interval.inSeconds == 1) {
-      _soundBloc.add(SoundEvent.longBeep());
       yield TimerState.recover(remaining.copyWith(interval: _initial.interval));
     } else {
       yield TimerState.running(remaining.copyWith(
@@ -122,11 +122,6 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> with LoggerMixin {
         recover: _initial.recover,
       ));
     } else {
-      if ([2, 3].contains(remaining.recover.inSeconds)) {
-        _soundBloc.add(SoundEvent.shortBeep());
-      } else if (remaining.recover.inSeconds == 1) {
-        _soundBloc.add(SoundEvent.longBeep());
-      }
       yield TimerState.recover(remaining.copyWith(
         recover: remaining.recover - const Duration(seconds: 1),
       ));

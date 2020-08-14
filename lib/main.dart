@@ -6,7 +6,6 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tyme/bloc/main_page_bottom_navigation/main_page_bottom_navigation_bloc.dart';
 import 'package:tyme/bloc/persistence/persistence_bloc.dart';
-import 'package:tyme/bloc/sound/sound_bloc.dart';
 import 'package:tyme/model/exercise.dart';
 import 'package:tyme/pages/main_page.dart';
 import 'package:tyme/type_adapter/duration_type_adapter.dart';
@@ -81,9 +80,6 @@ class MyApp extends StatelessWidget {
             )),
         home: MultiBlocProvider(
           providers: [
-            BlocProvider(
-              create: (context) => SoundBloc(),
-            ),
             BlocProvider(
               create: (context) => PersistenceBloc(),
             ),
