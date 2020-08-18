@@ -20,15 +20,12 @@ class TimerPageUnconcerning extends StatelessWidget {
       body: timerState.maybeWhen(
           paused: (_, __) => Center(
                 child: Text(t.timer.pause,
-                        style: Theme.of(context).textTheme.headline3),
+                    style: Theme.of(context).textTheme.headline3),
               ),
           finished: (_) => Center(
-            child: Text(t.timer.finish,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .headline3),
-          ),
+                child: Text(t.timer.finish,
+                    style: Theme.of(context).textTheme.headline3),
+              ),
           orElse: () => TimerDetailUnconcerning(state: timerState)),
       floatingActionButton: timerState.maybeWhen(
         paused: (_, __) {

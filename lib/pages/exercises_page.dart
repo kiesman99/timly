@@ -7,7 +7,8 @@ import 'package:tyme/bloc/persistence/persistence_event.dart';
 import 'package:tyme/bloc/persistence/persistence_state.dart';
 import 'package:tyme/bloc/timer/timer_bloc.dart';
 import 'package:tyme/model/exercise.dart';
-import 'package:tyme/pages/exercises_edit_page.dart';
+import 'package:tyme/pages/exercise_add_edit/exercises_add_page.dart';
+import 'exercise_add_edit/exercise_edit_page.dart';
 import 'package:tyme/pages/timer_page.dart';
 import 'package:tyme/service/tts_service.dart';
 import 'package:tyme/i18n/strings.g.dart';
@@ -30,8 +31,7 @@ class _ExercisesPageState extends State<ExercisesPage> {
       builder: (context, state) {
         return state.when(
             error: () => Scaffold(
-                body:
-                    Center(child: Text(t.bloc_persistence.error_loading))),
+                body: Center(child: Text(t.bloc_persistence.error_loading))),
             init: () =>
                 Scaffold(body: Center(child: CircularProgressIndicator())),
             loaded: (exercises) =>
@@ -66,8 +66,10 @@ class __ExercisesListState extends State<_ExercisesList> {
       onPressed: () {
         _resetSelection();
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) =>
-                ExercisesEditPage(persistenceBloc: persistenceBloc)));
+            builder: (context) => BlocProvider(
+                  create: (_) => context.bloc<PersistenceBloc>(),
+                  child: ExerciseAddPage(),
+                )));
       },
     );
   }
@@ -83,7 +85,7 @@ class __ExercisesListState extends State<_ExercisesList> {
       onPressed: () {
         persistenceBloc.add(PersistenceEvent.deleteAll(List.generate(
             _indexOfSelected.length,
-                (index) => widget._exercises.elementAt(_indexOfSelected[index]))));
+            (index) => widget._exercises.elementAt(_indexOfSelected[index]))));
         _resetSelection();
       },
     );
@@ -97,10 +99,9 @@ class __ExercisesListState extends State<_ExercisesList> {
           onPressed: () {
             Navigator.of(context)
                 .push(MaterialPageRoute(
-                builder: (context) => ExercisesEditPage(
-                    persistenceBloc: persistenceBloc,
-                    exercise: widget._exercises
-                        .elementAt(_indexOfSelected.elementAt(0)))))
+                    builder: (context) => ExerciseEditPage(
+                        exerciseToUpdate: widget._exercises
+                            .elementAt(_indexOfSelected.elementAt(0)))))
                 .then((value) => _resetSelection());
           },
         )
@@ -143,22 +144,21 @@ class __ExercisesListState extends State<_ExercisesList> {
                 } else {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (_) => Provider.value(
-                        value: e,
-                        child: MultiBlocProvider(
-                          providers: [
-                            BlocProvider(
-                              create: (_) =>
-                                  TimerBloc(e, TTSService()),
+                            value: e,
+                            child: MultiBlocProvider(
+                              providers: [
+                                BlocProvider(
+                                  create: (_) => TimerBloc(e, TTSService()),
+                                ),
+                                BlocProvider(
+                                  create: (_) => BurnInBloc(),
+                                )
+                              ],
+                              child: TimerPage(
+                                  //exercise: e,
+                                  ),
                             ),
-                            BlocProvider(
-                              create: (_) => BurnInBloc(),
-                            )
-                          ],
-                          child: TimerPage(
-                            //exercise: e,
-                          ),
-                        ),
-                      )));
+                          )));
                 }
               },
               onLongPress: () => _toggleSelect(index),
