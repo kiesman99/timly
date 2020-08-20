@@ -7,11 +7,11 @@ import 'package:tyme/bloc/persistence/persistence_event.dart';
 import 'package:tyme/bloc/persistence/persistence_state.dart';
 import 'package:tyme/bloc/timer/timer_bloc.dart';
 import 'package:tyme/model/exercise.dart';
-import 'package:tyme/pages/exercise_add_edit/exercises_add_page.dart';
-import 'exercise_add_edit/exercise_edit_page.dart';
 import 'package:tyme/pages/timer_page.dart';
 import 'package:tyme/service/tts_service.dart';
 import 'package:tyme/i18n/strings.g.dart';
+
+import 'exercise_add_edit/exercise_forms.dart';
 
 class ExercisesPage extends StatefulWidget {
   @override
@@ -66,8 +66,8 @@ class __ExercisesListState extends State<_ExercisesList> {
       onPressed: () {
         _resetSelection();
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => BlocProvider(
-                  create: (_) => context.bloc<PersistenceBloc>(),
+            builder: (context) => BlocProvider.value(
+                  value: persistenceBloc,
                   child: ExerciseAddPage(),
                 )));
       },
@@ -99,9 +99,12 @@ class __ExercisesListState extends State<_ExercisesList> {
           onPressed: () {
             Navigator.of(context)
                 .push(MaterialPageRoute(
-                    builder: (context) => ExerciseEditPage(
-                        exerciseToUpdate: widget._exercises
-                            .elementAt(_indexOfSelected.elementAt(0)))))
+                    builder: (context) => BlocProvider.value(
+                      value: persistenceBloc,
+                      child: ExerciseEditPage(
+                          exerciseToUpdate: widget._exercises
+                              .elementAt(_indexOfSelected.elementAt(0))),
+                    )))
                 .then((value) => _resetSelection());
           },
         )

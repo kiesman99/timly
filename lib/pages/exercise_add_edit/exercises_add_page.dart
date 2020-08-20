@@ -1,14 +1,4 @@
-import 'package:bottom_sheet_duration_picker/bottom_sheet_duration_picker.dart';
-import 'package:tyme/i18n/strings.g.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:tyme/bloc/persistence/persistence_bloc.dart';
-import 'package:tyme/bloc/persistence/persistence_event.dart';
-import 'package:tyme/model/exercise.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tyme/pages/exercise_add_edit/exercise_add_edit_validation_mixin.dart';
-
-import 'exercise_form.dart';
+part of exercise_form;
 
 class ExerciseAddPage extends StatefulWidget {
   @override
@@ -35,59 +25,65 @@ class _ExerciseAddPageState extends State<ExerciseAddPage>
   }
 
   @override
-  Widget build(BuildContext context) {
-    return ExerciseForm(
-      pageTitle: t.exercise_edit.add,
-      fabTitle: t.exercise_edit.button_save,
-      formKey: _formKey,
-      submit: _submit,
-      formWidget: ListView(
-        children: <Widget>[
-          ListTile(
-            title: Text(t.exercise_edit.hint_exercise),
-            subtitle: TextFormField(
-              validator: nameValidation,
-              focusNode: _nameFocusNode,
-              controller: _nameController,
-              onFieldSubmitted: (value) {
-                _nameFocusNode.unfocus();
-              },
-            ),
+  String get fabTitle => t.exercise_edit.button_save;
+
+  @override
+  Widget form() {
+    return ListView(
+      children: <Widget>[
+        ListTile(
+          title: Text(t.exercise_edit.hint_exercise),
+          subtitle: TextFormField(
+            validator: nameValidation,
+            focusNode: _nameFocusNode,
+            controller: _nameController,
+            onFieldSubmitted: (value) {
+              _nameFocusNode.unfocus();
+            },
           ),
-          ListTile(
-            title: Text(t.exercise_edit.hint_laps),
-            subtitle: TextFormField(
-              validator: lapsValidation,
-              focusNode: _lapsFocusNode,
-              controller: _lapsController,
-              inputFormatters: numberFormatter,
-              keyboardType: TextInputType.numberWithOptions(
-                  decimal: false, signed: false),
-              onFieldSubmitted: (_) {
-                _lapsFocusNode.unfocus();
-              },
-            ),
+        ),
+        ListTile(
+          title: Text(t.exercise_edit.hint_laps),
+          subtitle: TextFormField(
+            validator: lapsValidation,
+            focusNode: _lapsFocusNode,
+            controller: _lapsController,
+            inputFormatters: numberFormatter,
+            keyboardType: TextInputType.numberWithOptions(
+                decimal: false, signed: false),
+            onFieldSubmitted: (_) {
+              _lapsFocusNode.unfocus();
+            },
           ),
-          DurationPickerFormField(
-            controller: _intervalDurationController,
-            title: t.exercise_edit.hint_interval_time,
-            validator: intervalDurationValidation,
-          ),
-          DurationPickerFormField(
-            controller: _recoverDurationController,
-            title: t.exercise_edit.hint_recover_time,
-          ),
-        ],
-      ),
+        ),
+        DurationPickerFormField(
+          themeData: AppTheme.durationPickerTheme,
+          controller: _intervalDurationController,
+          title: t.exercise_edit.hint_interval_time,
+          validator: intervalDurationValidation,
+        ),
+        DurationPickerFormField(
+          themeData: AppTheme.durationPickerTheme,
+          controller: _recoverDurationController,
+          title: t.exercise_edit.hint_recover_time,
+        ),
+      ],
     );
   }
 
-  void _submit() {
+  @override
+  GlobalKey<FormState> get formKey => _formKey;
+
+  @override
+  String get pageTitle => t.exercise_edit.add;
+
+  @override
+  void submit() {
     Exercise exercise = Exercise(
-      name: _nameController.text,
-      laps: int.parse(_lapsController.text),
-      interval: _intervalDurationController.value,
-      recover: _recoverDurationController.value
+        name: _nameController.text,
+        laps: int.parse(_lapsController.text),
+        interval: _intervalDurationController.value,
+        recover: _recoverDurationController.value
     );
     _persistenceBloc.add(PersistenceEvent.add(exercise));
     Navigator.of(context).pop();

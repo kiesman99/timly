@@ -1,7 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tyme/i18n/strings.g.dart';
+import 'package:meta/meta.dart';
 
-class ExerciseFormValidationMixin {
+@protected
+mixin ExerciseFormValidationMixin<T extends StatefulWidget> on State<T> {
 
   String nameValidation(String name) {
     if (name.isEmpty) {
@@ -36,5 +39,36 @@ class ExerciseFormValidationMixin {
     FilteringTextInputFormatter.deny("^0"),
     FilteringTextInputFormatter.deny("\s")
   ];
+
+  void submit();
+  Widget form();
+  String get pageTitle;
+  GlobalKey<FormState> get formKey;
+  String get fabTitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(pageTitle),
+      ),
+      body: Form(
+        key: formKey,
+        child: Container(
+          padding: EdgeInsets.all(15.0),
+          child: form(),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        label: Text(fabTitle),
+        onPressed: () {
+          if (formKey.currentState.validate()) {
+            submit.call();
+          }
+        },
+      ),
+    );
+  }
 
 }

@@ -9,6 +9,7 @@ import 'package:bottom_sheet_duration_picker/bottom_sheet_duration_picker.dart';
 import 'package:tyme/model/exercise.dart';
 import 'package:tyme/pages/timer_page.dart';
 import 'package:tyme/service/tts_service.dart';
+import 'package:tyme/theme/app_theme.dart';
 
 class QuickTimerPage extends HookWidget {
   @override
@@ -42,6 +43,7 @@ class QuickTimerPage extends HookWidget {
                 height: 20,
               ),
               DurationPickerFormField(
+                themeData: AppTheme.durationPickerTheme,
                 controller: intervalDurationPickerController,
                 title: t.quick_timer_page.hint_interval,
                 validator: _intervalDurationValidation,
@@ -50,6 +52,7 @@ class QuickTimerPage extends HookWidget {
                 height: 20,
               ),
               DurationPickerFormField(
+                themeData: AppTheme.durationPickerTheme,
                 controller: recoverDurationPickerController,
                 title: t.quick_timer_page.hint_recover,
               ),
