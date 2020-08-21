@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:tyme/bloc/burn_in/burn_in_bloc.dart';
 import 'package:tyme/bloc/persistence/persistence_bloc.dart';
-import 'package:tyme/bloc/timer/timer_bloc.dart';
 import 'package:tyme/i18n/strings.g.dart';
 import 'package:tyme/model/exercise.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tyme/pages/exercise_add_edit/exercise_forms.dart';
 import 'package:tyme/pages/exercises_page/no_exercises_page.dart';
-import 'package:tyme/service/tts_service.dart';
 
-import '../timer_page.dart';
 import 'exercise_list_tile.dart';
 
 class ExercisesList extends StatefulWidget {
@@ -38,29 +33,7 @@ class _ExercisesListState extends State<ExercisesList> {
       body: ListView.builder(
         itemCount: _exercises.length,
         itemBuilder: (_, int index) {
-          final Exercise exercise = widget.exercises.elementAt(index);
-          return ExerciseTile(
-            exercise: exercise,
-            onTap: () {
-              Navigator.of(context).push<void>(MaterialPageRoute<void>(
-                  builder: (_) => Provider<Exercise>.value(
-                        value: exercise,
-                        child: MultiBlocProvider(
-                          providers: [
-                            BlocProvider<TimerBloc>(
-                              create: (_) => TimerBloc(exercise, TTSService()),
-                            ),
-                            BlocProvider<BurnInBloc>(
-                              create: (_) => BurnInBloc(),
-                            )
-                          ],
-                          child: TimerPage(
-                              //exercise: e,
-                              ),
-                        ),
-                      )));
-            },
-          );
+          return ExerciseTile(exercise: _exercises.elementAt(index));
         },
       ),
       floatingActionButton: FloatingActionButton(

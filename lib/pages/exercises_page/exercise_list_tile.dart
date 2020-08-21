@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tyme/bloc/burn_in/burn_in_bloc.dart';
 import 'package:tyme/bloc/persistence/persistence_bloc.dart';
 import 'package:tyme/bloc/persistence/persistence_event.dart';
+import 'package:tyme/bloc/timer/timer_bloc.dart';
 import 'package:tyme/model/exercise.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tyme/pages/exercise_add_edit/exercise_forms.dart';
+import 'package:tyme/service/tts_service.dart';
+
+import '../timer_page.dart';
 
 @immutable
 class ExerciseTile extends StatelessWidget {
-  const ExerciseTile({this.exercise, this.onTap});
+  const ExerciseTile({this.exercise});
 
   final Exercise exercise;
-  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +31,7 @@ class ExerciseTile extends StatelessWidget {
               SnackBar(content: Text('${exercise.name} deleted')));
         },
         child: ListTile(
-          onTap: onTap,
+          onTap: () => _onTap(context),
           onLongPress: () => _longPress(context),
           title: Text(exercise.name),
           leading: CircleAvatar(
@@ -34,6 +39,26 @@ class ExerciseTile extends StatelessWidget {
             backgroundColor: Colors.teal[800],
           ),
         ));
+  }
+
+  void _onTap(BuildContext context) {
+    Navigator.of(context).push<void>(MaterialPageRoute<void>(
+        builder: (_) => Provider<Exercise>.value(
+              value: exercise,
+              child: MultiBlocProvider(
+                providers: [
+                  BlocProvider<TimerBloc>(
+                    create: (_) => TimerBloc(exercise, TTSService()),
+                  ),
+                  BlocProvider<BurnInBloc>(
+                    create: (_) => BurnInBloc(),
+                  )
+                ],
+                child: TimerPage(
+                    //exercise: e,
+                    ),
+              ),
+            )));
   }
 
   void _longPress(BuildContext context) {
