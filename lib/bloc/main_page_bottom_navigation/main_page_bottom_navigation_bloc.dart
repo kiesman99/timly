@@ -7,28 +7,28 @@ import 'main_page_bottom_navigation_state.dart';
 class MainPageBottomNavigationBloc
     extends Bloc<MainPageBottomNavigationEvent, MainPageBottomNavigationState> {
   MainPageBottomNavigationBloc()
-      : super(MainPageBottomNavigationState.exercises());
+      : super(const MainPageBottomNavigationState.exercises());
 
   @override
   Stream<MainPageBottomNavigationState> mapEventToState(
       MainPageBottomNavigationEvent event) async* {
-    yield* _mapNavigationEventToState(event);
+    yield* _mapNavigationEventToState(event as Navigate);
   }
 
   Stream<MainPageBottomNavigationState> _mapNavigationEventToState(
       Navigate event) async* {
     switch (event.index) {
       case 0:
-        yield MainPageBottomNavigationState.exercises();
+        yield const MainPageBottomNavigationState.exercises();
         break;
       case 1:
-        yield MainPageBottomNavigationState.quickTimer();
+        yield const MainPageBottomNavigationState.quickTimer();
         break;
       case 2:
-        yield MainPageBottomNavigationState.settings();
+        yield const MainPageBottomNavigationState.settings();
         break;
       default:
-        yield MainPageBottomNavigationState.exercises();
+        yield const MainPageBottomNavigationState.exercises();
         break;
     }
   }

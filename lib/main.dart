@@ -6,6 +6,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tyme/bloc/main_page_bottom_navigation/main_page_bottom_navigation_bloc.dart';
 import 'package:tyme/bloc/persistence/persistence_bloc.dart';
+import 'package:tyme/bloc/persistence/persistence_event.dart';
 import 'package:tyme/model/exercise.dart';
 import 'package:tyme/pages/main_page.dart';
 import 'package:tyme/theme/app_theme.dart';
@@ -20,8 +21,10 @@ void _registerHiveAdapter() {
 }
 
 Future<void> _initialOpenHiveBoxes() async {
-  List<Future> boxOpenings = [Hive.openBox<Exercise>(exercise_box_name)];
-  await Future.wait(boxOpenings);
+  final List<Future<dynamic>> boxOpenings = [
+    Hive.openBox<Exercise>(exercise_box_name)
+  ];
+  await Future.wait<dynamic>(boxOpenings);
 }
 
 void main() async {
@@ -33,18 +36,16 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
-  // This widget is the root of your application.
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();
     LocaleSettings.useDeviceLocale().whenComplete(() {
-      setState((){});
+      setState(() {});
     });
   }
 
@@ -55,11 +56,12 @@ class _MyAppState extends State<MyApp> {
         theme: AppTheme.appTheme,
         home: MultiBlocProvider(
           providers: [
-            BlocProvider(
-              create: (context) => PersistenceBloc(),
+            BlocProvider<PersistenceBloc>(
+              create: (_) =>
+                  PersistenceBloc()..add(const PersistenceEvent.loadAll()),
             ),
-            BlocProvider(
-              create: (context) => MainPageBottomNavigationBloc(),
+            BlocProvider<MainPageBottomNavigationBloc>(
+              create: (_) => MainPageBottomNavigationBloc(),
             )
           ],
           child: MainPage(),

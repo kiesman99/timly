@@ -5,14 +5,14 @@ import 'package:tyme/widgets/timer_detail.dart';
 
 @immutable
 class TimerDetailUnconcerning extends StatelessWidget {
-  final TimerState state;
+  const TimerDetailUnconcerning({@required this.state});
 
-  TimerDetailUnconcerning({@required this.state});
+  final TimerState state;
 
   @override
   Widget build(BuildContext context) {
     if (state is Setup) {
-      return SetupDetail(setupState: state);
+      return SetupDetail(setupState: state as Setup);
     }
 
     return TimerDetail(timerState: state);

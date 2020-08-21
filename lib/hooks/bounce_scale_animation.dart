@@ -3,25 +3,25 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 /// This function will provide an animation from 0.0 to 1.0
 /// with an [Curves.easeInOutQuint]
-Animation useBounceScaleAnimation(AnimationController controller) {
+Animation<double> useBounceScaleAnimation(AnimationController controller) {
   return Hook.use(_BounceScaleHook(animationController: controller));
 }
 
-class _BounceScaleHook extends Hook<Animation> {
+class _BounceScaleHook extends Hook<Animation<double>> {
+  const _BounceScaleHook({@required this.animationController});
   final AnimationController animationController;
-
-  _BounceScaleHook({@required this.animationController});
 
   @override
   _BounceScaleHookState createState() => _BounceScaleHookState();
 }
 
-class _BounceScaleHookState extends HookState<Animation, _BounceScaleHook> {
-  Animation _bounceScaleAnimation;
+class _BounceScaleHookState
+    extends HookState<Animation<double>, _BounceScaleHook> {
+  Animation<double> _bounceScaleAnimation;
 
   @override
   void initHook() {
-    _bounceScaleAnimation = Tween(begin: 0.0, end: 1.0)
+    _bounceScaleAnimation = Tween<double>(begin: 0.0, end: 1.0)
         .chain(CurveTween(curve: Curves.easeInOutQuint))
         .animate(hook.animationController);
     super.initHook();
@@ -29,5 +29,5 @@ class _BounceScaleHookState extends HookState<Animation, _BounceScaleHook> {
   }
 
   @override
-  Animation build(BuildContext context) => _bounceScaleAnimation;
+  Animation<double> build(BuildContext context) => _bounceScaleAnimation;
 }

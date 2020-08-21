@@ -14,10 +14,14 @@ import 'package:tyme/theme/app_theme.dart';
 class QuickTimerPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final lapsTextEditingController = useTextEditingController();
-    final intervalDurationPickerController = useDurationPickerController();
-    final recoverDurationPickerController = useDurationPickerController();
-    var formKey = useState(GlobalKey<FormState>());
+    final TextEditingController lapsTextEditingController =
+        useTextEditingController();
+    final DurationPickerController intervalDurationPickerController =
+        useDurationPickerController();
+    final DurationPickerController recoverDurationPickerController =
+        useDurationPickerController();
+    final ValueNotifier<GlobalKey<FormState>> formKey =
+        useState<GlobalKey<FormState>>(GlobalKey<FormState>());
 
     return Scaffold(
       appBar: AppBar(
@@ -34,12 +38,12 @@ class QuickTimerPage extends HookWidget {
                 subtitle: TextFormField(
                   // ignore: missing_return
                   validator: _lapsValidation,
-                  keyboardType: TextInputType.numberWithOptions(
+                  keyboardType: const TextInputType.numberWithOptions(
                       decimal: false, signed: false),
                   controller: lapsTextEditingController,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               DurationPickerFormField(
@@ -48,7 +52,7 @@ class QuickTimerPage extends HookWidget {
                 title: t.quick_timer_page.hint_interval,
                 validator: _intervalDurationValidation,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               DurationPickerFormField(
@@ -61,24 +65,24 @@ class QuickTimerPage extends HookWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        label: Text('Los'),
+        // TODO: add translation
+        label: const Text('Los'),
         onPressed: () async {
-          if (formKey.value.currentState.validate()) {
+          if (formKey.value.currentState.validate() == true) {
             var e = Exercise(
                 laps: int.parse(lapsTextEditingController.text),
                 interval: intervalDurationPickerController.value,
                 recover: recoverDurationPickerController.value);
 
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (_) => Provider.value(
+            Navigator.of(context).push<void>(MaterialPageRoute<void>(
+                builder: (_) => Provider<Exercise>.value(
                       value: e,
                       child: MultiBlocProvider(
                         providers: [
-                          BlocProvider(
-                            create: (_) =>
-                                TimerBloc(e, TTSService()),
+                          BlocProvider<TimerBloc>(
+                            create: (_) => TimerBloc(e, TTSService()),
                           ),
-                          BlocProvider(
+                          BlocProvider<BurnInBloc>(
                             create: (_) => BurnInBloc(),
                           )
                         ],
@@ -95,14 +99,14 @@ class QuickTimerPage extends HookWidget {
     if (value.isEmpty) {
       return t.errors.textfield_empty;
     }
-    int num = int.tryParse(value);
+    final int num = int.tryParse(value);
 
     if (num == null) {
       return t.errors.not_a_number;
     }
 
     if (num < 1) {
-      return  t.errors.laps_lower_one;
+      return t.errors.laps_lower_one;
     }
 
     return null;

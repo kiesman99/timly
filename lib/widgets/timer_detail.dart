@@ -16,9 +16,9 @@ class TimerDetail extends HookWidget {
   /// the given [timerState]
   int get _duration {
     return timerState.maybeWhen(
-        running: (exercise) => exercise.interval.inSeconds,
-        setup: (setup, _) => setup.inSeconds,
-        recover: (exercise) => exercise.recover.inSeconds,
+        running: (Exercise exercise) => exercise.interval.inSeconds,
+        setup: (Duration setup, _) => setup.inSeconds,
+        recover: (Exercise exercise) => exercise.recover.inSeconds,
         orElse: () => 0);
   }
 
@@ -26,9 +26,9 @@ class TimerDetail extends HookWidget {
   /// for the [timerState]
   int get _laps {
     return timerState.maybeWhen(
-        running: (exercise) => exercise.laps,
-        setup: (_, exercise) => exercise.laps,
-        recover: (exercise) => exercise.laps,
+        running: (Exercise exercise) => exercise.laps,
+        setup: (_, Exercise exercise) => exercise.laps,
+        recover: (Exercise exercise) => exercise.laps,
         orElse: () => 0);
   }
 
@@ -36,19 +36,19 @@ class TimerDetail extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final interval = context.select((Exercise e) => e.interval);
-    Duration currentInterval = timerState.remaining.interval;
-    final intervalProgress =
+    final Duration interval = context.select((Exercise e) => e.interval);
+    final Duration currentInterval = timerState.remaining.interval;
+    final double intervalProgress =
         (currentInterval.inSeconds / interval.inSeconds) * 100.0;
 
-    final initAnimationController =
-    useAnimationController(duration: const Duration(milliseconds: 400));
-    final progressAnimationController =
-    useAnimationController(duration: const Duration(milliseconds: 100));
+    final AnimationController initAnimationController =
+        useAnimationController(duration: const Duration(milliseconds: 400));
+    final AnimationController progressAnimationController =
+        useAnimationController(duration: const Duration(milliseconds: 100));
 
-    final Animation initAnimation =
-    useBounceScaleAnimation(initAnimationController);
-    final Animation progressAnimation = useTimerProgressAnimation(
+    final Animation<double> initAnimation =
+        useBounceScaleAnimation(initAnimationController);
+    final Animation<double> progressAnimation = useTimerProgressAnimation(
         controller: progressAnimationController, progress: intervalProgress);
 
     return Stack(
@@ -57,27 +57,27 @@ class TimerDetail extends HookWidget {
           top: 20.0,
           right: 20.0,
           child:
-          Text("${_laps}x", style: Theme.of(context).textTheme.headline6),
+              Text("${_laps}x", style: Theme.of(context).textTheme.headline6),
         ),
         Center(
             child: ScaleTransition(
-              scale: initAnimation,
-              child: AnimatedBuilder(
-                animation: progressAnimation,
-                builder: (context, child) {
-                  if (timerState is Recover) {
-                    return TimerProgressUnconcerningWidget.recover(
-                      text: _duration.toString(),
-                    );
-                  }
+          scale: initAnimation,
+          child: AnimatedBuilder(
+            animation: progressAnimation,
+            builder: (context, child) {
+              if (timerState is Recover) {
+                return TimerProgressUnconcerningWidget.recover(
+                  text: _duration.toString(),
+                );
+              }
 
-                  return TimerProgressUnconcerningWidget(
-                      intervalProgress: progressAnimation.value,
-                      text: _duration.toString(),
-                    );
-                },
-              ),
-            )),
+              return TimerProgressUnconcerningWidget(
+                intervalProgress: progressAnimation.value,
+                text: _duration.toString(),
+              );
+            },
+          ),
+        )),
       ],
     );
   }

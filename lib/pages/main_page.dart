@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tyme/bloc/main_page_bottom_navigation/main_page_bottom_navigation_bloc.dart';
 import 'package:tyme/bloc/main_page_bottom_navigation/main_page_bottom_navigation_event.dart';
 import 'package:tyme/bloc/main_page_bottom_navigation/main_page_bottom_navigation_state.dart';
-import 'package:tyme/pages/exercises_page.dart';
+import 'file:///C:/Users/jvietz/Workspace/Private/timly/lib/pages/exercises_page/exercises_page.dart';
 import 'package:tyme/pages/quick_timer_page.dart';
 import 'package:tyme/pages/settings_page.dart';
 import 'package:tyme/widgets/bottom_navigation_transition.dart';

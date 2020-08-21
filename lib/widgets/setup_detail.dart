@@ -6,18 +6,18 @@ import 'package:tyme/hooks/fade_scale_animation.dart';
 import 'package:tyme/i18n/strings.g.dart';
 
 class SetupDetail extends HookWidget {
-  final Setup setupState;
-
-  SetupDetail({
+  const SetupDetail({
     @required this.setupState,
   });
 
+  final Setup setupState;
+
   @override
   Widget build(BuildContext context) {
-    final animationController =
-    useAnimationController(duration: const Duration(milliseconds: 300));
-    final Animation fadeScaleAnimation =
-    useFadeScaleAnimation(animationController);
+    final AnimationController animationController =
+        useAnimationController(duration: const Duration(milliseconds: 300));
+    final Animation<double> fadeScaleAnimation =
+        useFadeScaleAnimation(animationController);
 
     return Container(
         width: MediaQuery.of(context).size.width,
@@ -30,7 +30,7 @@ class SetupDetail extends HookWidget {
               t.timer.starting_in,
               style: Theme.of(context).textTheme.headline3,
             ),
-            SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
             ScaleTransition(
               scale: fadeScaleAnimation,
               child: FadeTransition(

@@ -14,7 +14,13 @@ class ExerciseHiveRepository extends ExerciseRepository {
 
   @override
   Future<List<Exercise>> getAll() {
-    return Future.value(_exerciseBox.values.toList());
+    var tmp = _exerciseBox.values.toList();
+    var exercises = <Exercise>[];
+    for (int i = 0; i < tmp.length; i++) {
+      var e = tmp[i].copyWith(key: i);
+      exercises.add(e);
+    }
+    return Future.value(exercises);
   }
 
   @override
