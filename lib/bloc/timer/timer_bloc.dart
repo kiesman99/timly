@@ -12,21 +12,9 @@ import 'package:tyme/utils/real_timer.dart';
 import 'package:wakelock/wakelock.dart';
 
 class TimerBloc extends Bloc<TimerEvent, TimerState> with LoggerMixin {
-  final Duration _initialSetupDuration;
-
-  /// The timer used to produce a tick each
-  /// second. It'll invoke [_tickHandler]
-  CustomTimer _customTimer;
-
-  /// The initial [Exercise] the [TimerBloc] was
-  /// started with.
-  final Exercise _initial;
-
-  final TTSService _ttsService;
-
   TimerBloc(
-    this._initial,
-    this._ttsService,[
+    this._initial, [
+    TTSService _ttsService,
     this._customTimer,
     // TODO: get from SettingsBloc
     this._initialSetupDuration = const Duration(seconds: 5),
@@ -39,12 +27,24 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> with LoggerMixin {
     if (_customTimer == null) {
       _customTimer = RealTimer(interval: const Duration(seconds: 1));
     } else {
-      loggerNS.d("Using custom Timer: ${_customTimer.runtimeType}");
+      loggerNS.d('Using custom Timer: ${_customTimer.runtimeType}');
     }
-    _customTimer.callback = () => add(TimerEvent.ticked());
+    this._ttsService = _ttsService ?? TTSService();
+    _customTimer.callback = () => add(const TimerEvent.ticked());
     _customTimer.start();
   }
 
+  final Duration _initialSetupDuration;
+
+  /// The timer used to produce a tick each
+  /// second. It'll invoke [_tickHandler]
+  CustomTimer _customTimer;
+
+  /// The initial [Exercise] the [TimerBloc] was
+  /// started with.
+  final Exercise _initial;
+
+  TTSService _ttsService;
 
   @override
   void onEvent(TimerEvent event) {

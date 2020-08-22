@@ -69,26 +69,12 @@ class QuickTimerPage extends HookWidget {
         label: const Text('Los'),
         onPressed: () async {
           if (formKey.value.currentState.validate() == true) {
-            var e = Exercise(
+            final Exercise e = Exercise(
                 laps: int.parse(lapsTextEditingController.text),
                 interval: intervalDurationPickerController.value,
                 recover: recoverDurationPickerController.value);
 
-            Navigator.of(context).push<void>(MaterialPageRoute<void>(
-                builder: (_) => Provider<Exercise>.value(
-                      value: e,
-                      child: MultiBlocProvider(
-                        providers: [
-                          BlocProvider<TimerBloc>(
-                            create: (_) => TimerBloc(e, TTSService()),
-                          ),
-                          BlocProvider<BurnInBloc>(
-                            create: (_) => BurnInBloc(),
-                          )
-                        ],
-                        child: TimerPage(),
-                      ),
-                    )));
+            Navigator.of(context).push(TimerPage.route(exercise: e));
           }
         },
       ),

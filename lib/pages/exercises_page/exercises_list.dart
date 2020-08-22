@@ -18,8 +18,6 @@ class ExercisesList extends StatefulWidget {
 }
 
 class _ExercisesListState extends State<ExercisesList> {
-  PersistenceBloc get persistenceBloc => context.bloc<PersistenceBloc>();
-
   List<Exercise> get _exercises => widget.exercises;
 
   @override
@@ -39,11 +37,8 @@ class _ExercisesListState extends State<ExercisesList> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          Navigator.of(context).push<void>(MaterialPageRoute<void>(
-              builder: (_) => BlocProvider<PersistenceBloc>.value(
-                    value: persistenceBloc,
-                    child: ExerciseAddPage(),
-                  )));
+          Navigator.of(context).push(ExerciseAddPage.route(
+              persistenceBloc: context.bloc<PersistenceBloc>()));
         },
       ),
     );

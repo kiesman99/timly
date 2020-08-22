@@ -1,12 +1,23 @@
 part of exercise_form;
 
 class ExerciseAddPage extends StatefulWidget {
+  const ExerciseAddPage();
+
+  static Route<void> route({@required PersistenceBloc persistenceBloc}) {
+    return MaterialPageRoute<void>(builder: (_) {
+      return BlocProvider<PersistenceBloc>.value(
+        value: persistenceBloc,
+        child: const ExerciseAddPage(),
+      );
+    });
+  }
+
   @override
   _ExerciseAddPageState createState() => _ExerciseAddPageState();
 }
 
 class _ExerciseAddPageState extends State<ExerciseAddPage>
-    with ExerciseFormValidationMixin {
+    with ExerciseFormValidationMixin<ExerciseAddPage> {
   PersistenceBloc _persistenceBloc;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _nameController = TextEditingController();
@@ -49,8 +60,8 @@ class _ExerciseAddPageState extends State<ExerciseAddPage>
             focusNode: _lapsFocusNode,
             controller: _lapsController,
             inputFormatters: numberFormatter,
-            keyboardType: TextInputType.numberWithOptions(
-                decimal: false, signed: false),
+            keyboardType:
+                TextInputType.numberWithOptions(decimal: false, signed: false),
             onFieldSubmitted: (_) {
               _lapsFocusNode.unfocus();
             },
@@ -83,8 +94,7 @@ class _ExerciseAddPageState extends State<ExerciseAddPage>
         name: _nameController.text,
         laps: int.parse(_lapsController.text),
         interval: _intervalDurationController.value,
-        recover: _recoverDurationController.value
-    );
+        recover: _recoverDurationController.value);
     _persistenceBloc.add(PersistenceEvent.add(exercise));
     Navigator.of(context).pop();
   }

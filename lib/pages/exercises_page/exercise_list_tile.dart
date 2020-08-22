@@ -42,32 +42,13 @@ class ExerciseTile extends StatelessWidget {
   }
 
   void _onTap(BuildContext context) {
-    Navigator.of(context).push<void>(MaterialPageRoute<void>(
-        builder: (_) => Provider<Exercise>.value(
-              value: exercise,
-              child: MultiBlocProvider(
-                providers: [
-                  BlocProvider<TimerBloc>(
-                    create: (_) => TimerBloc(exercise, TTSService()),
-                  ),
-                  BlocProvider<BurnInBloc>(
-                    create: (_) => BurnInBloc(),
-                  )
-                ],
-                child: TimerPage(
-                    //exercise: e,
-                    ),
-              ),
-            )));
+    Navigator.of(context).push(TimerPage.route(exercise: exercise));
   }
 
   void _longPress(BuildContext context) {
-    print('Long press');
-    Navigator.of(context).push<void>(MaterialPageRoute<void>(
-        builder: (_) => BlocProvider<PersistenceBloc>.value(
-              value: context.bloc<PersistenceBloc>(),
-              child: ExerciseEditPage(exerciseToUpdate: exercise),
-            )));
+    Navigator.of(context).push<void>(ExerciseEditPage.route<void>(
+        exerciseToUpdate: exercise,
+        persistenceBloc: context.bloc<PersistenceBloc>()));
   }
 }
 
@@ -77,6 +58,7 @@ class _DeleteBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 30.0),
       color: Colors.red,
       child: Row(

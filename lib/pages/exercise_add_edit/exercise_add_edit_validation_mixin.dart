@@ -5,7 +5,6 @@ import 'package:meta/meta.dart';
 
 @protected
 mixin ExerciseFormValidationMixin<T extends StatefulWidget> on State<T> {
-
   String nameValidation(String name) {
     if (name.isEmpty) {
       return t.errors.textfield_empty;
@@ -17,7 +16,7 @@ mixin ExerciseFormValidationMixin<T extends StatefulWidget> on State<T> {
     if (laps.isEmpty) {
       return t.errors.textfield_empty;
     }
-    var number = int.tryParse(laps);
+    final int number = int.tryParse(laps);
     if (number == null) {
       return t.errors.not_a_number;
     }
@@ -35,9 +34,9 @@ mixin ExerciseFormValidationMixin<T extends StatefulWidget> on State<T> {
   }
 
   final List<TextInputFormatter> numberFormatter = [
-    FilteringTextInputFormatter.deny("[.|,|-]"),
-    FilteringTextInputFormatter.deny("^0"),
-    FilteringTextInputFormatter.deny("\s")
+    FilteringTextInputFormatter.deny(r'[.|,|-]'),
+    FilteringTextInputFormatter.deny(r'^0'),
+    FilteringTextInputFormatter.deny('\s')
   ];
 
   void submit();
@@ -55,7 +54,7 @@ mixin ExerciseFormValidationMixin<T extends StatefulWidget> on State<T> {
       body: Form(
         key: formKey,
         child: Container(
-          padding: EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(15.0),
           child: form(),
         ),
       ),
@@ -70,5 +69,4 @@ mixin ExerciseFormValidationMixin<T extends StatefulWidget> on State<T> {
       ),
     );
   }
-
 }

@@ -1,7 +1,7 @@
-import 'package:tyme/bloc/persistence/persistence_bloc.dart';
-import 'package:tyme/bloc/persistence/persistence_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tyme/bloc/persistence/persistence_bloc.dart';
+import 'package:tyme/bloc/persistence/persistence_event.dart';
 import 'package:tyme/pages/exercises_page/exercises_page.dart';
 import 'package:tyme/pages/main_page/bottom_navigation_cubit.dart';
 import 'package:tyme/pages/quick_timer_page.dart';
@@ -14,13 +14,12 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<PersistenceBloc>(
-          create: (_) =>
-              PersistenceBloc()..add(const PersistenceEvent.loadAll()),
-        ),
         BlocProvider<BottomNavigationCubit>(
           create: (_) => BottomNavigationCubit(),
-        )
+        ),
+        BlocProvider<PersistenceBloc>(
+            create: (_) =>
+                PersistenceBloc()..add(const PersistenceEvent.loadAll()))
       ],
       child: Scaffold(
         body: _ActualMainPage(),
