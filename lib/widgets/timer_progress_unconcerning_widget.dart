@@ -7,18 +7,22 @@ class TimerProgressUnconcerningWidget extends StatelessWidget {
   final String text;
   final double intervalProgress;
   final double radiusPercentage;
-  final bool _isRecover;
+  final bool isRecover;
 
   TimerProgressUnconcerningWidget(
-      {this.text, this.intervalProgress = 100.0, this.radiusPercentage = 1.0})
-      : _isRecover = false;
+      {this.text,
+      this.intervalProgress = 100.0,
+      this.radiusPercentage = 1.0,
+      bool isRecover})
+      : this.isRecover = isRecover ?? false;
 
   TimerProgressUnconcerningWidget.recover(
       {this.text, this.radiusPercentage = 1.0})
-      : _isRecover = true, intervalProgress = 100.0;
+      : isRecover = true,
+        intervalProgress = 100.0;
 
   Widget _buildChild(BuildContext context) {
-    if (!_isRecover) {
+    if (!isRecover) {
       return Center(
         child: Text("$text", style: Theme.of(context).textTheme.headline1),
       );
@@ -28,10 +32,10 @@ class TimerProgressUnconcerningWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(t.timer.pause,
-                style: TextStyle(
-                    fontSize: 30.0,
-                    color: Colors.amber[300],
-                    fontWeight: FontWeight.bold)),
+            style: TextStyle(
+                fontSize: 30.0,
+                color: Colors.amber[300],
+                fontWeight: FontWeight.bold)),
         Text("$text", style: Theme.of(context).textTheme.headline1)
       ],
     );
@@ -39,10 +43,10 @@ class TimerProgressUnconcerningWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (_isRecover) {
+    if (isRecover) {
       return CustomPaint(
-        painter: TimerProgressPainter.recover(
-            radiusPercentage: radiusPercentage),
+        painter:
+            TimerProgressPainter.recover(radiusPercentage: radiusPercentage),
         child: _buildChild(context),
       );
     }
