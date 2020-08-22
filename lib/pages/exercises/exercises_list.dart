@@ -4,7 +4,7 @@ import 'package:tyme/i18n/strings.g.dart';
 import 'package:tyme/model/exercise.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tyme/pages/exercise_add_edit/exercise_forms.dart';
-import 'package:tyme/pages/exercises_page/no_exercises_page.dart';
+import 'package:tyme/pages/exercises/no_exercises_page.dart';
 
 import 'exercise_list_tile.dart';
 

@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tyme/pages/exercise_add_edit/exercise_forms.dart';
 import 'package:tyme/service/tts_service.dart';
 
-import '../timer_page.dart';
+import '../timer/timer_page.dart';
 
 @immutable
 class ExerciseTile extends StatelessWidget {

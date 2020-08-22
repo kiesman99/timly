@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tyme/bloc/persistence/persistence_bloc.dart';
 import 'package:tyme/bloc/persistence/persistence_event.dart';
-import 'package:tyme/pages/exercises_page/exercises_page.dart';
+import 'package:tyme/pages/exercises/exercises_page.dart';
 import 'package:tyme/pages/main_page/bottom_navigation_cubit.dart';
-import 'package:tyme/pages/quick_timer_page.dart';
-import 'package:tyme/pages/settings_page.dart';
+import 'package:tyme/pages/quick_timer/quick_timer_page.dart';
+import 'package:tyme/pages/settings/settings_page.dart';
 
 import 'bottom_navigation.dart';
 

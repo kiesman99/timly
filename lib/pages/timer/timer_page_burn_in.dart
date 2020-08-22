@@ -10,14 +10,16 @@ import 'package:tyme/bloc/timer/timer_state.dart';
 import 'package:tyme/model/exercise.dart';
 import 'package:tyme/widgets/timer_detail_burn_in.dart';
 
+@immutable
 class TimerPageBurnIn extends StatelessWidget {
+  const TimerPageBurnIn(
+      {this.leftPadding = 0.0,
+      this.topPadding = 0.0,
+      @required this.timerState});
+
   final double leftPadding;
   final double topPadding;
   final TimerState timerState;
-
-  TimerPageBurnIn({this.leftPadding = 0.0,
-    this.topPadding = 0.0,
-    @required this.timerState});
 
   Widget _bodyWidget(BuildContext pageContext) {
     var interval = pageContext.select((Exercise e) => e.interval);
@@ -44,7 +46,7 @@ class TimerPageBurnIn extends StatelessWidget {
         padding: EdgeInsets.only(left: leftPadding, top: topPadding),
         child: Center(
           child: Text(t.timer.pause,
-                  style: TextStyle(fontSize: 30.0, color: Colors.white)),
+              style: const TextStyle(fontSize: 30.0, color: Colors.white)),
         ));
   }
 
@@ -53,15 +55,15 @@ class TimerPageBurnIn extends StatelessWidget {
     return Scaffold(
       body: InkWell(
         onTap: () {
-          context.bloc<TimerBloc>().add(TimerEvent.pause());
-          context.bloc<BurnInBloc>().add(BurnInEvent.touched());
+          context.bloc<TimerBloc>().add(const TimerEvent.pause());
+          context.bloc<BurnInBloc>().add(const BurnInEvent.touched());
         },
         child: LayoutBuilder(
-          builder: (context, constraints) {
+          builder: (_, BoxConstraints constraints) {
             return Container(
               width: constraints.maxWidth,
               height: constraints.maxHeight,
-              decoration: BoxDecoration(color: Colors.black),
+              decoration: const BoxDecoration(color: Colors.black),
               child: _bodyWidget(context),
             );
           },

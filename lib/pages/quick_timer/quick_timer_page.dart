@@ -7,7 +7,7 @@ import 'package:tyme/bloc/burn_in/burn_in_bloc.dart';
 import 'package:tyme/bloc/timer/timer_bloc.dart';
 import 'package:bottom_sheet_duration_picker/bottom_sheet_duration_picker.dart';
 import 'package:tyme/model/exercise.dart';
-import 'package:tyme/pages/timer_page.dart';
+import 'package:tyme/pages/timer/timer_page.dart';
 import 'package:tyme/service/tts_service.dart';
 import 'package:tyme/theme/app_theme.dart';
 

@@ -6,8 +6,8 @@ import 'package:tyme/bloc/burn_in/burn_in_state.dart';
 import 'package:tyme/bloc/timer/timer_bloc.dart';
 import 'package:tyme/bloc/timer/timer_state.dart';
 import 'package:tyme/model/exercise.dart';
-import 'package:tyme/pages/timer_page_burn_in.dart';
-import 'package:tyme/pages/timer_page_unconcerning.dart';
+import 'package:tyme/pages/timer/timer_page_burn_in.dart';
+import 'package:tyme/pages/timer/timer_page_unconcerning.dart';
 
 @immutable
 class TimerPage extends StatelessWidget {
