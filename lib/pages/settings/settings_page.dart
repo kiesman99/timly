@@ -1,16 +1,15 @@
 import 'package:tyme/i18n/strings.g.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:bottom_sheet_duration_picker/bottom_sheet_duration_picker.dart';
 
+@immutable
+class SettingsPage extends StatelessWidget {
+  SettingsPage();
 
-// TODO: IMPLEMENT DB
-class SettingsPage extends HookWidget {
+  final Duration setupDuration = Duration.zero;
+  final bool burnInProtection = true;
+
   @override
   Widget build(BuildContext context) {
-    var setupDuration = useState(Duration.zero);
-    var burnInProtection = useState(true);
-
     return Scaffold(
         appBar: AppBar(
           title: Text(t.settings_page.title),
@@ -20,25 +19,22 @@ class SettingsPage extends HookWidget {
             ListTile(
               title: Text(t.settings_page.setup_time_title),
               subtitle: Text(t.settings_page.setup_time_description),
-              trailing: Text('${setupDuration.value.inSeconds}s'),
+              trailing: Text('${setupDuration.inSeconds}s'),
               onTap: () async {
-                setupDuration.value =
-                    await showDurationPickerBottomSheet(context: context) ??
-                        setupDuration.value;
+                // Update [setupDuration]
               },
             ),
-            Divider(),
+            const Divider(),
             SwitchListTile(
               activeColor: Colors.teal[100],
-              value: burnInProtection.value,
+              value: burnInProtection,
               title: Text(t.settings_page.burn_in_protection_title),
-              subtitle:
-                  Text(t.settings_page.burn_in_protection_description),
-              onChanged: (value) {
-                burnInProtection.value = value;
+              subtitle: Text(t.settings_page.burn_in_protection_description),
+              onChanged: (bool value) {
+                // update [brunInProtection]
               },
             ),
-            Divider(),
+            const Divider(),
           ],
         ));
   }

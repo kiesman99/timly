@@ -1,28 +1,19 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:hive/hive.dart';
 
-part 'exercise.g.dart';
-
-@HiveType(typeId: 0)
-class Exercise extends HiveObject with EquatableMixin {
-  @HiveField(1)
-  String name;
-  @HiveField(2)
-  Duration interval;
-  @HiveField(3)
-  Duration recover;
-  @HiveField(4)
-  int laps;
-
-  dynamic key;
-
-  Exercise(
-      {this.name = "",
+class Exercise with EquatableMixin {
+  const Exercise(
+      {this.name = '',
       @required this.interval,
       @required this.recover,
       @required this.laps,
       this.key});
+  final String name;
+  final Duration interval;
+  final Duration recover;
+  final int laps;
+
+  final dynamic key;
 
   Exercise copyWith(
       {String name,
@@ -40,7 +31,7 @@ class Exercise extends HiveObject with EquatableMixin {
 
   @override
   String toString() {
-    return "Exercise {key: $key, name: $name, laps: $laps, interval: ${interval.inSeconds}, recover: ${recover.inSeconds}}";
+    return 'Exercise {key: $key, name: $name, laps: $laps, interval: ${interval.inSeconds}, recover: ${recover.inSeconds}}';
   }
 
   @override

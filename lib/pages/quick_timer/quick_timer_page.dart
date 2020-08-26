@@ -1,28 +1,27 @@
 import 'package:tyme/i18n/strings.g.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:provider/provider.dart';
-import 'package:tyme/bloc/burn_in/burn_in_bloc.dart';
-import 'package:tyme/bloc/timer/timer_bloc.dart';
 import 'package:bottom_sheet_duration_picker/bottom_sheet_duration_picker.dart';
 import 'package:tyme/model/exercise.dart';
 import 'package:tyme/pages/timer/timer_page.dart';
-import 'package:tyme/service/tts_service.dart';
 import 'package:tyme/theme/app_theme.dart';
 
-class QuickTimerPage extends HookWidget {
+class QuickTimerPage extends StatefulWidget {
+  const QuickTimerPage();
+  @override
+  _QuickTimerPageState createState() => _QuickTimerPageState();
+}
+
+class _QuickTimerPageState extends State<QuickTimerPage> {
+  final TextEditingController lapsTextEditingController =
+      TextEditingController();
+  final DurationPickerController intervalDurationPickerController =
+      DurationPickerController.zero();
+  final DurationPickerController recoverDurationPickerController =
+      DurationPickerController.zero();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController lapsTextEditingController =
-        useTextEditingController();
-    final DurationPickerController intervalDurationPickerController =
-        useDurationPickerController();
-    final DurationPickerController recoverDurationPickerController =
-        useDurationPickerController();
-    final ValueNotifier<GlobalKey<FormState>> formKey =
-        useState<GlobalKey<FormState>>(GlobalKey<FormState>());
-
     return Scaffold(
       appBar: AppBar(
         title: Text(t.quick_timer_page.title),
@@ -30,7 +29,7 @@ class QuickTimerPage extends HookWidget {
       body: Padding(
         padding: const EdgeInsets.all(0),
         child: Form(
-          key: formKey.value,
+          key: formKey,
           child: ListView(
             children: <Widget>[
               ListTile(
@@ -47,7 +46,7 @@ class QuickTimerPage extends HookWidget {
                 height: 20,
               ),
               DurationPickerFormField(
-                themeData: AppTheme.durationPickerTheme,
+                themeData: durationPickerTheme,
                 controller: intervalDurationPickerController,
                 title: t.quick_timer_page.hint_interval,
                 validator: _intervalDurationValidation,
@@ -56,7 +55,7 @@ class QuickTimerPage extends HookWidget {
                 height: 20,
               ),
               DurationPickerFormField(
-                themeData: AppTheme.durationPickerTheme,
+                themeData: durationPickerTheme,
                 controller: recoverDurationPickerController,
                 title: t.quick_timer_page.hint_recover,
               ),
@@ -68,7 +67,7 @@ class QuickTimerPage extends HookWidget {
         // TODO: add translation
         label: const Text('Los'),
         onPressed: () async {
-          if (formKey.value.currentState.validate() == true) {
+          if (formKey.currentState.validate() == true) {
             final Exercise e = Exercise(
                 laps: int.parse(lapsTextEditingController.text),
                 interval: intervalDurationPickerController.value,

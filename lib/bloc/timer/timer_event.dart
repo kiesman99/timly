@@ -1,15 +1,22 @@
-import 'package:flutter/foundation.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+/// The Events that can be used to transform the [TimerBloc] [TimerState].
+enum TimerEvent {
+  /// This event starts the timer.
+  start,
 
-part 'timer_event.freezed.dart';
+  /// This event should be purely used by the [Timer] that is registered inside
+  /// of [TimerBloc] and should **not** be invoked manually
+  timerTicked,
 
-@freezed
-abstract class TimerEvent with _$TimerEvent {
-  const factory TimerEvent.ticked() = TimerTicked;
+  /// This event should be used to Pause the current timer
+  pause,
 
-  const factory TimerEvent.pause() = Pause;
+  /// This event should be used to Resume the current timer.
+  ///
+  /// It does only work if the [TimerBloc] was previously paused.
+  resume,
 
-  const factory TimerEvent.resume() = Resume;
-
-  const factory TimerEvent.replay() = Replay;
+  /// This event should be used to Replay the [Exercise].
+  ///
+  /// It does only work if the [TimerBloc] has previously finished.
+  replay
 }

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:tyme/bloc/burn_in/burn_in_bloc.dart';
-import 'package:tyme/bloc/burn_in/burn_in_state.dart';
-import 'package:tyme/bloc/timer/timer_bloc.dart';
-import 'package:tyme/bloc/timer/timer_state.dart';
-import 'package:tyme/model/exercise.dart';
-import 'package:tyme/pages/timer/timer_page_burn_in.dart';
-import 'package:tyme/pages/timer/timer_page_unconcerning.dart';
+import 'package:tyme/pages/timer/widgets/timer_detail/timer_detail_recover.dart';
+import 'package:tyme/pages/timer/widgets/timer_detail/timer_detail_setup.dart';
+import 'package:tyme/pages/timer/widgets/timer_detail/timer_detail_workout.dart';
+import 'package:tyme/pages/timer/widgets/timer_finished/timer_finished.dart';
+import 'package:tyme/pages/timer/widgets/timer_paused/timer_paused.dart';
+
+import '../../bloc/blocs.dart';
+import '../../bloc/timer/timer_state.dart';
+import '../../model/exercise.dart';
+import 'widgets/timer_detail/timer_detail.dart';
 
 @immutable
 class TimerPage extends StatelessWidget {
@@ -28,39 +31,91 @@ class TimerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider<Exercise>.value(
       value: exercise,
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider<BurnInBloc>(
-            create: (_) => BurnInBloc(),
-          ),
-          BlocProvider<TimerBloc>(
-            create: (_) => TimerBloc(exercise),
-          )
-        ],
-        child: _ActualTimerPage(),
+      child: BlocProvider<TimerBloc>(
+        create: (_) => TimerBloc(exercise, OneSecondIntervalTicker()),
+        child: _Page(),
       ),
     );
   }
 }
 
-class _ActualTimerPage extends StatelessWidget {
+@immutable
+class _Page extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        // TODO: TimerBloc notify touch
+        // TimerBloc has to reset burnInCounter
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(context.watch<Exercise>().name),
+        ),
+        body: BlocBuilder<TimerBloc, TimerState>(
+          builder: (BuildContext timerBlocContext, TimerState timerState) {
+            if (timerState is Initial) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (timerState is Paused) {
+              return TimerPaused();
+            } else if (timerState is Finished) {
+              return TimerFinished();
+            }
+
+            return timerDetailWithSetupState(context, timerState);
+          },
+        ),
+        floatingActionButton: const _Fab(),
+      ),
+    );
+  }
+
+  TimerDetail timerDetailWithSetupState(
+      BuildContext context, TimerState state) {
+    var exercise = context.read<Exercise>();
+    if (state is Workout) {
+      return TimerDetailWorkout(context, exercise, state);
+    } else if (state is Setup) {
+      return TimerDetailSetup(context, exercise, state);
+    } else if (state is Recover) {
+      return TimerDetailRecover(exercise, state);
+    }
+
+    throw Exception("State ${state.runtimeType} was not expected.");
+  }
+}
+
+@immutable
+class _Fab extends StatelessWidget {
+  const _Fab();
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TimerBloc, TimerState>(
-      builder: (BuildContext context, TimerState timerState) {
-        return BlocBuilder<BurnInBloc, BurnInState>(
-          builder: (BuildContext context, BurnInState state) {
-            return state == null
-                ? const Text('failed')
-                : state.when(
-                    protecting: (double left, double top) => TimerPageBurnIn(
-                          leftPadding: left,
-                          topPadding: top,
-                          timerState: timerState,
-                        ),
-                    unconcerning: () =>
-                        TimerPageUnconcerning(timerState: timerState));
-          },
+      buildWhen: (TimerState previous, TimerState current) {
+        return (previous != current) &&
+            !((previous is Workout) && (current is Workout)) &&
+            !((previous is Setup) && (current is Setup)) &&
+            !((previous is Finished) && (current is Finished));
+      },
+      builder: (_, TimerState timerState) {
+        // TODO: hide button when protecting mode is enabled
+        if (timerState is Paused) {
+          return FloatingActionButton(
+            child: const Icon(Icons.play_arrow),
+            onPressed: () => context.bloc<TimerBloc>().add(TimerEvent.resume),
+          );
+        } else if (timerState is Finished) {
+          return FloatingActionButton(
+              child: const Icon(Icons.replay),
+              onPressed: () =>
+                  context.bloc<TimerBloc>().add(TimerEvent.replay));
+        }
+
+        return FloatingActionButton(
+          child: const Icon(Icons.pause),
+          onPressed: () => context.bloc<TimerBloc>().add(TimerEvent.pause),
         );
       },
     );

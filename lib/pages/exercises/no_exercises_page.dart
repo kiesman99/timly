@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tyme/bloc/persistence/persistence_bloc.dart';
+import 'package:tyme/bloc/blocs.dart';
 import 'package:tyme/i18n/strings.g.dart';
 import 'package:tyme/pages/exercise_add_edit/exercise_forms.dart';
 

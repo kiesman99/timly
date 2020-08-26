@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:tyme/bloc/burn_in/burn_in_bloc.dart';
-import 'package:tyme/bloc/persistence/persistence_bloc.dart';
-import 'package:tyme/bloc/persistence/persistence_event.dart';
-import 'package:tyme/bloc/timer/timer_bloc.dart';
-import 'package:tyme/model/exercise.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tyme/pages/exercise_add_edit/exercise_forms.dart';
-import 'package:tyme/service/tts_service.dart';
+import '../../bloc/blocs.dart';
+import '../../model/exercise.dart';
+import '../exercise_add_edit/exercise_forms.dart';
 
 import '../timer/timer_page.dart';
 
+/// {@template exercise_tile}
+/// This element is used to display all necessary information about the given
+/// [Exercise].
+/// {@endtemplate}
 @immutable
 class ExerciseTile extends StatelessWidget {
-  const ExerciseTile({this.exercise});
+  /// {@macro exercise_tile}
+  const ExerciseTile({@required Exercise exercise})
+      : assert(exercise != null),
+        _exercise = exercise;
 
-  final Exercise exercise;
+  final Exercise _exercise;
 
   @override
   Widget build(BuildContext context) {
@@ -25,29 +27,29 @@ class ExerciseTile extends StatelessWidget {
         onDismissed: (_) {
           context
               .bloc<PersistenceBloc>()
-              .add(PersistenceEvent.delete(exercise));
+              .add(PersistenceEvent.delete(_exercise));
 
           Scaffold.of(context).showSnackBar(
-              SnackBar(content: Text('${exercise.name} deleted')));
+              SnackBar(content: Text('${_exercise.name} deleted')));
         },
         child: ListTile(
           onTap: () => _onTap(context),
           onLongPress: () => _longPress(context),
-          title: Text(exercise.name),
+          title: Text(_exercise.name),
           leading: CircleAvatar(
-            child: Text('${exercise.laps}x'),
+            child: Text('${_exercise.laps}x'),
             backgroundColor: Colors.teal[800],
           ),
         ));
   }
 
   void _onTap(BuildContext context) {
-    Navigator.of(context).push(TimerPage.route(exercise: exercise));
+    Navigator.of(context).push(TimerPage.route(exercise: _exercise));
   }
 
   void _longPress(BuildContext context) {
     Navigator.of(context).push<void>(ExerciseEditPage.route<void>(
-        exerciseToUpdate: exercise,
+        exerciseToUpdate: _exercise,
         persistenceBloc: context.bloc<PersistenceBloc>()));
   }
 }

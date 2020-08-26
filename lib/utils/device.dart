@@ -1,7 +1,11 @@
 import 'dart:io';
 
-class Device {
+import 'package:flutter/foundation.dart';
 
-  static bool get isMobile => Platform.isAndroid || Platform.isIOS;
+bool get isMobile {
+  if (kIsWeb) {
+    return false;
+  }
 
+  return Platform.isAndroid || Platform.isAndroid;
 }

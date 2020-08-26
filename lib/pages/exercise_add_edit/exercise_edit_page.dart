@@ -72,13 +72,13 @@ class _ExerciseEditPageState extends State<ExerciseEditPage>
           ),
         ),
         DurationPickerFormField(
-          themeData: AppTheme.durationPickerTheme,
+          themeData: durationPickerTheme,
           controller: _intervalDurationController,
           title: t.exercise_edit.hint_interval_time,
           validator: intervalDurationValidation,
         ),
         DurationPickerFormField(
-          themeData: AppTheme.durationPickerTheme,
+          themeData: durationPickerTheme,
           controller: _recoverDurationController,
           title: t.exercise_edit.hint_recover_time,
         ),
