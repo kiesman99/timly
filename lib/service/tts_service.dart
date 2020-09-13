@@ -1,15 +1,13 @@
-
 import 'dart:ui';
 
 import 'package:intl/intl_standalone.dart'
-  if (dart.library.html) 'package:intl/intl_browser.dart';
+    if (dart.library.html) 'package:intl/intl_browser.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:tyme/bloc/timer/timer_state.dart';
 
 /// This Service is used to 'speak'
 /// a certain sentence.
 class TTSService {
-
   FlutterTts _tts = FlutterTts();
 
   TTSService() {
@@ -33,15 +31,7 @@ class TTSService {
   }
 
   Future speakFromState(TimerState state) async {
-    await state.when(
-        setup: (duration, _) => _mapSetupState(duration),
-        running: (exercise) => _mapRunningState(exercise.interval),
-        paused: (_, __) => _mapPauseState(),
-        recover: (exercise) => _mapRecoverState(exercise.recover),
-        finished: (_) => _mapFinishState()
-    );
-
-    return;
+    // TODO: implement function
   }
 
   void _mapRunningState(Duration duration) {
@@ -76,11 +66,10 @@ class TTSService {
   }
 
   void _mapFinishState() {
-    speak("Fertig");
+    speak('Fertig');
   }
 
   void _mapPauseState() {
-    speak("Pause");
+    speak('Pause');
   }
-
 }

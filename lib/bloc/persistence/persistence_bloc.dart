@@ -4,14 +4,14 @@ import 'package:bloc/bloc.dart';
 import 'package:tyme/bloc/persistence/persistence_event.dart';
 import 'package:tyme/bloc/persistence/persistence_state.dart';
 import 'package:tyme/model/exercise.dart';
-import 'package:tyme/repository/exercise_hive_repository.dart';
+import 'package:tyme/repository/exercise_mock_repository.dart';
 import 'package:tyme/repository/exercise_repository.dart';
 import 'package:tyme/utils/logger.dart';
 
 class PersistenceBloc extends Bloc<PersistenceEvent, PersistenceState>
     with LoggerMixin {
   PersistenceBloc() : super(const PersistenceState.init());
-  ExerciseRepository repository = ExerciseHiveRepository();
+  ExerciseRepository repository = ExerciseMockRepository();
 
   @override
   Stream<PersistenceState> mapEventToState(PersistenceEvent event) async* {

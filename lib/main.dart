@@ -1,32 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:tyme/model/exercise.dart';
 import 'package:tyme/pages/main_page/main_page.dart';
 import 'package:tyme/theme/app_theme.dart';
-import 'package:tyme/type_adapter/duration_type_adapter.dart';
 
-import './globals.dart';
 import 'i18n/strings.g.dart';
 
-void _registerHiveAdapter() {
-  Hive.registerAdapter(DurationTypeAdapter());
-  Hive.registerAdapter(ExerciseAdapter());
-}
-
-Future<void> _initialOpenHiveBoxes() async {
-  final List<Future<dynamic>> boxOpenings = [
-    Hive.openBox<Exercise>(exercise_box_name)
-  ];
-  await Future.wait<dynamic>(boxOpenings);
-}
-
-void main() async {
-  _registerHiveAdapter();
-  await Hive.initFlutter();
-  await _initialOpenHiveBoxes();
-
+void main() {
   runApp(MyApp());
 }
 
@@ -46,12 +25,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo', theme: AppTheme.appTheme, home: MainPage());
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+    return MaterialApp(title: 'Tyme', theme: appTheme, home: MainPage());
   }
 }

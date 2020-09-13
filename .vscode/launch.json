@@ -8,6 +8,12 @@
             "name": "Flutter",
             "request": "launch",
             "type": "dart"
+        },
+        {
+            "name": "Flutter chrome",
+            "args": ["-d", "chrome"],
+            "request": "launch",
+            "type": "dart"
         }
     ]
 }

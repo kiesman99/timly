@@ -1,6 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:tyme/model/exercise.dart';
+import 'package:flutter/foundation.dart';
 
 part 'persistence_event.freezed.dart';
 
