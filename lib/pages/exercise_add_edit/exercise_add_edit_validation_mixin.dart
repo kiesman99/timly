@@ -16,7 +16,7 @@ mixin ExerciseFormValidationMixin<T extends StatefulWidget> on State<T> {
     if (laps.isEmpty) {
       return t.errors.textfield_empty;
     }
-    final int number = int.tryParse(laps);
+    final number = int.tryParse(laps);
     if (number == null) {
       return t.errors.not_a_number;
     }

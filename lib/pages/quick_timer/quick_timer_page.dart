@@ -68,12 +68,13 @@ class _QuickTimerPageState extends State<QuickTimerPage> {
         label: const Text('Los'),
         onPressed: () async {
           if (formKey.currentState.validate() == true) {
-            final Exercise e = Exercise(
+            final exercise = Exercise(
                 laps: int.parse(lapsTextEditingController.text),
                 interval: intervalDurationPickerController.value,
                 recover: recoverDurationPickerController.value);
 
-            Navigator.of(context).push(TimerPage.route(exercise: e));
+            await Navigator.of(context)
+                .push(TimerPage.route(exercise: exercise));
           }
         },
       ),
@@ -84,7 +85,7 @@ class _QuickTimerPageState extends State<QuickTimerPage> {
     if (value.isEmpty) {
       return t.errors.textfield_empty;
     }
-    final int num = int.tryParse(value);
+    final num = int.tryParse(value);
 
     if (num == null) {
       return t.errors.not_a_number;

@@ -19,14 +19,14 @@ class ExerciseAddPage extends StatefulWidget {
 class _ExerciseAddPageState extends State<ExerciseAddPage>
     with ExerciseFormValidationMixin<ExerciseAddPage> {
   PersistenceBloc _persistenceBloc;
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _nameController = TextEditingController();
-  FocusNode _nameFocusNode = FocusNode();
-  TextEditingController _lapsController = TextEditingController();
-  FocusNode _lapsFocusNode = FocusNode();
-  DurationPickerController _intervalDurationController =
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final FocusNode _nameFocusNode = FocusNode();
+  final TextEditingController _lapsController = TextEditingController();
+  final FocusNode _lapsFocusNode = FocusNode();
+  final DurationPickerController _intervalDurationController =
       DurationPickerController.zero();
-  DurationPickerController _recoverDurationController =
+  final DurationPickerController _recoverDurationController =
       DurationPickerController.zero();
 
   @override
@@ -90,7 +90,7 @@ class _ExerciseAddPageState extends State<ExerciseAddPage>
 
   @override
   void submit() {
-    Exercise exercise = Exercise(
+    final exercise = Exercise(
         name: _nameController.text,
         laps: int.parse(_lapsController.text),
         interval: _intervalDurationController.value,

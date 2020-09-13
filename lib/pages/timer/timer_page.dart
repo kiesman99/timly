@@ -83,7 +83,7 @@ class _Page extends StatelessWidget {
       return TimerDetailRecover(exercise, state);
     }
 
-    throw Exception("State ${state.runtimeType} was not expected.");
+    throw Exception('State ${state.runtimeType} was not expected.');
   }
 }
 

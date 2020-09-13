@@ -97,12 +97,12 @@ class _ExerciseEditPageState extends State<ExerciseEditPage>
 
   @override
   void submit() {
-    final Exercise exercise = _exercise.copyWith(
+    final exercise = _exercise.copyWith(
         name: _nameController.text,
         laps: int.parse(_lapsController.text),
         interval: _intervalDurationController.value,
         recover: _recoverDurationController.value);
-    // context.bloc<PersistenceBloc>().add(PersistenceEvent.add(exercise));
+    context.bloc<PersistenceBloc>().add(PersistenceEvent.add(exercise));
     Navigator.of(context).pop();
   }
 }

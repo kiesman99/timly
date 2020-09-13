@@ -27,14 +27,14 @@ class PersistenceBloc extends Bloc<PersistenceEvent, PersistenceState>
   }
 
   Stream<PersistenceState> _mapDeleteAllEventToState(DeleteAll event) async* {
-    for (final Exercise e in event.exercises) {
+    for (final e in event.exercises) {
       await repository.delete(e);
     }
     add(const PersistenceEvent.loadAll());
   }
 
   Stream<PersistenceState> _mapLoadAllEventToState(LoadAll event) async* {
-    final List<Exercise> exercises = await repository.getAll();
+    final exercises = await repository.getAll();
     print('Loaded Exercises: $exercises');
     yield PersistenceState.loaded(exercises);
   }

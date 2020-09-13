@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:quiver/testing/async.dart';
 import 'package:tyme/bloc/timer/interval_ticker.dart';

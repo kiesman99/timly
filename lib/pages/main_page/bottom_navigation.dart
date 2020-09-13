@@ -8,8 +8,7 @@ class BottomNavigation extends StatelessWidget {
   const BottomNavigation();
   @override
   Widget build(BuildContext context) {
-    final BottomNavigationCubit _navigationCubit =
-        context.bloc<BottomNavigationCubit>();
+    final _navigationCubit = context.bloc<BottomNavigationCubit>();
 
     return BlocBuilder<BottomNavigationCubit, BottomNavPages>(
       builder: (_, BottomNavPages page) {
@@ -22,15 +21,15 @@ class BottomNavigation extends StatelessWidget {
           currentIndex: page.index,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              title: Text(t.main_page.bottom_navigation_exercises),
+              label: t.main_page.bottom_navigation_exercises,
               icon: const Icon(Icons.list),
             ),
             BottomNavigationBarItem(
-              title: Text(t.main_page.bottom_navigation_quick_timer),
+              label: t.main_page.bottom_navigation_quick_timer,
               icon: const Icon(Icons.av_timer),
             ),
             BottomNavigationBarItem(
-                title: Text(t.main_page.bottom_navigation_settings),
+                label: t.main_page.bottom_navigation_settings,
                 icon: const Icon(Icons.settings))
           ],
         );

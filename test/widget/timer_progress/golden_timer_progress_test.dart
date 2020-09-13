@@ -9,7 +9,7 @@ void main() {
     var widget = TimerProgress(
       indicatorColor: Colors.amber,
       intervalProgress: 0.5,
-      durationLeft: "30s",
+      durationLeft: '30s',
     );
     await tester.pumpWidget(widget);
     await expectLater(find.byType(TimerProgress),
@@ -20,7 +20,7 @@ void main() {
     var widget = TimerProgress(
       indicatorColor: Colors.amber,
       intervalProgress: 0.0,
-      durationLeft: "30s",
+      durationLeft: '30s',
     );
     await tester.pumpWidget(widget);
     await expectLater(find.byType(TimerProgress),
@@ -31,7 +31,7 @@ void main() {
     var widget = TimerProgress(
       indicatorColor: Colors.amber,
       intervalProgress: 1.0,
-      durationLeft: "30s",
+      durationLeft: '30s',
     );
     await tester.pumpWidget(widget);
     await expectLater(find.byType(TimerProgress),
@@ -42,7 +42,7 @@ void main() {
     var widget = TimerProgress(
       indicatorColor: Colors.green,
       intervalProgress: 0.99,
-      durationLeft: "30s",
+      durationLeft: '30s',
     );
     await tester.pumpWidget(widget);
     await expectLater(find.byType(TimerProgress),
@@ -53,7 +53,7 @@ void main() {
     var widget = TimerProgress(
       indicatorColor: Colors.red,
       intervalProgress: 0.75,
-      durationLeft: "30s",
+      durationLeft: '30s',
     );
     await tester.pumpWidget(widget);
     await expectLater(find.byType(TimerProgress),
