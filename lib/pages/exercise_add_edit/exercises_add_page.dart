@@ -25,9 +25,9 @@ class _ExerciseAddPageState extends State<ExerciseAddPage>
   final TextEditingController _lapsController = TextEditingController();
   final FocusNode _lapsFocusNode = FocusNode();
   final DurationPickerController _intervalDurationController =
-      DurationPickerController.zero();
+      DurationPickerController();
   final DurationPickerController _recoverDurationController =
-      DurationPickerController.zero();
+      DurationPickerController();
 
   @override
   void initState() {

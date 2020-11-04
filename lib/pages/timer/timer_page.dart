@@ -20,6 +20,7 @@ class TimerPage extends StatelessWidget {
   static Route<void> route({
     @required Exercise exercise,
   }) {
+    print(exercise);
     return MaterialPageRoute<void>(
       builder: (BuildContext context) {
         return TimerPage(exercise: exercise);

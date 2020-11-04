@@ -39,9 +39,9 @@ dependencies:
 
 
   # local libraries
-  bottom_sheet_duration_picker:
-    # git: https://github.com/kiesman99/bottom_sheet_duration_picker
-    path: ../bottom_sheet_duration_picker
+  picky:
+    git: https://github.com/kiesman99/picky
+    # path: ../picky
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

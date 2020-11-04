@@ -1,6 +1,6 @@
 import 'package:tyme/i18n/strings.g.dart';
 import 'package:flutter/material.dart';
-import 'package:bottom_sheet_duration_picker/bottom_sheet_duration_picker.dart';
+import 'package:picky/picky.dart';
 import 'package:tyme/model/exercise.dart';
 import 'package:tyme/pages/timer/timer_page.dart';
 import 'package:tyme/theme/app_theme.dart';
@@ -15,9 +15,9 @@ class _QuickTimerPageState extends State<QuickTimerPage> {
   final TextEditingController lapsTextEditingController =
       TextEditingController();
   final DurationPickerController intervalDurationPickerController =
-      DurationPickerController.zero();
+      DurationPickerController();
   final DurationPickerController recoverDurationPickerController =
-      DurationPickerController.zero();
+      DurationPickerController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override

@@ -38,8 +38,8 @@ class _ExerciseEditPageState extends State<ExerciseEditPage>
     super.initState();
     _nameController = TextEditingController(text: _exercise.name);
     _lapsController = TextEditingController(text: _exercise.laps.toString());
-    _intervalDurationController = DurationPickerController.zero();
-    _recoverDurationController = DurationPickerController.zero();
+    _intervalDurationController = DurationPickerController();
+    _recoverDurationController = DurationPickerController();
   }
 
   @override
